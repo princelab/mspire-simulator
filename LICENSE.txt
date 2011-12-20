@@ -1,4 +1,6 @@
-Copyright (c) 2011 anoyce
+Copyright (c) 2011 Brigham Young University
+Authors: Andrew Noyce, Nozumo Okuda, James Dagliesh
+Under the Guidance of: Dr. John Prince
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
