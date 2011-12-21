@@ -51,6 +51,7 @@ module MS
 				var<<atoms[6].to_s
 	
 				percents = Isotope.dist(var)
+				puts percents
 				return percents
 			end
 		end
