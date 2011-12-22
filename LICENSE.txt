@@ -1,5 +1,5 @@
 Copyright (c) 2011 Brigham Young University
-Authors: Andrew Noyce, Nozumo Okuda, James Dagliesh
+Authors: Andrew Noyce, Nozumo Okuda, James Dagliesh, John Prince
 Under the Guidance of: Dr. John Prince
 
 Permission is hereby granted, free of charge, to any person obtaining
