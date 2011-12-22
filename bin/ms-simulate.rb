@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-#ruby -I lib ./bin/ms-simulate.rb 3d testFastaFiles/p53.fasta
+#ruby -I lib ./bin/ms-simulate.rb testFastaFiles/p53.fasta
 
 require 'ms/digester'
 require 'msplat'
