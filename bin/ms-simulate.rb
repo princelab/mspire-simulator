@@ -7,7 +7,7 @@ require 'msplat'
 require 'ms/feature/aa'
 require 'ms/peptide'
 require 'ms/plot/plot'
-require 'ms/rtgenerator'
+require 'ms/rt/rtgenerator'
 require 'ms/mzml/writer'
 
 if(ARGV.length == 0)
