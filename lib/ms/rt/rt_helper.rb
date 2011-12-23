@@ -51,8 +51,8 @@ module RThelper
 	   code
        builder.c <<-code
 			
-		float gaussian(float rt, float mu, float sd, float intRand){
-			return ((1/(sqrt(2*(PI)*(pow(sd,2)))))*(exp(-((pow((rt-mu),2))/(pow((2*sd),2))))))*intRand;
+		float gaussian(float mz, float mu, float sd){
+			return ((1/(sqrt(2*(PI)*(pow(sd,2)))))*(exp(-((pow((mz-mu),2))/(pow((2*sd),2))))));
 		} 
        code
        builder.c <<-code

@@ -3,6 +3,7 @@ require 'ms/feature/feature'
 require 'ms/peptide'
 require 'ms/rt/rt_helper'
 require 'ms/rt/dtree'
+require 'ms/plot/mgl_plot'
 
 module MS
 	class Rtgenerator
@@ -26,7 +27,7 @@ module MS
 			peptides.each do |pep,ind|
 				peps = Array.new
 				
-				for i in (1..((pep.charge*5)+rand(5)))
+				for i in (1..((pep.charge*10)+rand(5)))
 					peps<<MS::Peptide.new(pep.sequence,pep.mass,pep.charge,0,ind)
 				end
 				
@@ -102,18 +103,29 @@ module MS
 			pep.rt = RThelper.randn(mu,5)
 		end
 		
+		# Intensities are shaped in the rt direction by the Exponentially
+		# modified gaussian. They are also shaped in the m/z direction 
+		# by a simple gaussian curve (see 'factor' below). 
+		#
 		def getInts(fins, percents, avg)
 			intRand = (fins[0].length)*10**6.1
 			stddev = rand+2
 		
 			index = 0
 			fins.each do |fin|
+				mzmu = fin[0].mz + index + 0.5
+				max_y = RThelper.gaussian(mzmu,mzmu,0.05) 
+				
 				percent_int = intRand*percents[index]
-				c = 0
 				fin.each do |p|
-					c = c+1
-					p.int = RThelper.emg(percent_int,avg,0.25,0.4,p.rt) #Exponentially modified gaussian
-					p.mz = p.mz+index
+					p.mz = RThelper.randn(mzmu,0.08)
+					
+					fraction = RThelper.gaussian(p.mz,mzmu,0.05)
+					factor = fraction/max_y
+							
+					#Exponentially modified gaussian * gaussian
+					p.int = (RThelper.emg(percent_int,avg,0.25,0.4,p.rt)) * factor
+					#p.int = p.int * Mgl_Plot.RandomFloat(0.80,1.0)#Jagged-ness
 				end
 				index = index+1
 			end

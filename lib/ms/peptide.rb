@@ -3,7 +3,7 @@ module MS
 	class Peptide
 		def initialize(sequence, mass, charge, rt = 0, group = 0)
 			@sequence = sequence
-			@mass   = mass + (rand*10**(-1))
+			@mass   = mass
 			@charge = charge
 			@rt = rt
 			@int = 0
