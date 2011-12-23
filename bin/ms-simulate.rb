@@ -60,7 +60,5 @@ else
 		end
 	end
 	features = MS::Rtgenerator.new.generateRT(peptides)
-	puts features[0].length
-	#MS::Mzml::Writer.new.to_file(fins[0],fins[1][1])
 	MS::Plot.new.plot(features)
 end

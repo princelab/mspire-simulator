@@ -1,15 +1,15 @@
-
 require 'msplat'
 require 'ms/peptide'
 require 'ms/feature/isotope'
-#require 'ms/fin'
+
 module MS
 	module Feature
 		class Feature 
 			def initialize()
-				
 			end
 			
+			# Counts the number of each atom in the peptide sequence.
+			#
 			def countAtoms(seq)
 				o = 0
 				n = 0
@@ -30,6 +30,9 @@ module MS
 				return o,n,c,h,s,p,se
 			end
 			
+			# Calculates the relative intensities of the isotopic 
+			# envelope.
+			#
 			def calcPercent(seq)
 				#isotope.rb from Dr. Prince
 				atoms = countAtoms(seq)
@@ -51,7 +54,7 @@ module MS
 				var<<atoms[6].to_s
 	
 				percents = Isotope.dist(var)
-				puts percents
+				#puts percents
 				return percents
 			end
 		end

@@ -12,6 +12,11 @@ module MS
 			@index = 0
 		end
 		
+		# Here the peptides are multiplied based on charge. This may
+		# also not be correct. Groups of peptides are then multiplied
+		# by the number of isotopic peaks. Consequently retention times
+		# of each peptide in each isotopic peak look very similar.
+		#
 		def generateRT(peptides)
 		
 			f = open("/dev/tty")
@@ -27,7 +32,7 @@ module MS
 			peptides.each do |pep,ind|
 				peps = Array.new
 				
-				for i in (1..((pep.charge*10)+rand(5)))
+				for i in (1..((pep.charge*20)+rand(5)))
 					peps<<MS::Peptide.new(pep.sequence,pep.mass,pep.charge,0,ind)
 				end
 				
@@ -60,6 +65,9 @@ module MS
 			return features,arrays
 		end
 		
+		# Gets retention times from the 'decisiontree' this will probably
+		# change.
+		#
 		def getRTs(peps)
 		    
 		    avg = 0.0
@@ -98,9 +106,11 @@ module MS
 			return avg
 		end
 		
+		# Spreading peaks by a normal density function.
+		# This may not be the correct thing to do.
+		#
 		def spreadRTs(pep,mu)
-			x = (rand(mu+15)+(mu-30))
-			pep.rt = RThelper.randn(mu,5)
+			pep.rt = RThelper.randn(mu,10)
 		end
 		
 		# Intensities are shaped in the rt direction by the Exponentially

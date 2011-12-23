@@ -23,17 +23,12 @@ module RThelper
 			  static int use_last   = 0;   
 			  static float rand_max = (float)( RAND_MAX);   
 			   
-			  if ( use_last)            /* use value from previous call */   
-			  {   
+			  if ( use_last){            /* use value from previous call */      
 				y1 = y2;   
 				use_last = 0;   
 			  }   
-			  else   
-			  {   
-				do    
-				{   
-			//      x1 = 2.0 * ranf() - 1.0;   
-			//      x2 = 2.0 * ranf() - 1.0;   
+			  else{   
+				do{     
 				  x1 = 2.0 * (float)( rand()) / rand_max - 1.0;   
 				  x2 = 2.0 * (float)( rand()) / rand_max - 1.0;   
 				  w = x1 * x1 + x2 * x2;   
@@ -46,8 +41,7 @@ module RThelper
 			  }   
 			   
 			  return ( m + y1 * s);   
-			}
-			
+			}		
 	   code
        builder.c <<-code
 			
