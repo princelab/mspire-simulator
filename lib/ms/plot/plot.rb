@@ -10,7 +10,7 @@ module MS
 		def plot3d(cents)
 			#[mzs,rts,ints,groups]
 
-			Mgl_Plot.newPlot(45.0,45.0)
+			Mgl_Plot.newPlot(1.0,0.0)
 			x = cents[0].sort[0]
 			x2 = cents[0].sort[cents[0].length-1]
 			y = cents[1].sort[0]

@@ -51,7 +51,7 @@ else
 				h = 'H'
 				k = 'K'
 				r = 'R'
-				if aa == h||k||r
+				if aa == h or aa == k or aa == r
 					charge = charge + 1
 				end
 			end
@@ -61,4 +61,5 @@ else
 	end
 	features = MS::Rtgenerator.new.generateRT(peptides)
 	MS::Plot.new.plot(features)
+	MS::Writer.new.to_file(features)
 end

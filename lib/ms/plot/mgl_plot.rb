@@ -45,21 +45,20 @@ module Mgl_Plot
 				return a + r;
 			}
 	   code
-	   builder.c <<-code
+	   builder.c <<-code 
 		  int sample(mglGraph *gr, void *){
-		  
 				gr->Rotate(rX,rY,0);
+				gr->Aspect(5, 4, 1);
 				gr->SetRanges (tx-5, tx2+5, ty-5, ty2+5, tz, tz2);	
 				gr->SetFontSize(1.6);
 				gr->Label('x', "m/z", 0.0);
 				gr->Label('y', "RT", 0.0);
 				gr->Label('z', "Int", 0.0);
 				gr->SetTickLen (0.03, 1.0);
-				gr->SetTicks ('x', 10, 0);
-				gr->SetTicks ('y', 10, 0);
-				gr->Axis("x");
-				gr->Axis("y");
-				gr->Axis("z");
+				gr->SetTicks ('x', ((tx2+5)/10), 0);
+				gr->SetTicks ('y', ((ty2+5)/5), 0);
+				gr->SetTicks ('z', (tz2/2), 0);
+				gr->Axis("xyz");
 				
 				vector<float>::iterator it;
 				int count = 0;
@@ -90,10 +89,10 @@ module Mgl_Plot
 					delete zd;
 					//addlines
 				}
-				gr->Mesh(nx,"W9");
-
+			gr->SetMeshNum(10);
+			gr->Mesh(nx,"W9");
 			return 0;
-		  }
+		  } 
        code
        builder.c <<-code
           float plotC(){ 

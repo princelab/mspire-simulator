@@ -32,7 +32,7 @@ module MS
 			peptides.each do |pep,ind|
 				peps = Array.new
 				
-				for i in (1..((pep.charge*20)+rand(5)))
+				for i in (1..(rand(500)+200))
 					peps<<MS::Peptide.new(pep.sequence,pep.mass,pep.charge,0,ind)
 				end
 				
