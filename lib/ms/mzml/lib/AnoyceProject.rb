@@ -234,7 +234,7 @@ end
 
 class Mzmlspectrum < MzmlParamArr
 	attr_accessor :id, :spotID, :defaultArrayLength, :dataProcessingRef, :sourceFileRef, :scanList, :precursorList, :productList, :binaryDataArrayList
-	def initialize(in_id, in_defaultArrayLength, in_scanList=nil, in_precursorList=nil, in_productList=nil, in_binaryDataArrayList=nil, in_spotID=nil, in_dataProcessingRef='nil', in_sourceFileRef='nil', in_referenceableParamGroupRefArr=nil, in_cvParamArr=nil, in_userParamArr=nil)
+	def initialize(in_id, in_defaultArrayLength, in_scanList=nil, in_precursorList=nil, in_productList=nil, in_binaryDataArrayList=nil, in_spotID=nil, in_dataProcessingRef='ms-simulate', in_sourceFileRef='nil', in_referenceableParamGroupRefArr=nil, in_cvParamArr=nil, in_userParamArr=nil)
 		super(in_referenceableParamGroupRefArr, in_cvParamArr, in_userParamArr)
 		@id = in_id
 		@spotID = in_spotID
@@ -315,7 +315,7 @@ end
 
 class MzmlbinaryDataArray < MzmlParamArr
 	attr_accessor :encodedLength, :binary, :arrayLength, :dataProcessingRef
-	def initialize(in_encodedLength, in_binary, in_arrayLength, in_dataProcessingRef='nil', in_referenceableParamGroupRefArr=nil, in_cvParamArr=nil, in_userParamArr=nil)
+	def initialize(in_encodedLength, in_binary, in_arrayLength, in_dataProcessingRef='ms-simulate', in_referenceableParamGroupRefArr=nil, in_cvParamArr=nil, in_userParamArr=nil)
 		super(in_referenceableParamGroupRefArr, in_cvParamArr, in_userParamArr)
 		@encodedLength = in_encodedLength
 		@binary = in_binary
@@ -339,7 +339,7 @@ end
 
 class Mzmlchromatogram < MzmlParamArr
 	attr_accessor :defaultArrayLength, :id, :binaryDataArrayList, :dataProcessingRef, :precursor, :product
-	def initialize(in_defaultArrayLength, in_id, in_binaryDataArrayList, in_precursor=nil, in_product=nil, in_dataProcessingRef='nil', in_referenceableParamGroupRefArr=nil, in_cvParamArr=nil, in_userParamArr=nil)
+	def initialize(in_defaultArrayLength, in_id, in_binaryDataArrayList, in_precursor=nil, in_product=nil, in_dataProcessingRef='ms-simulate', in_referenceableParamGroupRefArr=nil, in_cvParamArr=nil, in_userParamArr=nil)
 		super(in_referenceableParamGroupRefArr, in_cvParamArr, in_userParamArr)
 		@defaultArrayLength = in_defaultArrayLength
 		@id = in_id

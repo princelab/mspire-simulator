@@ -44,17 +44,16 @@ refParamGrpListArr.push(AnoyceProject::MzmlreferenceableParamGroup.new('group2')
 tempArr = []
 tempArr.push(AnoyceProject::MzmlreferenceableParamGroupRef.new('group1'))
 tempArr2 = []
-tempArr2.push(AnoyceProject::MzmlcvParam.new('cv3','ref','blargh'))
+tempArr2.push(AnoyceProject::MzmlcvParam.new('cv3','cv1','blargh', nil, 'cv1'))
 tempArr3 = []
-tempArr3.push(AnoyceProject::MzmluserParam.new('James'))
+tempArr3.push(AnoyceProject::MzmluserParam.new('James',nil,nil,'cv1'))
 sampleListArr.push(AnoyceProject::Mzmlsample.new('sample1', 'Bond',nil,tempArr2,tempArr3))
 sampleListArr.push(AnoyceProject::Mzmlsample.new('sample2', 'end', tempArr))
 
-softwareListArr.push(AnoyceProject::Mzmlsoftware.new('v1.83', 'ClustalW'))
-softwareListArr.push(AnoyceProject::Mzmlsoftware.new('v1.52', 'Starcraft'))
+softwareListArr.push(AnoyceProject::Mzmlsoftware.new('ms', 'ClustalW'))
 
 tempSrcRef = []
-tempSrcRef.push(AnoyceProject::MzmlsourceFileRef.new('sourceFile'))
+tempSrcRef.push(AnoyceProject::MzmlsourceFileRef.new('name1'))
 tempTargets = []
 tempTargets.push(AnoyceProject::Mzmltarget.new())
 scanSettingsListArr.push(AnoyceProject::MzmlscanSettings.new('scan1', tempSrcRef, tempTargets))
@@ -66,8 +65,8 @@ testCompList.push(AnoyceProject::Mzmlcomponent.new('detector'))
 instConfigListArr.push(AnoyceProject::MzmlinstrumentConfigurationSettings.new('LCQDeca', testCompList))
 
 procMetList = []
-procMetList.push(AnoyceProject::MzmlprocessingMethod.new('proc'))
-dataProcListArr.push(AnoyceProject::MzmldataProcessing.new('data1', procMetList))
+procMetList.push(AnoyceProject::MzmlprocessingMethod.new('ms'))
+dataProcListArr.push(AnoyceProject::MzmldataProcessing.new('ms-simulate', procMetList))
 
 
 specArr = []
@@ -76,8 +75,8 @@ specScanWindowList = []
 specPrecursorList = []
 specProductList = []
 specBinList = []
-specScanWindowList.push(AnoyceProject::MzmlscanWindow.new([AnoyceProject::MzmlcvParam.new('cv4','anotherRef','moreStuff')]))
-specScanArr.push(AnoyceProject::Mzmlscan.new(specScanWindowList,'scanwin','LCQDeca','refSrc','refSpec'))
+specScanWindowList.push(AnoyceProject::MzmlscanWindow.new([AnoyceProject::MzmlcvParam.new('cv4','cv1','moreStuff', nil, 'cv2')]))
+specScanArr.push(AnoyceProject::Mzmlscan.new(specScanWindowList,'scanwin','LCQDeca','name1','scan=1'))
 specPrecursorList.push(AnoyceProject::Mzmlprecursor.new(AnoyceProject::Mzmlactivation.new(),AnoyceProject::MzmlisolationWindow.new(),[AnoyceProject::MzmlselectedIon.new()],'ref685'))
 specProductList.push(AnoyceProject::Mzmlproduct.new([AnoyceProject::MzmlisolationWindow.new()]))
 arr = [103.45,209.5,708.5677,45,36.345,56,56,345,324,5643,24]
@@ -85,7 +84,7 @@ bi = Base64.strict_encode64(arr.to_s)
 specBinList.push(AnoyceProject::MzmlbinaryDataArray.new(bi.length,bi,arr.length))
 specBinList.push(AnoyceProject::MzmlbinaryDataArray.new(bi.length,bi,arr.length))
 specArr.push(AnoyceProject::Mzmlspectrum.new('scan=1','1',AnoyceProject::MzmlscanList.new(specScanArr),specPrecursorList,specProductList,specBinList))
-specArr.push(AnoyceProject::Mzmlspectrum.new('scan=2','1',AnoyceProject::MzmlscanList.new(specScanArr),specPrecursorList,specProductList,specBinList))
+specArr.push(AnoyceProject::Mzmlspectrum.new('scan=2','1',AnoyceProject::MzmlscanList.new(specScanArr),specPrecursorList,specProductList,specBinList,nil,nil,'name1'))
 
 chromArr = []
 chromBinList = []
@@ -97,7 +96,7 @@ chromArr.push(AnoyceProject::Mzmlchromatogram.new('10','chrom1',chromBinList))
 chromArr.push(AnoyceProject::Mzmlchromatogram.new('10','chrom2',chromBinList))
 
 # like the arrays above, 'run' is used in the code; don't change the name of this variable!
-run = AnoyceProject::Mzmlrun.new('run1','LCQDeca',AnoyceProject::MzmlspectrumList.new('spec3',specArr),AnoyceProject::MzmlchromatogramList.new('refProc',chromArr))
+run = AnoyceProject::Mzmlrun.new('run1','LCQDeca',AnoyceProject::MzmlspectrumList.new('ms-simulate',specArr),AnoyceProject::MzmlchromatogramList.new('ms-simulate',chromArr), nil,'sample1')
 
 ##### end test values #####
 
