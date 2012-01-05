@@ -52,11 +52,11 @@
       <processingMethod order="1" softwareRef="ms"/>
     </dataProcessing>
   </dataProcessingList>
-  <run id="run1" defaultInstrumentConfigurationRef="LCQDeca" sampleRef="sample1" startTimeStamp="2012-01-04T16:02:35.37811-07:00">
+  <run id="run1" defaultInstrumentConfigurationRef="LCQDeca" sampleRef="sample1" startTimeStamp="2012-01-05T15:55:18.00748-07:00">
     <spectrumList count="2" defaultDataProcessingRef="ms-simulate">
-      <spectrum id="scan=1" spotID="" index="0" defaultArrayLength="1" dataProcessingRef="ms-simulate" sourceFileRef="nil">
+      <spectrum id="scan=1" spotID="" index="0" defaultArrayLength="1" dataProcessingRef="ms-simulate" sourceFileRef="name1">
         <scanList count="1">
-          <scan spectrumRef="refSpec" sourceFileRef="name1" externalSpectrumID="scanwin" instrumentConfigurationRef="LCQDeca">
+          <scan spectrumRef="scan=1" sourceFileRef="name1" externalSpectrumID="scanwin" instrumentConfigurationRef="LCQDeca">
             <scanWindowList count="1">
               <scanWindow>
                 <cvParam accession="cv4" cvRef="cv1" name="moreStuff" unitCvRef="cv2" unitName="" value=""/>
@@ -65,7 +65,7 @@
           </scan>
         </scanList>
         <precursorList count="1">
-          <precursor spectrumRef="" sourceFileRef="nil" externalSpectrumID="ref685">
+          <precursor spectrumRef="scan=1" sourceFileRef="name1" externalSpectrumID="ref685">
             <isolationWindow/>
             <selectedIonList count="1">
               <selectedIon/>
@@ -79,17 +79,17 @@
           </product>
         </productList>
         <binaryDataArrayList count="2">
-          <binaryDataArray arrayLength="11" dataProcessingRef="ms-simulate" encodedLength="88">
-            <binary>WzEwMy40NSwgMjA5LjUsIDcwOC41Njc3LCA0NSwgMzYuMzQ1LCA1NiwgNTYsIDM0NSwgMzI0LCA1NjQzLCAyNF0=</binary>
+          <binaryDataArray arrayLength="11" dataProcessingRef="ms-simulate" encodedLength="80">
+            <binary>eJw7ewYI7kQ6MICAQZZDs77Psi6VNgi/wc0hpv/QVw0dJwifwQeVnlAKoR1KIDT3Nqi8hQMAPRYSrQ==</binary>
           </binaryDataArray>
-          <binaryDataArray arrayLength="11" dataProcessingRef="ms-simulate" encodedLength="88">
-            <binary>WzEwMy40NSwgMjA5LjUsIDcwOC41Njc3LCA0NSwgMzYuMzQ1LCA1NiwgNTYsIDM0NSwgMzI0LCA1NjQzLCAyNF0=</binary>
+          <binaryDataArray arrayLength="11" dataProcessingRef="ms-simulate" encodedLength="80">
+            <binary>eJw7ewYI7kQ6MICAQZZDs77Psi6VNgi/wc0hpv/QVw0dJwifwQeVnlAKoR1KIDT3Nqi8hQMAPRYSrQ==</binary>
           </binaryDataArray>
         </binaryDataArrayList>
       </spectrum>
-      <spectrum id="scan=2" spotID="" index="1" defaultArrayLength="1" dataProcessingRef="" sourceFileRef="name1">
+      <spectrum id="scan=2" spotID="" index="1" defaultArrayLength="1" dataProcessingRef="ms-simulate" sourceFileRef="name1">
         <scanList count="1">
-          <scan spectrumRef="refSpec" sourceFileRef="name1" externalSpectrumID="scanwin" instrumentConfigurationRef="LCQDeca">
+          <scan spectrumRef="scan=1" sourceFileRef="name1" externalSpectrumID="scanwin" instrumentConfigurationRef="LCQDeca">
             <scanWindowList count="1">
               <scanWindow>
                 <cvParam accession="cv4" cvRef="cv1" name="moreStuff" unitCvRef="cv2" unitName="" value=""/>
@@ -98,7 +98,7 @@
           </scan>
         </scanList>
         <precursorList count="1">
-          <precursor spectrumRef="" sourceFileRef="nil" externalSpectrumID="ref685">
+          <precursor spectrumRef="scan=1" sourceFileRef="name1" externalSpectrumID="ref685">
             <isolationWindow/>
             <selectedIonList count="1">
               <selectedIon/>
@@ -112,11 +112,11 @@
           </product>
         </productList>
         <binaryDataArrayList count="2">
-          <binaryDataArray arrayLength="11" dataProcessingRef="ms-simulate" encodedLength="88">
-            <binary>WzEwMy40NSwgMjA5LjUsIDcwOC41Njc3LCA0NSwgMzYuMzQ1LCA1NiwgNTYsIDM0NSwgMzI0LCA1NjQzLCAyNF0=</binary>
+          <binaryDataArray arrayLength="11" dataProcessingRef="ms-simulate" encodedLength="80">
+            <binary>eJw7ewYI7kQ6MICAQZZDs77Psi6VNgi/wc0hpv/QVw0dJwifwQeVnlAKoR1KIDT3Nqi8hQMAPRYSrQ==</binary>
           </binaryDataArray>
-          <binaryDataArray arrayLength="11" dataProcessingRef="ms-simulate" encodedLength="88">
-            <binary>WzEwMy40NSwgMjA5LjUsIDcwOC41Njc3LCA0NSwgMzYuMzQ1LCA1NiwgNTYsIDM0NSwgMzI0LCA1NjQzLCAyNF0=</binary>
+          <binaryDataArray arrayLength="11" dataProcessingRef="ms-simulate" encodedLength="80">
+            <binary>eJw7ewYI7kQ6MICAQZZDs77Psi6VNgi/wc0hpv/QVw0dJwifwQeVnlAKoR1KIDT3Nqi8hQMAPRYSrQ==</binary>
           </binaryDataArray>
         </binaryDataArrayList>
       </spectrum>
@@ -124,21 +124,21 @@
     <chromatogramList count="2" defaultDataProcessingRef="ms-simulate">
       <chromatogram id="chrom1" index="0" defaultArrayLength="10" dataProcessingRef="ms-simulate">
         <binaryDataArrayList count="2">
-          <binaryDataArray arrayLength="5" dataProcessingRef="ms-simulate" encodedLength="44">
-            <binary>WzEuMiwgMS4zLCAxLjQsIDEuNSwgMTA5ODg3LjQ1NTZd</binary>
+          <binaryDataArray arrayLength="5" dataProcessingRef="ms-simulate" encodedLength="52">
+            <binary>eJwzNgaBz/Znz4DAF/s0MPhmzwAGP+wPWip7fb/8ywEAaLYRnA==</binary>
           </binaryDataArray>
-          <binaryDataArray arrayLength="5" dataProcessingRef="ms-simulate" encodedLength="44">
-            <binary>WzEuMiwgMS4zLCAxLjQsIDEuNSwgMTA5ODg3LjQ1NTZd</binary>
+          <binaryDataArray arrayLength="5" dataProcessingRef="ms-simulate" encodedLength="52">
+            <binary>eJwzNgaBz/Znz4DAF/s0MPhmzwAGP+wPWip7fb/8ywEAaLYRnA==</binary>
           </binaryDataArray>
         </binaryDataArrayList>
       </chromatogram>
       <chromatogram id="chrom2" index="1" defaultArrayLength="10" dataProcessingRef="ms-simulate">
         <binaryDataArrayList count="2">
-          <binaryDataArray arrayLength="5" dataProcessingRef="ms-simulate" encodedLength="44">
-            <binary>WzEuMiwgMS4zLCAxLjQsIDEuNSwgMTA5ODg3LjQ1NTZd</binary>
+          <binaryDataArray arrayLength="5" dataProcessingRef="ms-simulate" encodedLength="52">
+            <binary>eJwzNgaBz/Znz4DAF/s0MPhmzwAGP+wPWip7fb/8ywEAaLYRnA==</binary>
           </binaryDataArray>
-          <binaryDataArray arrayLength="5" dataProcessingRef="ms-simulate" encodedLength="44">
-            <binary>WzEuMiwgMS4zLCAxLjQsIDEuNSwgMTA5ODg3LjQ1NTZd</binary>
+          <binaryDataArray arrayLength="5" dataProcessingRef="ms-simulate" encodedLength="52">
+            <binary>eJwzNgaBz/Znz4DAF/s0MPhmzwAGP+wPWip7fb/8ywEAaLYRnA==</binary>
           </binaryDataArray>
         </binaryDataArrayList>
       </chromatogram>

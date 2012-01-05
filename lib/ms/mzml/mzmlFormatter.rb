@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
-require "base64"
 require 'nokogiri'
 require 'AnoyceProject'
+require 'ms/cvlist'
 
 =begin
 The AnoyceProject file needs to become a gem or otherwise be packaged to make the above code less likely to die
@@ -77,21 +77,19 @@ specProductList = []
 specBinList = []
 specScanWindowList.push(AnoyceProject::MzmlscanWindow.new([AnoyceProject::MzmlcvParam.new('cv4','cv1','moreStuff', nil, 'cv2')]))
 specScanArr.push(AnoyceProject::Mzmlscan.new(specScanWindowList,'scanwin','LCQDeca','name1','scan=1'))
-specPrecursorList.push(AnoyceProject::Mzmlprecursor.new(AnoyceProject::Mzmlactivation.new(),AnoyceProject::MzmlisolationWindow.new(),[AnoyceProject::MzmlselectedIon.new()],'ref685'))
+specPrecursorList.push(AnoyceProject::Mzmlprecursor.new(AnoyceProject::Mzmlactivation.new(),AnoyceProject::MzmlisolationWindow.new(),[AnoyceProject::MzmlselectedIon.new()],'ref685','name1','scan=1'))
 specProductList.push(AnoyceProject::Mzmlproduct.new([AnoyceProject::MzmlisolationWindow.new()]))
 arr = [103.45,209.5,708.5677,45,36.345,56,56,345,324,5643,24]
-bi = Base64.strict_encode64(arr.to_s)
-specBinList.push(AnoyceProject::MzmlbinaryDataArray.new(bi.length,bi,arr.length))
-specBinList.push(AnoyceProject::MzmlbinaryDataArray.new(bi.length,bi,arr.length))
-specArr.push(AnoyceProject::Mzmlspectrum.new('scan=1','1',AnoyceProject::MzmlscanList.new(specScanArr),specPrecursorList,specProductList,specBinList))
-specArr.push(AnoyceProject::Mzmlspectrum.new('scan=2','1',AnoyceProject::MzmlscanList.new(specScanArr),specPrecursorList,specProductList,specBinList,nil,nil,'name1'))
+specBinList.push(AnoyceProject::MzmlbinaryDataArray.new(nil,arr,arr.length))
+specBinList.push(AnoyceProject::MzmlbinaryDataArray.new(nil,arr,arr.length))
+specArr.push(AnoyceProject::Mzmlspectrum.new('scan=1','1',AnoyceProject::MzmlscanList.new(specScanArr),specPrecursorList,specProductList,specBinList,nil,'ms-simulate','name1'))
+specArr.push(AnoyceProject::Mzmlspectrum.new('scan=2','1',AnoyceProject::MzmlscanList.new(specScanArr),specPrecursorList,specProductList,specBinList,nil,'ms-simulate','name1'))
 
 chromArr = []
 chromBinList = []
 arr = [1.2,1.3,1.4,1.5,109887.4556]
-bi = Base64.strict_encode64(arr.to_s)
-chromBinList.push(AnoyceProject::MzmlbinaryDataArray.new(bi.length,bi,arr.length))
-chromBinList.push(AnoyceProject::MzmlbinaryDataArray.new(bi.length,bi,arr.length))
+chromBinList.push(AnoyceProject::MzmlbinaryDataArray.new(nil,arr,arr.length))
+chromBinList.push(AnoyceProject::MzmlbinaryDataArray.new(nil,arr,arr.length))
 chromArr.push(AnoyceProject::Mzmlchromatogram.new('10','chrom1',chromBinList))
 chromArr.push(AnoyceProject::Mzmlchromatogram.new('10','chrom2',chromBinList))
 
@@ -429,3 +427,4 @@ puts builder.to_xml
 File.open(outFileName, 'w') do |output|
 	output.write(builder.to_xml)
 end
+

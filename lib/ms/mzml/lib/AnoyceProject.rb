@@ -278,7 +278,7 @@ end
 
 class Mzmlprecursor
 	attr_accessor :activation, :isolationWindow, :selectedIonList, :externalSpectrumID, :sourceFileRef, :spectrumRef
-	def initialize(in_activation, in_isolationWindow=nil, in_selectedIonList=nil, in_externalSpectrumID=nil, in_sourceFileRef='nil', in_spectrumRef=nil)
+	def initialize(in_activation, in_isolationWindow=nil, in_selectedIonList=nil, in_externalSpectrumID=nil, in_sourceFileRef, in_spectrumRef)
 		@activation = in_activation
 		@isolationWindow = in_isolationWindow	# up to one
 		@selectedIonList = in_selectedIonList
@@ -314,13 +314,27 @@ class Mzmlproduct
 end
 
 class MzmlbinaryDataArray < MzmlParamArr
+	require 'base64'
+	require 'zlib'
+
 	attr_accessor :encodedLength, :binary, :arrayLength, :dataProcessingRef
 	def initialize(in_encodedLength, in_binary, in_arrayLength, in_dataProcessingRef='ms-simulate', in_referenceableParamGroupRefArr=nil, in_cvParamArr=nil, in_userParamArr=nil)
 		super(in_referenceableParamGroupRefArr, in_cvParamArr, in_userParamArr)
-		@encodedLength = in_encodedLength
-		@binary = in_binary
+		@binary = array_to_mzml_string(in_binary)
+		@encodedLength = @binary.length
 		@arrayLength = in_arrayLength
 		@dataProcessingRef = in_dataProcessingRef
+	end
+	
+	def array_to_mzml_string(array, precision='MS:1000523', compression=true)
+	  unpack_code = 
+		case precision.to_s
+		when 'MS:1000523' ; 'E*'
+		when 'MS:1000521' ; 'e*'
+		end
+	  string = array.pack(unpack_code)
+	  string = Zlib::Deflate.deflate(string) if compression
+	  Base64.strict_encode64(string)
 	end
 end
 
