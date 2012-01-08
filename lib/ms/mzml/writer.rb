@@ -1,9 +1,14 @@
 require 'ms/peptide'
 
 module Writer
-	class Mzml
-		def to_mzml(features)
-		
+	
+end
+
+class Mzml
+	include Writer
+
+	def initialize()
+	
 		@cvList
 		@fileDescription
 		@referenceableParamGroupList
@@ -18,7 +23,5 @@ module Writer
 		@id
 		@accession
 
-		end
 	end
 end
-

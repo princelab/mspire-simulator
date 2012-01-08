@@ -52,7 +52,7 @@
       <processingMethod order="1" softwareRef="ms"/>
     </dataProcessing>
   </dataProcessingList>
-  <run id="run1" defaultInstrumentConfigurationRef="LCQDeca" sampleRef="sample1" startTimeStamp="2012-01-05T15:55:18.00748-07:00">
+  <run id="run1" defaultInstrumentConfigurationRef="LCQDeca" sampleRef="sample1" startTimeStamp="2012-01-06T14:01:56.73246-07:00">
     <spectrumList count="2" defaultDataProcessingRef="ms-simulate">
       <spectrum id="scan=1" spotID="" index="0" defaultArrayLength="1" dataProcessingRef="ms-simulate" sourceFileRef="name1">
         <scanList count="1">
