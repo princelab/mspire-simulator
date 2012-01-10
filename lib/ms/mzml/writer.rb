@@ -5,6 +5,16 @@ require 'filedescription'
 class Mzml
 
 	def initialize(builder)
+	#things needed:
+	#each file needs a location, name, id, and accession number
+		file = ['some_location', 'some_name', 'file=1', 'MS:1001348']
+	#array of iles
+		sourceFiles = [file]
+	#fileContent cvParam accession number
+		'MS:1000294'
+	#Contact name
+		'SOME_NAME'
+	
 	
 		@cvList
 		@fileDescription = FileDescription.new(builder)
