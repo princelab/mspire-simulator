@@ -1,18 +1,26 @@
+require 'msplat'
+require 'ms/cvlist'
 
 class CvList
-	include Writer
 	
-	def initialize()
+	def initialize(cvs)
 	
-		@cvs
+		@cvs = Array.new
 		#attributes - required
 		@count
+		
+		cvs.each do |cv|
+			@cvs.push(MS::CV::Param.new(cv))
+		end
 	
+	end
+	
+	def to_s
+		puts "Working"
 	end
 end
 
 class Cv
-	include Writer
 	
 	def initialize()
 
