@@ -1,8 +1,8 @@
+require 'nokogiri'
 
 class Run
-	include Writer
 	
-	def initialize()
+	def initialize(builder)
 		
 		@params
 		@spectrumList

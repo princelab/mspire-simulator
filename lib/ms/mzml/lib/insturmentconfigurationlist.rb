@@ -1,33 +1,53 @@
+require 'params'
+require 'nokogiri'
 
 class InsturmentConfigurationList
-	include Writer
 	
-	def initialize()
+	def initialize(builder)
 		#required
-		@count
-		@insturmentConfigurations
+		@count = 1
+		init_xml(builder)
+		@insturmentConfigurations = InsturmentConfiguration.new(builder)
+		@builder = builder
 	
+	end
+	
+	def init_xml(builder)
+		b = Nokogiri::XML::Builder.with(builder.doc.at('mzML')) do |xml|
+			xml.instrumentConfigurationList(:count=>@count)
+		end
+		return b
+	end
+	
+	def get_builder
+		return @builder
 	end
 end
 
 class InsturmentConfiguration
-	include Writer
 	
-	def initialize()
+	def initialize(builder)
 	
 		@params
 		@componentList
 		@softwareRef
 		#required
-		@id
+		@id = 'IC1'
+		init_xml(builder)
 		#optional
 		@scanSettingsRef
 	
 	end
+	
+	def init_xml(builder)
+		b = Nokogiri::XML::Builder.with(builder.doc.at('instrumentConfigurationList')) do |xml|
+			xml.instrumentConfiguration(:id=>@id)
+		end
+		return b
+	end
 end
 
 class ComponentList
-	include Writer
 	
 	def initialize()
 	
@@ -41,7 +61,6 @@ class ComponentList
 end
 
 class Source
-	include Writer
 	
 	def initialize()
 		
@@ -51,7 +70,6 @@ class Source
 end
 
 class Analyzer
-	include Writer
 	
 	def initialize()
 		
@@ -61,7 +79,6 @@ class Analyzer
 end
 
 class Detector
-	include Writer
 	
 	def initialize()
 		
@@ -71,8 +88,7 @@ class Detector
 end
 
 class SoftwareRef
-	include Writer
-	
+		
 	def initialize()
 		#required
 		@ref

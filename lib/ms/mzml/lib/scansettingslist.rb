@@ -1,8 +1,7 @@
 
 class ScanSettingsList
-	include Writer
 	
-	def initialize()
+	def initialize(builder)
 		#required
 		@count
 		@scanSettings
@@ -11,7 +10,6 @@ class ScanSettingsList
 end
 
 class ScanSettings
-	include Writer
 	
 	def initialize()
 	
@@ -25,7 +23,6 @@ class ScanSettings
 end
 
 class SourceFileRefList
-	include Writer
 	
 	def initialize()
 		#required
@@ -36,7 +33,6 @@ class SourceFileRefList
 end
 
 class SourceFileRef
-	include Writer
 	
 	def initialize()
 		#required
@@ -46,7 +42,6 @@ class SourceFileRef
 end
 
 class TargetList
-	include Writer
 	
 	def initialize()
 		#required
@@ -57,7 +52,6 @@ class TargetList
 end
 
 class Target
-	include Writer
 	
 	def initialize()
 		
