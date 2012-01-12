@@ -29,10 +29,11 @@ module MS
 			groups = Array.new
 			arrays = [mzs,rts,ints,groups]
 			@time = Array.new
-			t = samplingRate
-			for i in (1..(runTime/samplingRate))
+			r = samplingRate/runTime
+			t = r
+			for i in (1..(runTime/r))
 				@time<<t
-				t = t + samplingRate
+				t = t + r
 			end
 			
 			peptides.each do |pep,ind|

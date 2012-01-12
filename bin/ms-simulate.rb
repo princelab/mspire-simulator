@@ -59,7 +59,7 @@ else
 			peptides[p] = count
 		end
 	end
-	features = MS::Rtgenerator.new.generateRT(peptides,1, 900)
+	features = MS::Rtgenerator.new.generateRT(peptides,3.0, 900)
 	MS::Plot.new.plot(features)
 	#MS::Writer.new.to_file(features)
 end
