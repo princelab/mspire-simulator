@@ -1,6 +1,17 @@
 #!/usr/bin/env ruby
 
 #ruby -I lib ./bin/ms-simulate.rb testFastaFiles/p53.fasta
+#TODO - NOISE:
+#	1. m/z variance
+#	2. Intensity variance
+#		a. Dropout
+#	3. Grass
+#	Beyond:
+#	-Scan Dropout
+#	-RT variance
+#	-RT warp
+#	-m/z warp
+#	-contaminants
 
 require 'ms/digester'
 require 'msplat'
