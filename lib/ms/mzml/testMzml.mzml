@@ -1,37 +1,60 @@
-<?xml version="1.0"?>
-<indexedmzML xmlns="http://psi.hupo.org/ms/mzml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://psi.hupo.org/ms/mzml http://psidev.info/files/ms/mzML/xsd/mzML1.1.0_idx.xsd">
-  <mzML xsi:schemaLocation="http://psi.hupo.org/ms/mzml http://psidev.info/files/ms/mzML/xsd/mzML1.1.0.xsd" id="" version="1.1.0">
-    <cvList count="2">
-      <cv id="MS" fullName="Proteomics Standards Initiative Mass Spectrometry Ontology" version="1.18.2" URI="http://psidev.cvs.sourceforge.net/*checkout*/psidev/psi/psi-ms/mzML/controlledVocabulary/psi-ms.obo"/>
-      <cv id="UO" fullName="Unit Ontology" version="04:03:2009" URI="http://obo.cvs.sourceforge.net/*checkout*/obo/obo/ontology/phenotype/unit.obo"/>
-    </cvList>
-    <fileDescription>
-      <fileContent>
-        <cvParam cvRef="MS" accession="MS:1000294" name="mass spectrum"/>
-      </fileContent>
-      <sourceFileList count="1">
-        <sourceFile id="file1" name="some_name" location="some_location">
-          <cvParam cvRef="MS" accession="MS:1001348" name="FASTA format"/>
-        </sourceFile>
-      </sourceFileList>
-      <contact>
-        <userParam name="SOME_NAME"/>
-      </contact>
-    </fileDescription>
-    <softwareList count="1">
-      <software id="MS-Simulate" version="1.0.0">
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<mzML xmlns="http://psi.hupo.org/ms/mzml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://psi.hupo.org/ms/mzml http://psidev.info/files/ms/mzML/xsd/mzML1.1.0.xsd" id="" version="1.1.0">
+  <cvList count="2">
+    <cv id="MS" fullName="Proteomics Standards Initiative Mass Spectrometry Ontology" version="1.18.2" URI="http://psidev.cvs.sourceforge.net/*checkout*/psidev/psi/psi-ms/mzML/controlledVocabulary/psi-ms.obo"/>
+    <cv id="UO" fullName="Unit Ontology" version="04:03:2009" URI="http://obo.cvs.sourceforge.net/*checkout*/obo/obo/ontology/phenotype/unit.obo"/>
+  </cvList>
+  <fileDescription>
+    <fileContent>
+      <cvParam cvRef="MS" accession="MS:1000294" name="mass spectrum"/>
+    </fileContent>
+    <sourceFileList count="1">
+      <sourceFile id="file1" name="some_name" location="some_location">
+        <cvParam cvRef="MS" accession="MS:1001348" name="FASTA format"/>
+      </sourceFile>
+    </sourceFileList>
+    <contact>
+      <userParam name="SOME_NAME"/>
+    </contact>
+  </fileDescription>
+  <softwareList count="1">
+    <software id="MS-Simulate" version="1.0.0">
+      <userParam name="MS-Simulate"/>
+    </software>
+  </softwareList>
+  <instrumentConfigurationList count="1">
+    <instrumentConfiguration id="IC1"/>
+  </instrumentConfigurationList>
+  <dataProcessingList count="1">
+    <dataProcessing id="Ruby_Simulated">
+      <processingMethod order="1" softwareRef="MS-Simulate">
         <userParam name="MS-Simulate"/>
-      </software>
-    </softwareList>
-    <instrumentConfigurationList count="1">
-      <instrumentConfiguration id="IC1"/>
-    </instrumentConfigurationList>
-    <dataProcessingList count="1">
-      <dataProcessing id="Ruby_Simulated">
-        <processingMethod order="1" softwareRef="MS-Simulate">
-          <userParam name="MS-Simulate"/>
-        </processingMethod>
-      </dataProcessing>
-    </dataProcessingList>
-  </mzML>
-</indexedmzML>
+      </processingMethod>
+    </dataProcessing>
+  </dataProcessingList>
+  <run id="run1" defaultInstrumentConfigurationRef="IC1" startTimeStamp="2012-01-11T15:54:20.98540-07:00">
+    <spectrumList count="1" defaultDataProcessingRef="Ruby_Simulated">
+    <spectrum index="0" id="scan=1" defaultArrayLength="1">
+          <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+          <scanList count="0">
+			  <scan>
+			  </scan>
+          </scanList>
+          <binaryDataArrayList count="2">
+            <binaryDataArray encodedLength="12">
+              <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float" value=""/>
+              <cvParam cvRef="MS" accession="MS:1000576" name="no compression" value=""/>
+              <cvParam cvRef="MS" accession="MS:1000514" name="m/z array" value="" unitCvRef="MS" unitAccession="MS:1000040" unitName="m/z"/>
+              <binary>r5RliGMxXEA=</binary>
+            </binaryDataArray>
+            <binaryDataArray encodedLength="12">
+              <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float" value=""/>
+              <cvParam cvRef="MS" accession="MS:1000576" name="no compression" value=""/>
+              <cvParam cvRef="MS" accession="MS:1000515" name="intensity array" value="" unitCvRef="MS" unitAccession="MS:1000131" unitName="number of counts"/>
+              <binary>AAAAAAAgdkA=</binary>
+            </binaryDataArray>
+          </binaryDataArrayList>
+        </spectrum>
+      </spectrumList> 
+  </run>
+</mzML>

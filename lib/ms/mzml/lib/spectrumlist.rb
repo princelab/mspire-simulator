@@ -1,19 +1,31 @@
+require 'nokogiri'
 
 class SpectrumList
-	include Writer
 	
-	def initialize()
+	def initialize(builder)
 	
-		@spectrum
 		#required
-		@count
-		@defaultDataProcessingRef
+		@count = 0
+		@defaultDataProcessingRef = 'Ruby_Simulated' # Note must match one of dataProcessing
+		init_xml(builder)
+		#@spectrum = Spectrum.new(builder)
+		@builder = builder
 	
+	end
+	
+	def init_xml(builder)
+		b = Nokogiri::XML::Builder.with(builder.doc.at('run')) do |xml|
+			xml.spectrumList(:count=>@count, :defaultDataProcessingRef=>@defaultDataProcessingRef)
+		end
+		return b
+	end
+	
+	def get_builder
+		return @builder
 	end
 end
 
 class Spectrum
-	include Writer
 	
 	def initialize()
 	
@@ -23,19 +35,25 @@ class Spectrum
 		@productList
 		@binaryDataArrayList
 		#required
-		@id
-		@defaultArrayLength
-		@index
+		@id 
+		@defaultArrayLength 
+		@index  
 		#optional
 		@dataProcessingRef
 		@spotId
 		@sourceFileRef
 	
 	end
+	
+	def init_xml(builder)
+		b = Nokogiri::XML::Builder.with(builder.doc.at('spectrumList')) do |xml|
+			#xml.spectrum(:id=>'', :defaultArrayLength=> , :index=> )
+		end
+		return b
+	end
 end
 
 class ScanList
-	include Writer
 	
 	def initialize()
 	
@@ -48,7 +66,6 @@ class ScanList
 end
 
 class Scan
-	include Writer
 	
 	def initialize()
 	
@@ -64,7 +81,6 @@ class Scan
 end
 
 class ScanWindowList
-	include Writer
 	
 	def initialize()
 	
@@ -76,7 +92,6 @@ class ScanWindowList
 end
 
 class ScanWindow
-	include Writer
 	
 	def initialize()
 	
@@ -86,7 +101,6 @@ class ScanWindow
 end
 
 class PrecursorList
-	include Writer
 	
 	def initialize()
 	
@@ -98,7 +112,6 @@ class PrecursorList
 end
 
 class ProductList
-	include Writer
 	
 	def initialize()
 	

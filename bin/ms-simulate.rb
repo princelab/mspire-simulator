@@ -8,7 +8,7 @@ require 'ms/feature/aa'
 require 'ms/peptide'
 require 'ms/plot/plot'
 require 'ms/rt/rtgenerator'
-require 'ms/mzml/writer'
+#require 'ms/mzml/writer'
 
 if(ARGV.length == 0)
 	puts "" 
@@ -59,7 +59,7 @@ else
 			peptides[p] = count
 		end
 	end
-	features = MS::Rtgenerator.new.generateRT(peptides)
+	features = MS::Rtgenerator.new.generateRT(peptides,1, 900)
 	MS::Plot.new.plot(features)
-	MS::Writer.new.to_file(features)
+	#MS::Writer.new.to_file(features)
 end

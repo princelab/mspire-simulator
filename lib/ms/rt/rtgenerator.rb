@@ -17,7 +17,7 @@ module MS
 		# by the number of isotopic peaks. Consequently retention times
 		# of each peptide in each isotopic peak look very similar.
 		#
-		def generateRT(peptides)
+		def generateRT(peptides, samplingRate, runTime)
 		
 			f = open("/dev/tty")
 		
@@ -28,6 +28,12 @@ module MS
 			ints = Array.new
 			groups = Array.new
 			arrays = [mzs,rts,ints,groups]
+			@time = Array.new
+			t = samplingRate
+			for i in (1..(runTime/samplingRate))
+				@time<<t
+				t = t + samplingRate
+			end
 			
 			peptides.each do |pep,ind|
 				peps = Array.new
@@ -43,7 +49,7 @@ module MS
 				for i in (1..(isotopes.length))
 					newpeps = Array.new
 					peps.each do |pe|
-						newpeps<<MS::Peptide.new(pe.sequence,pe.mass,pe.charge,(pe.rt+rand),ind)
+						newpeps<<MS::Peptide.new(pe.sequence,pe.mass,pe.charge,pe.rt,ind)
 					end
 					isos<<newpeps
 				end
@@ -61,7 +67,7 @@ module MS
 				features[feature] = @index
 				@index = @index+1
 			end
-			
+	
 			return features,arrays
 		end
 		
@@ -95,10 +101,11 @@ module MS
 				w = pep.sequence.count('W')
 				y = pep.sequence.count('Y')
 				v = pep.sequence.count('V')
-				b = [pep.mz,pep.charge,rand(52457000)+149860,a,r,n,d,b,c,e,q,z,g,h,i,l,k,m,f,p,s,t,w,y,v]
+				b = [pep.mz,pep.charge,a,r,n,d,b,c,e,q,z,g,h,i,l,k,m,f,p,s,t,w,y,v]
 				b = b + [@dec_tree.predict(b)[0]]
 				pep.mz = b[0] #needs to be distributed <|>
-				pep.rt = b[25]
+				pep.rt = b[24]
+
 				spreadRTs(pep,rtmu)
 				avg = avg+pep.rt
 			end
@@ -111,6 +118,7 @@ module MS
 		#
 		def spreadRTs(pep,mu)
 			pep.rt = RThelper.randn(mu,10)
+			pep.rt = @time.find {|i| i >= pep.rt}
 		end
 		
 		# Intensities are shaped in the rt direction by the Exponentially

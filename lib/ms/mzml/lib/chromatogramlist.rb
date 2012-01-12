@@ -1,8 +1,8 @@
+require 'spectrumlist'
 
 class ChromatogramList
-	include Writer
 	
-	def initialize()
+	def initialize(builder)
 		
 		@chromatogram
 		#required
@@ -13,7 +13,6 @@ class ChromatogramList
 end
 
 class Chromatogram
-	include Writer
 	
 	def initialize()
 		
