@@ -1,4 +1,4 @@
-require 'spectrumlist'
+require 'ms/mzml/lib/spectrumlist'
 
 class ChromatogramList
 	

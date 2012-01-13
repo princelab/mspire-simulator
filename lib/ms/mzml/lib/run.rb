@@ -1,11 +1,11 @@
 require 'nokogiri'
 require 'time'
-require 'spectrumlist'
-require 'chromatogramlist' 
+require 'ms/mzml/lib/spectrumlist'
+require 'ms/mzml/lib/chromatogramlist' 
 
 class Run
 	
-	def initialize(builder)
+	def initialize(builder,spectra)
 		
 		#required
 		@id = 'run1'
@@ -16,7 +16,7 @@ class Run
 		@defaultSourceFileRef
 		init_xml(builder)
 		@params
-		@spectrumList = SpectrumList.new(builder)
+		@spectrumList = SpectrumList.new(builder,spectra)
 			builder = @spectrumList.get_builder
 		#@chromatogramList = ChromatogramList.new(builder)#maybe put Total Ion Count here
 			#builder = @chromatogramList.get_builder

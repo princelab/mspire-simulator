@@ -1,4 +1,3 @@
-require 'params'
 require 'nokogiri'
 
 class InsturmentConfigurationList

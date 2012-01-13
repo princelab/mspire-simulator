@@ -1,4 +1,4 @@
-require 'params'
+require 'ms/mzml/lib/params'
 require 'nokogiri'
 
 class FileDescription

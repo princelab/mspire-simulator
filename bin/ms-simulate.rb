@@ -13,13 +13,14 @@
 #	-m/z warp
 #	-contaminants
 
+require 'nokogiri'
 require 'ms/digester'
 require 'msplat'
 require 'ms/feature/aa'
 require 'ms/peptide'
 require 'ms/plot/plot'
 require 'ms/rt/rtgenerator'
-#require 'ms/mzml/writer'
+require 'ms/mzml/mzml'
 
 if(ARGV.length == 0)
 	puts "" 
@@ -70,7 +71,7 @@ else
 			peptides[p] = count
 		end
 	end
-	features = MS::Rtgenerator.new.generateRT(peptides,3.0, 900)
+	features = MS::Rtgenerator.new.generateRT(peptides,3.0, 100)
 	MS::Plot.new.plot(features)
-	#MS::Writer.new.to_file(features)
+	Mzml.new(features[1])
 end

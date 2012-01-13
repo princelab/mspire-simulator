@@ -1,18 +1,18 @@
+require 'nokogiri'
 
 class BinaryDataArrayList
-	include Writer
 	
-	def initialize()
+	def initialize(builder, mzs, ints)
 		#required
 		@count
 		@binaryDataArray
 	
 	end
+	
 end
 
 class BinaryDataArray
-	include Writer
-	
+
 	def initialize()
 	
 		@params
@@ -27,7 +27,6 @@ class BinaryDataArray
 end
 
 class Precursor
-	include Writer
 	
 	def initialize()
 	
@@ -43,7 +42,6 @@ class Precursor
 end
 
 class IsolationWindow
-	include Writer
 	
 	def initialize()
 	
@@ -53,7 +51,6 @@ class IsolationWindow
 end
 
 class SelectedIonList
-	include Writer
 	
 	def initialize()
 	
@@ -65,7 +62,6 @@ class SelectedIonList
 end
 
 class SelectedIon
-	include Writer
 	
 	def initialize()
 	
@@ -75,7 +71,6 @@ class SelectedIon
 end
 
 class Activation
-	include Writer
 	
 	def initialize()
 	
@@ -85,8 +80,7 @@ class Activation
 end
 
 class Product
-	include Writer
-	
+		
 	def initialize()
 	
 		@isolationWindow
@@ -95,7 +89,6 @@ class Product
 end
 
 class IsolationWindow
-	include Writer
 	
 	def initialize()
 	

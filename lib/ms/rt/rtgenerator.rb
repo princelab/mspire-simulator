@@ -29,23 +29,25 @@ module MS
 			groups = Array.new
 			arrays = [mzs,rts,ints,groups]
 			@time = Array.new
-			r = samplingRate/runTime
-			t = r
-			for i in (1..(runTime/r))
+			r = samplingRate*runTime
+			t = 1/samplingRate
+			for i in (1..r)
 				@time<<t
-				t = t + r
+				t = t + (1/samplingRate)
 			end
 			
 			peptides.each do |pep,ind|
 				peps = Array.new
 				
-				for i in (1..(rand(500)+200))
+				for i in (1..(@time.length))
 					peps<<MS::Peptide.new(pep.sequence,pep.mass,pep.charge,0,ind)
 				end
 				
 				isotopes = MS::Feature::Feature.new.calcPercent(pep.sequence)
 				isos = Array.new
 				avg = getRTs(peps)
+				
+				peps.uniq! {|p| p.rt}
 				
 				for i in (1..(isotopes.length))
 					newpeps = Array.new
@@ -108,6 +110,9 @@ module MS
 				pep.rt = b[24]
 
 				spreadRTs(pep,rtmu)
+				if(pep.rt == nil)
+					pep.rt = 1
+				end
 				avg = avg+pep.rt
 			end
 			avg = avg/(peps.length)
@@ -146,7 +151,7 @@ module MS
 					p.int = (RThelper.emg(percent_int,avg,0.25,0.4,p.rt)) * factor
 					#p.int = p.int * Mgl_Plot.RandomFloat(0.80,1.0)#Jagged-ness
 				end
-				index = index+1
+				index = index+1.009
 			end
 			return fins
 		end
