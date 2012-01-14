@@ -39,10 +39,6 @@ class Mzml
 		@accession
 		
 		@builder = @run.get_builder
-		
-		File.open('testMzml.mzml', 'w') do |output|
-			output.write(@builder.to_xml)
-		end
 
 	end
 	

@@ -40,6 +40,10 @@ class Spectrum
 	
 	def initialize(builder,spectrum,count)
 	
+		mzs = spectrum.collect {|x| x[0]} 
+		ints = spectrum.collect {|x| x[2]} 
+		time = spectrum[0][1]
+		
 		@params
 		@scanList
 		@precursorList
@@ -48,7 +52,7 @@ class Spectrum
 		@id = "scan=#{count}"
 		@defaultArrayLength = 1 
 		@index = (count - 1)
-		init_xml(builder,spectrum[0],spectrum[2])
+		init_xml(builder,mzs,ints,time)
 		#@binaryDataArrayList = BinaryDataArrayList.new(builder,spectrum[0],spectrum[2])
 		#builder = @binaryDataArrayList.get_builder
 		#optional
@@ -58,13 +62,18 @@ class Spectrum
 	
 	end
 	
-	def init_xml(builder,mzs,ints)
+	def init_xml(builder,mzs,ints,time)
 		mzs = array_to_mzml_string(mzs)
 		ints = array_to_mzml_string(ints)
 	
 		b = Nokogiri::XML::Builder.with(builder.doc.at('spectrumList')) do |xml|
 			xml.spectrum(:id=>@id, :defaultArrayLength=> @defaultArrayLength, :index=> @index){
 				xml.cvParam(:cvRef=>"MS", :accession=>"MS:1000127", :name=>"centroid spectrum", :value=>"")
+				xml.scanList(:count=>1){
+					xml.scan{
+						xml.cvParam(:cvRef=>"MS", :accession=>"MS:1000016", :name=>"scan start time", :value=>time, :unitCvRef=>"UO", :unitAccession=>"UO:0000010", :unitName=>"second")
+					}
+				}
 				xml.binaryDataArrayList(:count=>2){
 					xml.binaryDataArray(:encodedLength=>mzs.length){
 						xml.cvParam(:cvRef=>"MS", :accession=>"MS:1000523", :name=>"64-bit float", :value=>"")
