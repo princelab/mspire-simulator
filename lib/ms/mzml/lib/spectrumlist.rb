@@ -1,4 +1,6 @@
 require 'nokogiri'
+require 'base64'
+require 'zlib'
 require 'ms/mzml/lib/runhelper' 
 
 class SpectrumList
@@ -46,9 +48,9 @@ class Spectrum
 		@id = "scan=#{count}"
 		@defaultArrayLength = 1 
 		@index = (count - 1)
-		init_xml(builder)
-		@binaryDataArrayList = BinaryDataArrayList.new(builder,spectrum[0],spectrum[2])
-		builder = @binaryDataArrayList.get_builder
+		init_xml(builder,spectrum[0],spectrum[2])
+		#@binaryDataArrayList = BinaryDataArrayList.new(builder,spectrum[0],spectrum[2])
+		#builder = @binaryDataArrayList.get_builder
 		#optional
 		@dataProcessingRef
 		@spotId
@@ -56,26 +58,41 @@ class Spectrum
 	
 	end
 	
-	def init_xml(builder)
+	def init_xml(builder,mzs,ints)
+		mzs = array_to_mzml_string(mzs)
+		ints = array_to_mzml_string(ints)
+	
 		b = Nokogiri::XML::Builder.with(builder.doc.at('spectrumList')) do |xml|
 			xml.spectrum(:id=>@id, :defaultArrayLength=> @defaultArrayLength, :index=> @index){
-				xml.binaryDataArrayList(){
-					xml.binaryDataArray(){
+				xml.cvParam(:cvRef=>"MS", :accession=>"MS:1000127", :name=>"centroid spectrum", :value=>"")
+				xml.binaryDataArrayList(:count=>2){
+					xml.binaryDataArray(:encodedLength=>mzs.length){
 						xml.cvParam(:cvRef=>"MS", :accession=>"MS:1000523", :name=>"64-bit float", :value=>"")
-						xml.cvParam(:cvRef=>"MS", :accession=>"MS:1000576", :name=>"no compression", :value=>"")
+						xml.cvParam(:cvRef=>"MS", :accession=>"MS:1000574", :name=>"zlib compression", :value=>"")
 						xml.cvParam(:cvRef=>"MS", :accession=>"MS:1000514", :name=>"m/z array", :value=>"", :unitCvRef=>"MS", :unitAccession=>"MS:1000040", :unitName=>"m/z")
-						xml.binary()
+						xml.binary(mzs)
 					}
-					xml.binaryDataArray(){
+					xml.binaryDataArray(:encodedLength=>ints.length){
 						xml.cvParam(:cvRef=>"MS", :accession=>"MS:1000523", :name=>"64-bit float", :value=>"")
-						xml.cvParam(:cvRef=>"MS", :accession=>"MS:1000576", :name=>"no compression", :value=>"")
+						xml.cvParam(:cvRef=>"MS", :accession=>"MS:1000574", :name=>"zlib compression", :value=>"")
 						xml.cvParam(:cvRef=>"MS", :accession=>"MS:1000515", :name=>"intensity array", :value=>"", :unitCvRef=>"MS", :unitAccession=>"MS:1000131", :unitName=>"number of counts")
-						xml.binary()
+						xml.binary(ints)
 					}
 				}
 			}
 		end
 		return b
+	end
+	
+	def array_to_mzml_string(array, precision='MS:1000523', compression=true)
+	  unpack_code = 
+		case precision.to_s
+		when 'MS:1000523' ; 'E*'
+		when 'MS:1000521' ; 'e*'
+		end
+	  string = array.pack(unpack_code)
+	  string = Zlib::Deflate.deflate(string) if compression
+	  Base64.strict_encode64(string)
 	end
 end
 

@@ -73,5 +73,10 @@ else
 	end
 	features = MS::Rtgenerator.new.generateRT(peptides,3.0, 100)
 	MS::Plot.new.plot(features)
-	Mzml.new(features[1])
+	mzml = Mzml.new(features[1])
+	#puts mzml.get_builder.to_xml
+	
+	File.open('test.mzml', 'w') do |output|
+		output.write(mzml.get_builder.to_xml)
+	end
 end
