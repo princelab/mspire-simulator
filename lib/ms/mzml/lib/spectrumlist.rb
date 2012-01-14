@@ -49,8 +49,8 @@ class Spectrum
 		@precursorList
 		@productList
 		#required
-		@id = "scan=#{count}"
-		@defaultArrayLength = 1 
+		@id = "spectrum=#{count}"
+		@defaultArrayLength = mzs.length 
 		@index = (count - 1)
 		init_xml(builder,mzs,ints,time)
 		#@binaryDataArrayList = BinaryDataArrayList.new(builder,spectrum[0],spectrum[2])
@@ -69,6 +69,9 @@ class Spectrum
 		b = Nokogiri::XML::Builder.with(builder.doc.at('spectrumList')) do |xml|
 			xml.spectrum(:id=>@id, :defaultArrayLength=> @defaultArrayLength, :index=> @index){
 				xml.cvParam(:cvRef=>"MS", :accession=>"MS:1000127", :name=>"centroid spectrum", :value=>"")
+				xml.cvParam(:cvRef=>"MS", :accession=>"MS:1000525", :name=>"spectrum representation")
+				xml.cvParam(:cvRef=>"MS", :accession=>"MS:1000511", :name=>"ms level", :value=>"1")
+				xml.cvParam(:cvRef=>"MS", :accession=>"MS:1000294", :name=>"mass spectrum")
 				xml.scanList(:count=>1){
 					xml.scan{
 						xml.cvParam(:cvRef=>"MS", :accession=>"MS:1000016", :name=>"scan start time", :value=>time, :unitCvRef=>"UO", :unitAccession=>"UO:0000010", :unitName=>"second")
