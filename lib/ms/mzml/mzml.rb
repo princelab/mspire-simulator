@@ -9,7 +9,6 @@ require 'ms/mzml/lib/run'
 class Mzml
 
 	def initialize(spectra)
-	#[mzs,rts,ints,groups] - spectra data
 	
 		builder = Nokogiri::XML::Builder.new do |xml|
 

@@ -6,18 +6,16 @@ require 'ms/mzml/lib/runhelper'
 class SpectrumList
 	
 	def initialize(builder, spectra)
-		#[mzs,rts,ints,groups] - spectra data
 	
-		spectra = spectra.transpose
-		spectra = spectra.group_by {|x| x[1]}
+		#now have Hash rt=>[[mzs],[ints]]
 	
 		#required
 		@count = 0
 		@defaultDataProcessingRef = 'Ruby_Simulated' # Note must match one of dataProcessing
 		init_xml(builder)
 		count = 1
-		spectra.each_value do |spectrum|
-			Spectrum.new(builder,spectrum,count)
+		spectra.each do |time,spectrum|
+			Spectrum.new(builder,time,spectrum,count)
 			count = count + 1
 		end
 		@builder = builder
@@ -38,11 +36,10 @@ end
 
 class Spectrum
 	
-	def initialize(builder,spectrum,count)
+	def initialize(builder,time,spectrum,count)
 	
-		mzs = spectrum.collect {|x| x[0]} 
-		ints = spectrum.collect {|x| x[2]} 
-		time = spectrum[0][1]
+		mzs = spectrum[0] 
+		ints = spectrum[1] 
 		
 		@params
 		@scanList

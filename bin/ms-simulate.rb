@@ -73,7 +73,20 @@ else
 	end
 	features = MS::Rtgenerator.new.generateRT(peptides,3.0, 100)
 	MS::Plot.new.plot(features)
-	mzml = Mzml.new(features[1])
+	
+	spectra = features[1].transpose
+	spectra = spectra.group_by {|x| x[1]}
+	newSpectra = Hash.new
+	spectra.each  do |key,val|
+		val = val.transpose
+		val.delete_at(1)
+		val.delete_at(2)
+		newSpectra[key] = val
+	end
+	spectra = newSpectra
+	spectra.delete_if{|k,v| v[1].inject(:+) <= 0.0}
+	
+	mzml = Mzml.new(spectra)
 	#puts mzml.get_builder.to_xml
 	
 	File.open('test.mzml', 'w') do |output|
