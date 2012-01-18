@@ -12,10 +12,7 @@ module MS
 			@index = 0
 		end
 		
-		# Here the peptides are multiplied based on charge. This may
-		# also not be correct. Groups of peptides are then multiplied
-		# by the number of isotopic peaks. Consequently retention times
-		# of each peptide in each isotopic peak look very similar.
+		
 		#
 		def generateRT(peptides, samplingRate, runTime)
 		
@@ -142,7 +139,7 @@ module MS
 				
 				percent_int = intRand*percents[index]
 				fin.each do |p|
-					p.mz = RThelper.randn(mzmu,0.08)
+					p.mz = RThelper.randn(mzmu,0.04)
 					
 					fraction = RThelper.gaussian(p.mz,mzmu,0.05)
 					factor = fraction/max_y

@@ -26,19 +26,24 @@ if(ARGV.length == 0)
 	puts "" 
 	puts "ms-simulate"
 	puts "Description: Simulates ms runs given the fasta files. Outputs"
-	puts " a 3d plot and a mzML file"
+	puts " a 3d plot(optional) and a mzML file"
 	puts ""
-	puts "Usage: \n\tms-simulate <fasta files>"
-	puts ""
+	puts "Usage: \n\tms-simulate [option] <fasta files>"
+	puts "Options: \n\t-p  ->  show 3d plot"
 	puts ""
 	puts "fasta files:         \n\tfiles must be in fasta format"
 	puts ""
-	puts "Output:              \n\tscatter.svg and simulate.mzML"
+	puts "Output:              \n\ttest.mzML"
 	puts ""
 	puts ""
 else
 	
 	peptides = Hash.new
+	pl = false
+	if ARGV.find {|p| p == '-p'}
+		p = ARGV.shift
+		pl = true
+	end
 
 	ARGV.each do |file|
 		inFile = File.open(file,"r")
@@ -71,8 +76,11 @@ else
 			peptides[p] = count
 		end
 	end
-	features = MS::Rtgenerator.new.generateRT(peptides,3.0, 100)
-	MS::Plot.new.plot(features)
+	features = MS::Rtgenerator.new.generateRT(peptides,3.0, 300)
+
+	if pl
+		MS::Plot.new.plot(features)
+	end
 	
 	spectra = features[1].transpose
 	spectra = spectra.group_by {|x| x[1]}
@@ -85,9 +93,8 @@ else
 	end
 	spectra = newSpectra
 	spectra.delete_if{|k,v| v[1].inject(:+) <= 0.0}
-	
+	#spectra is a Hash rt=>[[mzs],[ints]]
 	mzml = Mzml.new(spectra)
-	#puts mzml.get_builder.to_xml
 	
 	File.open('test.mzml', 'w') do |output|
 		output.write(mzml.get_builder.to_xml)

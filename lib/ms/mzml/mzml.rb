@@ -9,6 +9,7 @@ require 'ms/mzml/lib/run'
 class Mzml
 
 	def initialize(spectra)
+	#spectra is a Hash rt=>[[mzs],[ints]]
 	
 		builder = Nokogiri::XML::Builder.new do |xml|
 

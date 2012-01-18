@@ -8,7 +8,7 @@ class FileDescription
 		init_xml(builder)
 		@fileContent = FileContent.new(builder)
 		#each file needs a location, name, id, and accession number
-		file = ['some_location', 'some_name', 'file1', 'MS:1001348']
+		file = ['some_location', 'some_name', 'file1', 'MS:1001458']
 		sourceFiles = [file]
 		@sourceFileList = SourceFileList.new(builder,sourceFiles)
 		@contact = Contact.new(builder)
