@@ -19,7 +19,7 @@ require 'fftw3'
 
 
 module Isotope
-  MAX_MASS=2**13;
+  MAX_MASS=2**16;
   ORDER = [:h, :c, :n, :o, :s]
   ISOTOPE_VALUES = {
     1 => [0.9998443, 0.0001557],

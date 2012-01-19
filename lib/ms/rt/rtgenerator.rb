@@ -2,7 +2,7 @@
 require 'ms/feature/feature'
 require 'ms/peptide'
 require 'ms/rt/rt_helper'
-require 'ms/rt/dtree'
+#require 'ms/rt/dtree'
 require 'ms/plot/mgl_plot'
 
 module MS
@@ -12,13 +12,11 @@ module MS
 			@index = 0
 		end
 		
-		
-		#
 		def generateRT(peptides, samplingRate, runTime)
 		
 			f = open("/dev/tty")
 		
-			@dec_tree = DTree::Create.new.createDT
+			#@dec_tree = DTree::Create.new.createDT # - James is working on something better 
 			features = Hash.new
 			mzs = Array.new
 			rts = Array.new
@@ -32,14 +30,14 @@ module MS
 				@time<<t
 				t = t + (1/samplingRate)
 			end
-			
+			@rts = Array.new
 			peptides.each do |pep,ind|
 				peps = Array.new
 				
 				for i in (1..(@time.length))
 					peps<<MS::Peptide.new(pep.sequence,pep.mass,pep.charge,0,ind)
 				end
-				
+	
 				isotopes = MS::Feature::Feature.new.calcPercent(pep.sequence)
 				isos = Array.new
 				avg = getRTs(peps)
@@ -67,7 +65,7 @@ module MS
 				features[feature] = @index
 				@index = @index+1
 			end
-	
+			p @rts.uniq # to see what the decision tree is outputting
 			return features,arrays
 		end
 		
@@ -79,6 +77,7 @@ module MS
 		    avg = 0.0
 			rtmu = rand(80)+5
 			peps.each do |pep|
+=begin
 				a = pep.sequence.count('A')
 				r = pep.sequence.count('R')
 				n = pep.sequence.count('N')
@@ -104,8 +103,9 @@ module MS
 				b = [pep.mz,pep.charge,a,r,n,d,b,c,e,q,z,g,h,i,l,k,m,f,p,s,t,w,y,v]
 				b = b + [@dec_tree.predict(b)[0]]
 				pep.mz = b[0] #needs to be distributed <|>
+				@rts<<b[24]
 				pep.rt = b[24]
-
+=end
 				spreadRTs(pep,rtmu)
 				if(pep.rt == nil)
 					pep.rt = 1
@@ -120,7 +120,7 @@ module MS
 		# This may not be the correct thing to do.
 		#
 		def spreadRTs(pep,mu)
-			pep.rt = RThelper.randn(mu,10)
+			pep.rt = RThelper.randn(mu,5)
 			pep.rt = @time.find {|i| i >= pep.rt}
 		end
 		
@@ -129,7 +129,7 @@ module MS
 		# by a simple gaussian curve (see 'factor' below). 
 		#
 		def getInts(fins, percents, avg)
-			intRand = (fins[0].length)*10**6.1
+			intRand = (fins[0].length)*10**2
 			stddev = rand+2
 		
 			index = 0

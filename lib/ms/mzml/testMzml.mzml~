@@ -1,0 +1,148 @@
+<?xml version="1.0"?>
+<mzML xmlns="http://psi.hupo.org/ms/mzml" accession="Accession" version="1.1.0" id="mzml">
+  <cvList count="2">
+    <cv id="cv1" fullName="testcvlist1" version="0.1" URI="uri"/>
+    <cv id="cv2" fullName="testcvlist2" version="0.11" URI="uri2"/>
+  </cvList>
+  <fileDescription>
+    <fileContent/>
+    <sourceFileList count="2">
+      <sourceFile id="name1" name="name1" location="location1"/>
+      <sourceFile id="name2" name="name2" location="location2"/>
+    </sourceFileList>
+    <contact/>
+  </fileDescription>
+  <referenceableParamGroupList count="2">
+    <referenceableParamGroup id="group1"/>
+    <referenceableParamGroup id="group2"/>
+  </referenceableParamGroupList>
+  <sampleList count="2">
+    <sample id="sample1" name="Bond">
+      <cvParam accession="cv3" cvRef="ref" name="blargh" unitCvRef="nil" unitName="" value=""/>
+      <userParam name="James" type="" unitAccession="" unitCvRef="nil" unitName="" value=""/>
+    </sample>
+    <sample id="sample2" name="end">
+      <referenceableParamGroupRef ref="refgroup"/>
+    </sample>
+  </sampleList>
+  <softwareList count="2">
+    <software id="v1.83" version="ClustalW"/>
+    <software id="v1.52" version="Starcraft"/>
+  </softwareList>
+  <scanSettingsList count="1">
+    <scanSettings id="scan1">
+      <sourceFileRefList count="1">
+        <sourceFileRef ref="sourceFile"/>
+      </sourceFileRefList>
+      <targetList count="1">
+        <target/>
+      </targetList>
+    </scanSettings>
+  </scanSettingsList>
+  <instrumentConfigurationList count="1">
+    <instrumentConfiguration id="config1">
+      <componentList count="3">
+        <source order="1"/>
+        <analyzer order="2"/>
+        <detector order="3"/>
+      </componentList>
+    </instrumentConfiguration>
+  </instrumentConfigurationList>
+  <dataProcessingList count="1">
+    <dataProcessing id="data1">
+      <processingMethod order="1" softwareRef="proc"/>
+    </dataProcessing>
+  </dataProcessingList>
+  <run id="run1" defaultInstrumentConfigurationRef="default_config" sampleRef="nil" startTimeStamp="2011-12-31T17:59:54.24118-07:00">
+    <spectrumList count="2" defaultDataProcessingRef="spec3">
+      <spectrum id="scan=1" spotID="" index="0" defaultArrayLength="1" dataProcessingRef="nil" sourceFileRef="nil">
+        <scanList count="1">
+          <scan spectrumRef="refSpec" sourceFileRef="refSrc" externalSpectrumID="scanwin" instrumentConfigurationRef="ref468">
+            <scanWindowList count="1">
+              <scanWindow>
+                <cvParam accession="cv4" cvRef="anotherRef" name="moreStuff" unitCvRef="nil" unitName="" value=""/>
+              </scanWindow>
+            </scanWindowList>
+          </scan>
+        </scanList>
+        <precursorList count="1">
+          <precursor spectrumRef="" sourceFileRef="nil" externalSpectrumID="ref685">
+            <isolationWindow/>
+            <selectedIonList count="1">
+              <selectedIon/>
+            </selectedIonList>
+            <activation/>
+          </precursor>
+        </precursorList>
+        <productList count="1">
+          <product>
+            <isolationWindow/>
+          </product>
+        </productList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray arrayLength="11" dataProcessingRef="nil" encodedLength="88">
+            <binary>WzEwMy40NSwgMjA5LjUsIDcwOC41Njc3LCA0NSwgMzYuMzQ1LCA1NiwgNTYsIDM0NSwgMzI0LCA1NjQzLCAyNF0=</binary>
+          </binaryDataArray>
+          <binaryDataArray arrayLength="11" dataProcessingRef="nil" encodedLength="88">
+            <binary>WzEwMy40NSwgMjA5LjUsIDcwOC41Njc3LCA0NSwgMzYuMzQ1LCA1NiwgNTYsIDM0NSwgMzI0LCA1NjQzLCAyNF0=</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=2" spotID="" index="1" defaultArrayLength="1" dataProcessingRef="nil" sourceFileRef="nil">
+        <scanList count="1">
+          <scan spectrumRef="refSpec" sourceFileRef="refSrc" externalSpectrumID="scanwin" instrumentConfigurationRef="ref468">
+            <scanWindowList count="1">
+              <scanWindow>
+                <cvParam accession="cv4" cvRef="anotherRef" name="moreStuff" unitCvRef="nil" unitName="" value=""/>
+              </scanWindow>
+            </scanWindowList>
+          </scan>
+        </scanList>
+        <precursorList count="1">
+          <precursor spectrumRef="" sourceFileRef="nil" externalSpectrumID="ref685">
+            <isolationWindow/>
+            <selectedIonList count="1">
+              <selectedIon/>
+            </selectedIonList>
+            <activation/>
+          </precursor>
+        </precursorList>
+        <productList count="1">
+          <product>
+            <isolationWindow/>
+          </product>
+        </productList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray arrayLength="11" dataProcessingRef="nil" encodedLength="88">
+            <binary>WzEwMy40NSwgMjA5LjUsIDcwOC41Njc3LCA0NSwgMzYuMzQ1LCA1NiwgNTYsIDM0NSwgMzI0LCA1NjQzLCAyNF0=</binary>
+          </binaryDataArray>
+          <binaryDataArray arrayLength="11" dataProcessingRef="nil" encodedLength="88">
+            <binary>WzEwMy40NSwgMjA5LjUsIDcwOC41Njc3LCA0NSwgMzYuMzQ1LCA1NiwgNTYsIDM0NSwgMzI0LCA1NjQzLCAyNF0=</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+    </spectrumList>
+    <chromatogramList count="2" defaultDataProcessingRef="refProc">
+      <chromatogram id="chrom1" index="0" defaultArrayLength="10" dataProcessingRef="nil">
+        <binaryDataArrayList count="2">
+          <binaryDataArray arrayLength="5" dataProcessingRef="nil" encodedLength="44">
+            <binary>WzEuMiwgMS4zLCAxLjQsIDEuNSwgMTA5ODg3LjQ1NTZd</binary>
+          </binaryDataArray>
+          <binaryDataArray arrayLength="5" dataProcessingRef="nil" encodedLength="44">
+            <binary>WzEuMiwgMS4zLCAxLjQsIDEuNSwgMTA5ODg3LjQ1NTZd</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </chromatogram>
+      <chromatogram id="chrom2" index="1" defaultArrayLength="10" dataProcessingRef="nil">
+        <binaryDataArrayList count="2">
+          <binaryDataArray arrayLength="5" dataProcessingRef="nil" encodedLength="44">
+            <binary>WzEuMiwgMS4zLCAxLjQsIDEuNSwgMTA5ODg3LjQ1NTZd</binary>
+          </binaryDataArray>
+          <binaryDataArray arrayLength="5" dataProcessingRef="nil" encodedLength="44">
+            <binary>WzEuMiwgMS4zLCAxLjQsIDEuNSwgMTA5ODg3LjQ1NTZd</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </chromatogram>
+    </chromatogramList>
+  </run>
+</mzML>

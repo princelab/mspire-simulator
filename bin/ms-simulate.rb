@@ -30,6 +30,10 @@ if(ARGV.length == 0)
 	puts ""
 	puts "Usage: \n\tms-simulate [option] <fasta files>"
 	puts "Options: \n\t-p  ->  show 3d plot"
+	puts "\t-d <enzyme>  ->  digestors:  "
+	puts "\t\targ_c,\n \t\tasp_n,\n \t\tasp_n_ambic,\n \t\tchymotrypsin,\n \t\tcnbr,\n \t\tlys_c,\n \t\tlys_c_p,\n \t\tpepsin_a,\n" 
+    puts "\t\ttryp_cnbr,\n \t\ttryp_chymo,\n \t\ttrypsin_p,\n \t\tv8_de,\n \t\tv8_e,\n \t\ttrypsin,\n \t\tv8_e_trypsin,\n"
+    puts "\t\tv8_de_trypsin"
 	puts ""
 	puts "fasta files:         \n\tfiles must be in fasta format"
 	puts ""
@@ -41,8 +45,17 @@ else
 	peptides = Hash.new
 	pl = false
 	if ARGV.find {|p| p == '-p'}
-		p = ARGV.shift
+		p = ARGV.find {|p| p == '-p'}
+		ARGV.delete('-p')
 		pl = true
+	end
+	
+	if ARGV.find {|d| d == '-d'}
+		index = ARGV.find_index {|d| d == '-d'}
+		@digestor = ARGV[index+1]
+		ARGV.delete_at(index)
+		ARGV.delete_at(index)
+		puts @digestor
 	end
 
 	ARGV.each do |file|
@@ -55,9 +68,9 @@ else
 			end
 		end
 		inFile.close
-		trypsin = MS::Digester[:trypsin]
+		trypsin = MS::Digester[@digestor]
 		digested = trypsin.digest(seq)
-		
+
 		count = 0
 		digested.each do |peptide|
 			count = count + 1

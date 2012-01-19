@@ -54,7 +54,7 @@ class SourceFileList
 	def initialize(builder, sourceFiles)
 	
 		#required
-		@count = 1 #TODO
+		@count = sourceFiles.length
 		init_xml(builder)
 		@sourceFiles = Array.new
 		sourceFiles.each do |file|
