@@ -6,6 +6,8 @@ require 'ms/rt/rt_helper'
 require 'ms/plot/mgl_plot'
 
 module MS
+	#The name of this class should change - to much going on in here. 
+	#Need to compartmentalize.
 	class Rtgenerator
 		def initialize
 			@dec_tree = nil
@@ -13,8 +15,6 @@ module MS
 		end
 		
 		def generateRT(peptides, samplingRate, runTime)
-		
-			f = open("/dev/tty")
 		
 			#@dec_tree = DTree::Create.new.createDT # - James is working on something better 
 			features = Hash.new
