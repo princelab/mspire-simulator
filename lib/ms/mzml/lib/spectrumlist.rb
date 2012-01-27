@@ -41,25 +41,29 @@ class Spectrum
 		mzs = spectrum[0] 
 		ints = spectrum[1] 
 		
-		@params
-		@scanList
-		@precursorList
-		@productList
-		#required
+		#params
+		#scanList
+		#precursorList
+		#productList
+		#-required
 		@id = "spectrum=#{count}"
 		@defaultArrayLength = mzs.length 
 		@index = (count - 1)
 		init_xml(builder,mzs,ints,time)
 		#@binaryDataArrayList = BinaryDataArrayList.new(builder,spectrum[0],spectrum[2])
 		#builder = @binaryDataArrayList.get_builder
-		#optional
-		@dataProcessingRef
-		@spotId
-		@sourceFileRef
+		#-optional
+		#dataProcessingRef
+		#spotId
+		#sourceFileRef
 	
 	end
 	
 	def init_xml(builder,mzs,ints,time)
+		add_noise(mzs, mzs.max)
+		add_noise(ints, ints.max/2)
+		@defaultArrayLength = mzs.length 
+	
 		mzs = array_to_mzml_string(mzs)
 		ints = array_to_mzml_string(ints)
 	
@@ -103,73 +107,10 @@ class Spectrum
 	  string = Zlib::Deflate.deflate(string) if compression
 	  Base64.strict_encode64(string)
 	end
-end
-
-class ScanList
 	
-	def initialize()
-	
-		@params
-		@scans
-		#required
-		@count
-	
-	end
-end
-
-class Scan
-	
-	def initialize()
-	
-		@params
-		@scanWindowList
-		#optional
-		@externalSpectrumId
-		@spectrumRef
-		@sourceFileRef
-		@insturmentConfigurationRef
-	
-	end
-end
-
-class ScanWindowList
-	
-	def initialize()
-	
-		@scanWindows
-		#required
-		@count
-	
-	end
-end
-
-class ScanWindow
-	
-	def initialize()
-	
-		@params
-	
-	end
-end
-
-class PrecursorList
-	
-	def initialize()
-	
-		@precursors
-		#required
-		@count
-	
-	end
-end
-
-class ProductList
-	
-	def initialize()
-	
-		@products
-		#required
-		@count
-	
+	def add_noise(arr, range)
+		for i in (1..1000)
+			arr<<rand * range + 5
+		end
 	end
 end

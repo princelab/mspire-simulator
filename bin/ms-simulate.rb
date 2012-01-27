@@ -89,6 +89,7 @@ else
 			peptides[p] = count
 		end
 	end
+	#filter peptides ??? - in a later version
 	features = MS::Rtgenerator.new.generateRT(peptides,3.0, 300)
 
 	if pl
@@ -112,4 +113,5 @@ else
 	File.open('test.mzml', 'w') do |output|
 		output.write(mzml.get_builder.to_xml)
 	end
+	system("cp test.mzml /home/anoyce/Dropbox/")
 end

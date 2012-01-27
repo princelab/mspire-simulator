@@ -24,19 +24,25 @@ class Mzml
 
 		builder.doc.encoding = 'ISO-8859-1'
 	
-		@cvList # may not be needed
+		#cvList # may not be needed
+		
 		@fileDescription = FileDescription.new(builder)
-		@referenceableParamGroupList # may not be needed
-		@sampleList # may not be needed
+		
+		#referenceableParamGroupList # may not be needed
+		#sampleList # may not be needed
+		
 		@softwareList = SoftwareList.new(builder)
-		@scanSettingsList # may not be needed
+		
+		#scanSettingsList # may not be needed
+		
 		@insturmentConfigurationList = InsturmentConfigurationList.new(builder)
 		@dataProcessingList = DataProcessingList.new(builder)
 		@run = Run.new(builder,spectra)
+		
 		#attributes - only version is required
-		@version
-		@id
-		@accession
+		#version
+		#id
+		#accession
 		
 		@builder = @run.get_builder
 
