@@ -129,15 +129,17 @@ module MS
 		# by a simple gaussian curve (see 'factor' below). 
 		#
 		def getInts(fins, percents, avg)
-			intRand = (fins[0].length)*10**2
+			intRand = (fins[0][0].charge)*10**2
 			stddev = rand+2
 		
 			index = 0
+			neutron = 0
 			fins.each do |fin|
-				mzmu = fin[0].mz + index + 0.5
+				mzmu = fin[0].mz + neutron + 0.5
 				max_y = RThelper.gaussian(mzmu,mzmu,0.05) 
 				
-				percent_int = intRand*percents[index]
+				#percent_int = intRand*percents[index]
+				percent_int = percents[index]
 				fin.each do |p|
 					p.mz = RThelper.randn(mzmu,0.04)
 					
@@ -148,7 +150,8 @@ module MS
 					p.int = (RThelper.emg(percent_int,avg,0.25,0.4,p.rt)) * factor
 					#p.int = p.int * Mgl_Plot.RandomFloat(0.80,1.0)#Jagged-ness
 				end
-				index = index+1.009
+				index = index+1
+				neutron = neutron+1.009
 			end
 			return fins
 		end

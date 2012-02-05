@@ -2,6 +2,7 @@ require 'nokogiri'
 require 'base64'
 require 'zlib'
 require 'ms/mzml/lib/runhelper' 
+require 'ms/plot/mgl_plot'
 
 class SpectrumList
 	
@@ -14,8 +15,12 @@ class SpectrumList
 		@defaultDataProcessingRef = 'Ruby_Simulated' # Note must match one of dataProcessing
 		init_xml(builder)
 		count = 1
+		@range_mz = spectra.max_by{|spec| spec[1][0].max}[1][0].max
+		for i in (30..100)
+			contaminate(spectra)
+		end
 		spectra.each do |time,spectrum|
-			Spectrum.new(builder,time,spectrum,count)
+			Spectrum.new(builder,time,spectrum,count,@range_mz)
 			count = count + 1
 		end
 		@builder = builder
@@ -32,15 +37,39 @@ class SpectrumList
 	def get_builder
 		return @builder
 	end
+	
+	def contaminate(spectra)
+		x_max = spectra.max[0]
+		choice = []
+		choice<<Mgl_Plot.RandomFloat(0.0,x_max)
+		choice<<Mgl_Plot.RandomFloat(0.0,x_max)
+		x_low = choice.min
+		x_high = choice.max
+		tmp = spectra.find_all{|i| i[0]<x_high and i[0]>x_low}
+		x_cors = []
+		tmp.each do |spectrum|
+			x_cors<<spectrum[0]
+		end
+		if tmp.empty? == false
+			mu = x_cors.inject(:+)/x_cors.size
+			sd = Mgl_Plot.RandomFloat(x_low,x_high)/4
+			mz = Mgl_Plot.RandomFloat(0.0,@range_mz)
+			x_cors.each do |x|
+				spectra[x][0]<<mz+Mgl_Plot.RandomFloat(0.0,2.0)
+				int = (RThelper.gaussian(x,mu,sd)) * Mgl_Plot.RandomFloat(9.0,12.0)**2
+				spectra[x][1]<<int
+			end
+		end
+	end
 end
 
 class Spectrum
 	
-	def initialize(builder,time,spectrum,count)
+	def initialize(builder,time,spectrum,count,range_mz)
 	
 		mzs = spectrum[0] 
 		ints = spectrum[1] 
-		
+		@range_mz = range_mz
 		#params
 		#scanList
 		#precursorList
@@ -60,8 +89,8 @@ class Spectrum
 	end
 	
 	def init_xml(builder,mzs,ints,time)
-		add_noise(mzs, mzs.max)
-		add_noise(ints, ints.max/2)
+		add_noise(mzs, ints)
+
 		@defaultArrayLength = mzs.length 
 	
 		mzs = array_to_mzml_string(mzs)
@@ -108,9 +137,13 @@ class Spectrum
 	  Base64.strict_encode64(string)
 	end
 	
-	def add_noise(arr, range)
-		for i in (1..1000)
-			arr<<rand * range + 5
+	def add_noise(mzs, ints)
+		for i in (0..@range_mz)
+			r = rand(100)
+			if r > 80
+				mzs<<Mgl_Plot.RandomFloat(0.0,@range_mz.to_f)
+				ints<<Mgl_Plot.RandomFloat(0.0,Mgl_Plot.RandomFloat(1.0,4.0))
+			end
 		end
 	end
 end
