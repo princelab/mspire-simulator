@@ -2,7 +2,7 @@ require 'nokogiri'
 require 'base64'
 require 'zlib'
 require 'ms/mzml/lib/runhelper' 
-require 'ms/plot/mgl_plot'
+require 'ms/rt/rt_helper'
 
 class SpectrumList
 	
@@ -41,8 +41,8 @@ class SpectrumList
 	def contaminate(spectra)
 		x_max = spectra.max[0]
 		choice = []
-		choice<<Mgl_Plot.RandomFloat(0.0,x_max)
-		choice<<Mgl_Plot.RandomFloat(0.0,x_max)
+		choice<<RThelper.RandomFloat(0.0,x_max)
+		choice<<RThelper.RandomFloat(0.0,x_max)
 		x_low = choice.min
 		x_high = choice.max
 		tmp = spectra.find_all{|i| i[0]<x_high and i[0]>x_low}
@@ -52,11 +52,11 @@ class SpectrumList
 		end
 		if tmp.empty? == false
 			mu = x_cors.inject(:+)/x_cors.size
-			sd = Mgl_Plot.RandomFloat(x_low,x_high)/4
-			mz = Mgl_Plot.RandomFloat(0.0,@range_mz)
+			sd = RThelper.RandomFloat(x_low,x_high)/4
+			mz = RThelper.RandomFloat(0.0,@range_mz)
 			x_cors.each do |x|
-				spectra[x][0]<<mz+Mgl_Plot.RandomFloat(0.0,2.0)
-				int = (RThelper.gaussian(x,mu,sd)) * Mgl_Plot.RandomFloat(9.0,12.0)**2
+				spectra[x][0]<<mz+RThelper.RandomFloat(0.0,2.0)
+				int = (RThelper.gaussian(x,mu,sd)) * RThelper.RandomFloat(9.0,12.0)**2
 				spectra[x][1]<<int
 			end
 		end
@@ -141,8 +141,8 @@ class Spectrum
 		for i in (0..@range_mz)
 			r = rand(100)
 			if r > 80
-				mzs<<Mgl_Plot.RandomFloat(0.0,@range_mz.to_f)
-				ints<<Mgl_Plot.RandomFloat(0.0,Mgl_Plot.RandomFloat(1.0,4.0))
+				mzs<<RThelper.RandomFloat(0.0,@range_mz.to_f)
+				ints<<RThelper.RandomFloat(0.0,RThelper.RandomFloat(1.0,4.0))
 			end
 		end
 	end

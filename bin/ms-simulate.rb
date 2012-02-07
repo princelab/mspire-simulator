@@ -18,8 +18,8 @@ require 'ms/digester'
 require 'msplat'
 require 'ms/feature/aa'
 require 'ms/peptide'
-require 'ms/plot/plot'
 require 'ms/rt/rtgenerator'
+require 'ms/spectra/spectra'
 require 'ms/mzml/mzml'
 
 if(ARGV.length == 0)
@@ -42,7 +42,6 @@ if(ARGV.length == 0)
 	puts ""
 else
 	
-	peptides = Hash.new
 	pl = false
 	if ARGV.find {|p| p == '-p'}
 		p = ARGV.find {|p| p == '-p'}
@@ -55,7 +54,6 @@ else
 		@digestor = ARGV[index+1]
 		ARGV.delete_at(index)
 		ARGV.delete_at(index)
-		puts @digestor
 	end
 
 	ARGV.each do |file|
@@ -71,44 +69,19 @@ else
 		trypsin = MS::Digester[@digestor]
 		digested = trypsin.digest(seq)
 
-		count = 0
-		digested.each do |peptide|
-			count = count + 1
-			mass = 0
-			charge = 0
-			peptide.each_char do |aa| #simple charge state calculation (see http://www.springerlink.com/content/a5172138jj778192/fulltext.pdf)
-				mass = mass + MS::Mass::AA::MONO[aa]
-				h = 'H'
-				k = 'K'
-				r = 'R'
-				if aa == h or aa == k or aa == r
-					charge = charge + 1
-				end
-			end
-			p = MS::Peptide.new(peptide,mass,charge)
-			peptides[p] = count
+		@peptides = []
+		digested.each do |peptide_seq|
+			peptide = MS::Peptide.new(peptide_seq)
+			@peptides<<peptide
 		end
 	end
 	#filter peptides ??? - in a later version
-	features = MS::Rtgenerator.new.generateRT(peptides,3.0, 300)
-
-	if pl
-		MS::Plot.new.plot(features)
-	end
+	#need to include in options
+	sampling_rate = 3.0
+	run_time = 300
+	spectra = MS::Spectra.new(@peptides,sampling_rate, run_time)
 	
-	spectra = features[1].transpose
-	spectra = spectra.group_by {|x| x[1]}
-	newSpectra = Hash.new
-	spectra.each  do |key,val|
-		val = val.transpose
-		val.delete_at(1)
-		val.delete_at(2)
-		newSpectra[key] = val
-	end
-	spectra = newSpectra
-	spectra.delete_if{|k,v| v[1].inject(:+) <= 0.0}
-	#spectra is a Hash rt=>[[mzs],[ints]]
-	mzml = Mzml.new(spectra)
+	mzml = Mzml.new(spectra.data)
 	
 	File.open('test.mzml', 'w') do |output|
 		output.write(mzml.get_builder.to_xml)
