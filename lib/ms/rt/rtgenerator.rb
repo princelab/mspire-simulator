@@ -39,7 +39,8 @@ module MS
 		def getRTs(peps)
 		    
 		    avg_rt = 0.0
-			rtmu = rand(80)+5
+			rtmu = rand(295)+5
+			#TODO run time
 			peps.each do |pep|
 
 				spreadRTs(pep,rtmu)

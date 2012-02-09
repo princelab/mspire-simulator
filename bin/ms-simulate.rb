@@ -21,40 +21,36 @@ require 'ms/peptide'
 require 'ms/rt/rtgenerator'
 require 'ms/spectra/spectra'
 require 'ms/mzml/mzml'
+require 'trollop'
 
-if(ARGV.length == 0)
-	puts "" 
-	puts "ms-simulate"
-	puts "Description: Simulates ms runs given the fasta files. Outputs"
-	puts " a 3d plot(optional) and a mzML file"
-	puts ""
-	puts "Usage: \n\tms-simulate [option] <fasta files>"
-	puts "Options: \n\t-p  ->  show 3d plot"
-	puts "\t-d <enzyme>  ->  digestors:  "
-	puts "\t\targ_c,\n \t\tasp_n,\n \t\tasp_n_ambic,\n \t\tchymotrypsin,\n \t\tcnbr,\n \t\tlys_c,\n \t\tlys_c_p,\n \t\tpepsin_a,\n" 
-    puts "\t\ttryp_cnbr,\n \t\ttryp_chymo,\n \t\ttrypsin_p,\n \t\tv8_de,\n \t\tv8_e,\n \t\ttrypsin,\n \t\tv8_e_trypsin,\n"
-    puts "\t\tv8_de_trypsin"
-	puts ""
-	puts "fasta files:         \n\tfiles must be in fasta format"
-	puts ""
-	puts "Output:              \n\ttest.mzML"
-	puts ""
-	puts ""
-else
-	
-	pl = false
-	if ARGV.find {|p| p == '-p'}
-		p = ARGV.find {|p| p == '-p'}
-		ARGV.delete('-p')
-		pl = true
-	end
-	
-	if ARGV.find {|d| d == '-d'}
-		index = ARGV.find_index {|d| d == '-d'}
-		@digestor = ARGV[index+1]
-		ARGV.delete_at(index)
-		ARGV.delete_at(index)
-	end
+opts = Trollop::options do
+version "ms-simulate 0.0.1a (c) 2012 Brigham Young University"
+  banner <<-EOS
+  
+  *********************************************************************
+	 Description: Simulates ms runs given protien fasta files. Outputs
+	 a mzML file.
+	Usage:
+		   ms-simulate [options] <filenames>+
+		   
+	where [options] are:
+	EOS
+  opt :digestor, "Digestion Enzyme; one of: \n\t\targ_c,\n \t\tasp_n,\n \t\tasp_n_ambic,\n \t\tchymotrypsin,\n \t\tcnbr,\n \t\tlys_c,\n \t\tlys_c_p,\n \t\tpepsin_a,\n\t\ttryp_cnbr,\n \t\ttryp_chymo,\n \t\ttrypsin_p,\n \t\tv8_de,\n \t\tv8_e,\n \t\ttrypsin,\n \t\tv8_e_trypsin,\n\t\tv8_de_trypsin", :default => "trypsin" 
+  opt :sampling_rate, "How many scans per second", :default => 3.0 
+  opt :run_time, "Run time in seconds", :default => 300.0 
+end
+
+Trollop::die :sampling_rate, "must be greater than 0" if opts[:sampling_rate] <= 0
+Trollop::die :run_time, "must be non-negative" if opts[:run_time] < 0
+Trollop::die "must supply a .fasta protien sequence file" if ARGV.empty?
+
+#*************************Main******************************************
+
+	digestor = opts[:digestor]
+	sampling_rate = opts[:sampling_rate]
+	run_time = opts[:run_time]
+
+	@peptides = []
 
 	ARGV.each do |file|
 		inFile = File.open(file,"r")
@@ -66,19 +62,15 @@ else
 			end
 		end
 		inFile.close
-		trypsin = MS::Digester[@digestor]
+		trypsin = MS::Digester[digestor]
 		digested = trypsin.digest(seq)
 
-		@peptides = []
 		digested.each do |peptide_seq|
 			peptide = MS::Peptide.new(peptide_seq)
 			@peptides<<peptide
 		end
 	end
 	#filter peptides ??? - in a later version
-	#need to include in options
-	sampling_rate = 3.0
-	run_time = 300
 	spectra = MS::Spectra.new(@peptides,sampling_rate, run_time)
 	
 	mzml = Mzml.new(spectra.data)
@@ -87,4 +79,3 @@ else
 		output.write(mzml.get_builder.to_xml)
 	end
 	system("cp test.mzml /home/anoyce/Dropbox/")
-end
