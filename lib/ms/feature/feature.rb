@@ -1,3 +1,5 @@
+
+require 'time'
 require 'msplat'
 require 'ms/peptide'
 require 'ms/feature/isotope'
@@ -9,10 +11,11 @@ module MS
 			def initialize(peptide_groups)
 				#predict isotopes/relative abundance
 				#add noise (wobble)
-				
+				@start = Time.now
 				@features = []
 				@data = {}
-				peptide_groups.each do |peptides|
+				peptide_groups.each_with_index do |peptides,ind|
+					Progress.progress("Generating features:",(((ind+1)/peptide_groups.size.to_f)*100).to_i)
 					relative_abundances = calcPercent(peptides[0][0].sequence)
 					avg_rt = peptides[1]
 					waves = []
@@ -28,8 +31,13 @@ module MS
 					feature = getInts(waves,relative_abundances,avg_rt)
 					@features<<feature
 				end
+				Progress.progress("Generating features:",100,Time.now-@start)
+				puts ""
+				@start = Time.now
 				@features = @features.flatten.group_by{|pep| pep.rt}
+				count = 1
 				@features.each do |rt, peps|
+					Progress.progress("Populating structure for mzml:",((count/@features.size.to_f)*100).to_i)
 					mzs = []
 					ints = []
 					peps.each do |pep|
@@ -37,7 +45,10 @@ module MS
 						ints<<pep.int
 					end
 					@data[rt] = [mzs,ints]
+					count += 1
 				end
+				Progress.progress("Populating structure for mzml:",100,Time.now-@start)
+				puts ""
 			end
 			
 			attr_reader :data
@@ -88,16 +99,16 @@ module MS
 				var<<"SE"
 				var<<atoms[6].to_s
 	
-				percents = Isotope.dist(var)
+				rel_intesities = Isotope.dist(var)
 				#puts percents
-				return percents
+				return rel_intesities
 			end
 			
 			# Intensities are shaped in the rt direction by the Exponentially
 			# modified gaussian. They are also shaped in the m/z direction 
 			# by a simple gaussian curve (see 'factor' below). 
 			#
-			def getInts(fins, percents, avg)
+			def getInts(fins, relative_abundances, avg)
 				intRand = (fins[0][0].charge)*10**2
 				stddev = rand+2
 			
@@ -108,15 +119,18 @@ module MS
 					max_y = RThelper.gaussian(mzmu,mzmu,0.05) 
 					
 					#percent_int = intRand*percents[index]
-					percent_int = percents[index]
+					relative_abundances_int = relative_abundances[index]
 					fin.each do |p|
+								
+						#Exponentially modified gaussian * gaussian
+						p.int = (RThelper.emg(relative_abundances_int,avg,0.25,0.4,p.rt))
+						
+						#TODO mz noise function goes here
 						p.mz = RThelper.randn(mzmu,0.04)
 						
 						fraction = RThelper.gaussian(p.mz,mzmu,0.05)
 						factor = fraction/max_y
-								
-						#Exponentially modified gaussian * gaussian
-						p.int = (RThelper.emg(percent_int,avg,0.25,0.4,p.rt)) * factor
+						p.int = p.int * factor
 						#p.int = p.int * Mgl_Plot.RandomFloat(0.80,1.0)#Jagged-ness
 					end
 					index = index+1

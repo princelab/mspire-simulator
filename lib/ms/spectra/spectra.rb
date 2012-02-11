@@ -15,10 +15,11 @@ module MS
 				spec_time = spec_time + (1/sampling_rate)
 			end
 			
-			pre_features = MS::Rtgenerator.new.generateRT(peptides,r_times)
+			pre_features = MS::Rtgenerator.new.generateRT(peptides,r_times,run_time)
 			#pre_features = [peptide_groups]
 			#Features
 			@data = MS::Feature::Feature.new(pre_features).data
+			#create_spectrum(@data)
 		end
 		
 		attr_reader :data

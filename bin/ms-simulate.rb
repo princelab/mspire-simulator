@@ -1,18 +1,9 @@
 #!/usr/bin/env ruby
 
 #ruby -I lib ./bin/ms-simulate.rb testFastaFiles/p53.fasta
-#TODO - NOISE:
-#	1. m/z variance
-#	2. Intensity variance
-#		a. Dropout
-#	3. Grass
-#	Beyond:
-#	-Scan Dropout
-#	-RT variance
-#	-RT warp
-#	-m/z warp
-#	-contaminants
 
+require 'time'
+require 'progress'
 require 'nokogiri'
 require 'ms/digester'
 require 'msplat'
@@ -23,6 +14,7 @@ require 'ms/spectra/spectra'
 require 'ms/mzml/mzml'
 require 'trollop'
 
+@start = Time.now
 opts = Trollop::options do
 version "ms-simulate 0.0.1a (c) 2012 Brigham Young University"
   banner <<-EOS
@@ -53,6 +45,7 @@ Trollop::die "must supply a .fasta protien sequence file" if ARGV.empty?
 	@peptides = []
 
 	ARGV.each do |file|
+		Progress.progress("Reading file(s):",(((ARGV.index(file)+1)/ARGV.size.to_f)*100).to_i)
 		inFile = File.open(file,"r")
 		seq = ""
 		inFile.each_line do |sequence| 
@@ -70,12 +63,16 @@ Trollop::die "must supply a .fasta protien sequence file" if ARGV.empty?
 			@peptides<<peptide
 		end
 	end
+	Progress.progress("Reading file(s):",100,Time.now-@start)
+	puts ''
+
 	#filter peptides ??? - in a later version
 	spectra = MS::Spectra.new(@peptides,sampling_rate, run_time)
 	
 	mzml = Mzml.new(spectra.data)
 	
+	puts "Writing to file..."
 	File.open('test.mzml', 'w') do |output|
 		output.write(mzml.get_builder.to_xml)
 	end
-	system("cp test.mzml /home/anoyce/Dropbox/")
+	puts "Done."

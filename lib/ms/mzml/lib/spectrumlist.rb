@@ -1,3 +1,5 @@
+
+require 'time'
 require 'nokogiri'
 require 'base64'
 require 'zlib'
@@ -16,13 +18,21 @@ class SpectrumList
 		init_xml(builder)
 		count = 1
 		@range_mz = spectra.max_by{|spec| spec[1][0].max}[1][0].max
-		for i in (30..100)
+		@start = Time.now
+		for i in (1..70)
+			Progress.progress("Contaminating:",((i/70.to_f)*100).to_i)
 			contaminate(spectra)
 		end
+		Progress.progress("Contaminating:",100,Time.now-@start)
+		puts ""
+		@start = Time.new
 		spectra.each do |time,spectrum|
+			Progress.progress("Converting data to mzml:",((count/spectra.size.to_f)*100).to_i)
 			Spectrum.new(builder,time,spectrum,count,@range_mz)
 			count = count + 1
 		end
+		Progress.progress("Converting data to mzml:",100,Time.now-@start)
+		puts ""
 		@builder = builder
 	
 	end

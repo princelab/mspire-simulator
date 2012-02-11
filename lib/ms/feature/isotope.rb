@@ -19,6 +19,7 @@ require 'fftw3'
 
 
 module Isotope
+  #MAX_MASS needs to be highest possible nominal mass
   MAX_MASS=2**16;
   ORDER = [:h, :c, :n, :o, :s]
   ISOTOPE_VALUES = {
