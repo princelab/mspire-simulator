@@ -34,6 +34,7 @@ module MS
 				Progress.progress("Generating features:",100,Time.now-@start)
 				puts ""
 				@start = Time.now
+				
 				@features = @features.flatten.group_by{|pep| pep.rt}
 				count = 1
 				@features.each do |rt, peps|
@@ -123,15 +124,20 @@ module MS
 					fin.each do |p|
 								
 						#Exponentially modified gaussian * gaussian
+						#TODO expand and contract
 						p.int = (RThelper.emg(relative_abundances_int,avg,0.25,0.4,p.rt))
 						
-						#TODO mz noise function goes here
-						p.mz = RThelper.randn(mzmu,0.04)
+						#TODO mz noise function goes here; something like:
+						y = p.int
+						wobble_int = (100 - y) * 10**(-3)
+						#puts "#{p.int} => #{wobble_int}"
+						wobble_mz = RThelper.randn(mzmu,wobble_int+0.04) 
+						p.mz = wobble_mz
 						
 						fraction = RThelper.gaussian(p.mz,mzmu,0.05)
 						factor = fraction/max_y
 						p.int = p.int * factor
-						#p.int = p.int * Mgl_Plot.RandomFloat(0.80,1.0)#Jagged-ness
+						p.int = p.int * RThelper.RandomFloat(0.999,1.0)#Jagged-ness
 					end
 					index = index+1
 					neutron = neutron+1.009

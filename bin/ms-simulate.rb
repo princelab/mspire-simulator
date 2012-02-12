@@ -67,6 +67,7 @@ Trollop::die "must supply a .fasta protien sequence file" if ARGV.empty?
 	puts ''
 
 	#filter peptides ??? - in a later version
+	@peptides.uniq!
 	spectra = MS::Spectra.new(@peptides,sampling_rate, run_time)
 	
 	mzml = Mzml.new(spectra.data)
