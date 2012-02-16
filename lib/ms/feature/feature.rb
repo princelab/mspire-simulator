@@ -125,13 +125,18 @@ module MS
 								
 						#Exponentially modified gaussian * gaussian
 						#TODO expand and contract
-						p.int = (RThelper.emg(relative_abundances_int,avg,0.25,0.4,p.rt))
+						p.int = (RThelper.emg(relative_abundances_int,avg,0.1,0.4,p.rt))
 						
 						#TODO mz noise function goes here; something like:
 						y = p.int
-						wobble_int = (100 - y) * 10**(-3)
-						#puts "#{p.int} => #{wobble_int}"
-						wobble_mz = RThelper.randn(mzmu,wobble_int+0.04) 
+						# loggerPro curve fit 1 = 0.03093y^(-0.4007)
+						# loggerPro curve fit 2 = 0.1301y^(-0.5739)
+						# loggerPro curve fit 3 = 1.091y^(-0.8104)
+						# loggerPro curve fit 4 = 0.1669y^(-0.5983)
+						# AVG:                    0.3547325y^(-0.595825)
+						# Normalized:
+						wobble_int = 0.001086*y**(-0.5561) 
+						wobble_mz = mzmu + RThelper.RandomFloat(wobble_int,(wobble_int*-1))
 						p.mz = wobble_mz
 						
 						fraction = RThelper.gaussian(p.mz,mzmu,0.05)

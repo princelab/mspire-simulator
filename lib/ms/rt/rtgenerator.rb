@@ -55,14 +55,14 @@ module MS
 				avg_rt = avg_rt+pep.rt
 			end
 			avg_rt = avg_rt/(peps.length)
-			return avg_rt
+			return peps.sort_by {|pep| pep.rt}[0].rt
 		end
 		
 		# Spreading peaks by a normal density function.
 		# This may not be the correct thing to do.
 		#
 		def spreadRTs(pep,mu)
-			pep.rt = RThelper.randn(mu,5)
+			pep.rt = RThelper.randn(mu,20)
 			pep.rt = @r_time.find {|i| i >= pep.rt}
 		end
 	end
