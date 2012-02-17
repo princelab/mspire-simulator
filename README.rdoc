@@ -1,8 +1,7 @@
 = ms-simulate
 
 Description:
-	Simulates MS runs given amino acid .fasta files. Plots in 3d
-	and outputs a .mzML file.
+	Simulates MS runs given amino acid .fasta files. Outputs a .mzML file.
 
 == Examples
  

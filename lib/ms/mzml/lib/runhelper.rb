@@ -1,98 +1,98 @@
 require 'nokogiri'
 
 class BinaryDataArrayList
-	
-	def initialize(builder, mzs, ints)
-		#required
-		@count
-		@binaryDataArray
-	
-	end
-	
+  
+  def initialize(builder, mzs, ints)
+    #required
+    @count
+    @binaryDataArray
+  
+  end
+  
 end
 
 class BinaryDataArray
 
-	def initialize()
-	
-		@params
-		@binary
-		#required
-		@encodeLength
-		#optional
-		@arrayLength
-		@dataProcessingRef
-	
-	end
+  def initialize()
+  
+    @params
+    @binary
+    #required
+    @encodeLength
+    #optional
+    @arrayLength
+    @dataProcessingRef
+  
+  end
 end
 
 class Precursor
-	
-	def initialize()
-	
-		@isolationWindow
-		@selectedIonList
-		@activation
-		#optional
-		@externalSpectrumId
-		@sourceFileRef
-		@spectrumRef
-	
-	end
+  
+  def initialize()
+  
+    @isolationWindow
+    @selectedIonList
+    @activation
+    #optional
+    @externalSpectrumId
+    @sourceFileRef
+    @spectrumRef
+  
+  end
 end
 
 class IsolationWindow
-	
-	def initialize()
-	
-		@params
-	
-	end
+  
+  def initialize()
+  
+    @params
+  
+  end
 end
 
 class SelectedIonList
-	
-	def initialize()
-	
-		@selectedIons
-		#required
-		@count
+  
+  def initialize()
+  
+    @selectedIons
+    #required
+    @count
 
-	end
+  end
 end
 
 class SelectedIon
-	
-	def initialize()
-	
-		@params
+  
+  def initialize()
+  
+    @params
 
-	end
+  end
 end
 
 class Activation
-	
-	def initialize()
-	
-		@params
+  
+  def initialize()
+  
+    @params
 
-	end
+  end
 end
 
 class Product
-		
-	def initialize()
-	
-		@isolationWindow
-	
-	end
+    
+  def initialize()
+  
+    @isolationWindow
+  
+  end
 end
 
 class IsolationWindow
-	
-	def initialize()
-	
-		@params
-	
-	end
+  
+  def initialize()
+  
+    @params
+  
+  end
 end

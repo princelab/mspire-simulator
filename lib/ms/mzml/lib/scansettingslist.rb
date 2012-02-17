@@ -1,61 +1,61 @@
 
 class ScanSettingsList
-	
-	def initialize(builder)
-		#required
-		@count
-		@scanSettings
-	
-	end
+  
+  def initialize(builder)
+    #required
+    @count
+    @scanSettings
+  
+  end
 end
 
 class ScanSettings
-	
-	def initialize()
-	
-		@params
-		@sourceFileRefList
-		@targetList
-		#required
-		@id
-	
-	end
+  
+  def initialize()
+  
+    @params
+    @sourceFileRefList
+    @targetList
+    #required
+    @id
+  
+  end
 end
 
 class SourceFileRefList
-	
-	def initialize()
-		#required
-		@count
-		@sourceFileRefs
-	
-	end
+  
+  def initialize()
+    #required
+    @count
+    @sourceFileRefs
+  
+  end
 end
 
 class SourceFileRef
-	
-	def initialize()
-		#required
-		@ref
-	
-	end
+  
+  def initialize()
+    #required
+    @ref
+  
+  end
 end
 
 class TargetList
-	
-	def initialize()
-		#required
-		@count
-		@targets
-	
-	end
+  
+  def initialize()
+    #required
+    @count
+    @targets
+  
+  end
 end
 
 class Target
-	
-	def initialize()
-		
-		@params
-	
-	end
+  
+  def initialize()
+    
+    @params
+  
+  end
 end

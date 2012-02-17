@@ -6,149 +6,149 @@ require 'ms/feature/isotope'
 require 'ms/rt/rt_helper'
 
 module MS
-	module Feature
-		class Feature 
-			def initialize(peptide_groups)
-				#predict isotopes/relative abundance
-				#add noise (wobble)
-				@start = Time.now
-				@features = []
-				@data = {}
-				peptide_groups.each_with_index do |peptides,ind|
-					Progress.progress("Generating features:",(((ind+1)/peptide_groups.size.to_f)*100).to_i)
-					relative_abundances = calcPercent(peptides[0][0].sequence)
-					avg_rt = peptides[1]
-					waves = []
-					
-					relative_abundances.length.times do
-						newpeps = []
-						peptides[0].each do |peptide|
-							newpeps<<MS::Peptide.new(peptide.sequence,peptide.rt)
-						end
-						waves<<newpeps
-					end
-					
-					feature = getInts(waves,relative_abundances,avg_rt)
-					@features<<feature
-				end
-				Progress.progress("Generating features:",100,Time.now-@start)
-				puts ""
-				@start = Time.now
-				
-				@features = @features.flatten.group_by{|pep| pep.rt}
-				count = 1
-				@features.each do |rt, peps|
-					Progress.progress("Populating structure for mzml:",((count/@features.size.to_f)*100).to_i)
-					mzs = []
-					ints = []
-					peps.each do |pep|
-						mzs<<pep.mz
-						ints<<pep.int
-					end
-					@data[rt] = [mzs,ints]
-					count += 1
-				end
-				Progress.progress("Populating structure for mzml:",100,Time.now-@start)
-				puts ""
-			end
-			
-			attr_reader :data
-			attr_writer :data
-			
-			# Counts the number of each atom in the peptide sequence.
-			#
-			def countAtoms(seq)
-				o = 0
-				n = 0
-				c = 0
-				h = 0
-				s = 0
-				p = 0
-				se = 0
-				seq.each_char do |aa|
-					o = o + MS::Feature::AA::ATOM_COUNTS[aa][:o]
-					n = n + MS::Feature::AA::ATOM_COUNTS[aa][:n]
-					c = c + MS::Feature::AA::ATOM_COUNTS[aa][:c]
-					h = h + MS::Feature::AA::ATOM_COUNTS[aa][:h]
-					s = s + MS::Feature::AA::ATOM_COUNTS[aa][:s]
-					p = p + MS::Feature::AA::ATOM_COUNTS[aa][:p]
-					se = se + MS::Feature::AA::ATOM_COUNTS[aa][:se]
-				end
-				return o,n,c,h,s,p,se
-			end
-			
-			# Calculates the relative intensities of the isotopic 
-			# envelope.
-			#
-			def calcPercent(seq)
-				#isotope.rb from Dr. Prince
-				atoms = countAtoms(seq)
-				
-				var = ""
-				var<<"O"
-				var<<atoms[0].to_s
-				var<<"N"
-				var<<atoms[1].to_s
-				var<<"C"
-				var<<atoms[2].to_s
-				var<<"H"
-				var<<atoms[3].to_s
-				var<<"S"
-				var<<atoms[4].to_s
-				var<<"P"
-				var<<atoms[5].to_s
-				var<<"SE"
-				var<<atoms[6].to_s
-	
-				rel_intesities = Isotope.dist(var)
-				#puts percents
-				return rel_intesities
-			end
-			
-			# Intensities are shaped in the rt direction by the Exponentially
-			# modified gaussian. They are also shaped in the m/z direction 
-			# by a simple gaussian curve (see 'factor' below). 
-			#
-			def getInts(fins, relative_abundances, avg)
-				intRand = (fins[0][0].charge)*10**2
-				stddev = rand+2
-			
-				index = 0
-				neutron = 0
-				fins.each do |fin|
-					mzmu = fin[0].mz + neutron + 0.5
-					max_y = RThelper.gaussian(mzmu,mzmu,0.05) 
-					
-					#percent_int = intRand*percents[index]
-					relative_abundances_int = relative_abundances[index]
-					fin.each do |p|
-								
-						#Exponentially modified gaussian * gaussian
-						#TODO expand and contract
-						p.int = (RThelper.emg(relative_abundances_int,avg,0.1,0.4,p.rt))
-						
-						#TODO mz noise function goes here; something like:
-						y = p.int
-						# loggerPro curve fit 1 = 0.03093y^(-0.4007)
-						# loggerPro curve fit 2 = 0.1301y^(-0.5739)
-						# loggerPro curve fit 3 = 1.091y^(-0.8104)
-						# loggerPro curve fit 4 = 0.1669y^(-0.5983)
-						# AVG:                    0.3547325y^(-0.595825)
-						# Normalized:
-						wobble_int = 0.001086*y**(-0.5561) 
-						wobble_mz = mzmu + RThelper.RandomFloat(wobble_int,(wobble_int*-1))
-						p.mz = wobble_mz
-						
-						fraction = RThelper.gaussian(p.mz,mzmu,0.05)
-						factor = fraction/max_y
-						p.int = p.int * factor
-						p.int = p.int * RThelper.RandomFloat(0.999,1.0)#Jagged-ness
-					end
-					index = index+1
-					neutron = neutron+1.009
-				end
-				return fins
-			end
-		end
-	end
+  module Feature
+    class Feature 
+      def initialize(peptide_groups)
+        #predict isotopes/relative abundance
+        #add noise (wobble)
+        @start = Time.now
+        @features = []
+        @data = {}
+        peptide_groups.each_with_index do |peptides,ind|
+          Progress.progress("Generating features:",(((ind+1)/peptide_groups.size.to_f)*100).to_i)
+          relative_abundances = calcPercent(peptides[0][0].sequence)
+          avg_rt = peptides[1]
+          waves = []
+          
+          relative_abundances.length.times do
+            newpeps = []
+            peptides[0].each do |peptide|
+              newpeps<<MS::Peptide.new(peptide.sequence,peptide.rt)
+            end
+            waves<<newpeps
+          end
+          
+          feature = getInts(waves,relative_abundances,avg_rt)
+          @features<<feature
+        end
+        Progress.progress("Generating features:",100,Time.now-@start)
+        puts ""
+        @start = Time.now
+        
+        @features = @features.flatten.group_by{|pep| pep.rt}
+        count = 1
+        @features.each do |rt, peps|
+          Progress.progress("Populating structure for mzml:",((count/@features.size.to_f)*100).to_i)
+          mzs = []
+          ints = []
+          peps.each do |pep|
+            mzs<<pep.mz
+            ints<<pep.int
+          end
+          @data[rt] = [mzs,ints]
+          count += 1
+        end
+        Progress.progress("Populating structure for mzml:",100,Time.now-@start)
+        puts ""
+      end
+      
+      attr_reader :data
+      attr_writer :data
+      
+      # Counts the number of each atom in the peptide sequence.
+      #
+      def countAtoms(seq)
+        o = 0
+        n = 0
+        c = 0
+        h = 0
+        s = 0
+        p = 0
+        se = 0
+        seq.each_char do |aa|
+          o = o + MS::Feature::AA::ATOM_COUNTS[aa][:o]
+          n = n + MS::Feature::AA::ATOM_COUNTS[aa][:n]
+          c = c + MS::Feature::AA::ATOM_COUNTS[aa][:c]
+          h = h + MS::Feature::AA::ATOM_COUNTS[aa][:h]
+          s = s + MS::Feature::AA::ATOM_COUNTS[aa][:s]
+          p = p + MS::Feature::AA::ATOM_COUNTS[aa][:p]
+          se = se + MS::Feature::AA::ATOM_COUNTS[aa][:se]
+        end
+        return o,n,c,h,s,p,se
+      end
+      
+      # Calculates the relative intensities of the isotopic 
+      # envelope.
+      #
+      def calcPercent(seq)
+        #isotope.rb from Dr. Prince
+        atoms = countAtoms(seq)
+        
+        var = ""
+        var<<"O"
+        var<<atoms[0].to_s
+        var<<"N"
+        var<<atoms[1].to_s
+        var<<"C"
+        var<<atoms[2].to_s
+        var<<"H"
+        var<<atoms[3].to_s
+        var<<"S"
+        var<<atoms[4].to_s
+        var<<"P"
+        var<<atoms[5].to_s
+        var<<"SE"
+        var<<atoms[6].to_s
+  
+        rel_intesities = Isotope.dist(var)
+        #puts percents
+        return rel_intesities
+      end
+      
+      # Intensities are shaped in the rt direction by the Exponentially
+      # modified gaussian. They are also shaped in the m/z direction 
+      # by a simple gaussian curve (see 'factor' below). 
+      #
+      def getInts(fins, relative_abundances, avg)
+        intRand = (fins[0][0].charge)*10**2
+        stddev = rand+2
+      
+        index = 0
+        neutron = 0
+        fins.each do |fin|
+          mzmu = fin[0].mz + neutron + 0.5
+          max_y = RThelper.gaussian(mzmu,mzmu,0.05) 
+          
+          #percent_int = intRand*percents[index]
+          relative_abundances_int = relative_abundances[index]
+          fin.each do |p|
+                
+            #Exponentially modified gaussian * gaussian
+            #TODO expand and contract
+            p.int = (RThelper.emg(relative_abundances_int,avg,0.1,0.4,p.rt))
+            
+            #TODO mz noise function goes here; something like:
+            y = p.int
+            # loggerPro curve fit 1 = 0.03093y^(-0.4007)
+            # loggerPro curve fit 2 = 0.1301y^(-0.5739)
+            # loggerPro curve fit 3 = 1.091y^(-0.8104)
+            # loggerPro curve fit 4 = 0.1669y^(-0.5983)
+            # AVG:                    0.3547325y^(-0.595825)
+            # Normalized:
+            wobble_int = 0.001086*y**(-0.5561) 
+            wobble_mz = mzmu + RThelper.RandomFloat(wobble_int,(wobble_int*-1))
+            p.mz = wobble_mz
+            
+            fraction = RThelper.gaussian(p.mz,mzmu,0.05)
+            factor = fraction/max_y
+            p.int = p.int * factor
+            p.int = p.int * RThelper.RandomFloat(0.999,1.0)#Jagged-ness
+          end
+          index = index+1
+          neutron = neutron+1.009
+        end
+        return fins
+      end
+    end
+  end
 end

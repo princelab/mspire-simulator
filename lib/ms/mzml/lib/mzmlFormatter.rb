@@ -100,331 +100,331 @@ run = AnoyceProject::Mzmlrun.new('run1','LCQDeca',AnoyceProject::MzmlspectrumLis
 
 
 builder = Nokogiri::XML::Builder.new do |xml|
-	paramPrinter = AnoyceProject::MzmlParamArrPrinter.new(xml)
-	xml.mzML(:xmlns=>"http://psi.hupo.org/ms/mzml", :accession=>mzmlAccession, :version=>"1.1.0", :id=>"default_config") {
-		xml.cvList(:count=>cvListArr.length) {
-			cvListArr.each do |curCv|
-				xml.cv(:id=>curCv.id, :fullName=>curCv.name, :version=>curCv.version, :URI=>curCv.uri)
-			end
-		}
-		
-		
-		
-		xml.fileDescription {
-			xml.fileContent {
-				fileContentArrLength = fileContentArr.length
-				if(fileContentArrLength > 0)
-					fileContentArr.each do |curFile|
-						paramPrinter.print(curFile)
-					end
-				end
-			}
-			srcFileListArrLength = srcFileListArr.length
-			if(srcFileListArrLength > 0)
-				xml.sourceFileList(:count=>srcFileListArrLength) {
-					srcFileListArr.each do |curFile|
-						xml.sourceFile(:id=>curFile.id, :name=>curFile.name, :location=>curFile.location) {
-							paramPrinter.print(curFile)
-						}
-					end
-				}
-			end
-			xml.contact {
-				paramPrinter.print(contactInfo)
-			}
-		}
-		
-		
-		
-		referenceableParamGroupListLength = refParamGrpListArr.length
-		if(referenceableParamGroupListLength > 0) 
-			xml.referenceableParamGroupList(:count=>referenceableParamGroupListLength) {
-				refParamGrpListArr.each do |curRef|
-					xml.referenceableParamGroup(:id=>curRef.id) {
-						curRefcvParamArr = curRef.cvParamArr
-						if(curRefcvParamArr != nil)
-							if(curRefcvParamArr.length > 0)
-								curRefcvParamArr.each do |curcv|
-									paramPrinter.printcv(curcv)
-								end
-							end
-						end
-						curRefUserParamArr = curRef.userParamArr
-						if(curRefUserParamArr != nil)
-							if(curRefUserParamArr.length > 0)
-								curRefUserParamArr.each do |curUser|
-									paramPrinter.printuser(curUser)
-								end
-							end
-						end
-					}
-				end
-			}
-		end
-		
-		
-		
-		sampleListArrLength = sampleListArr.length
-		if(sampleListArrLength > 0)
-			xml.sampleList(:count=>sampleListArrLength) {
-				sampleListArr.each do |curSample|
-					xml.sample(:id=>curSample.id, :name=>curSample.name) {
-						paramPrinter.print(curSample)
-					}
-				end
-			}
-		end
-		
-		
-		
-		softwareListArrLength = softwareListArr.length
-		xml.softwareList(:count=>softwareListArrLength) {
-			softwareListArr.each do |curSoft|
-				xml.software(:id=>curSoft.id, :version=>curSoft.version) {
-					paramPrinter.print(curSoft)
-				}
-			end
-		}
-		
-		
-		
-		scanSettingsListArrLength = scanSettingsListArr.length
-		if(scanSettingsListArrLength > 0)
-			xml.scanSettingsList(:count=>scanSettingsListArrLength) {
-				scanSettingsListArr.each do |curScanSet|
-					xml.scanSettings(:id=>curScanSet.id) {
-						curSrcFileRefListArr = curScanSet.sourceFileRefList
-						xml.sourceFileRefList(:count=>curSrcFileRefListArr.length) {
-							curSrcFileRefListArr.each do |curRef|
-								xml.sourceFileRef(:ref=>curRef.ref)
-							end
-						}
-						curTargetListArr = curScanSet.targetList
-						xml.targetList(:count=>curTargetListArr.length) {
-							curTargetListArr.each do |curTarget|
-								xml.target {
-									paramPrinter.print(curTarget)
-								}
-							end
-						}
-						paramPrinter.print(curScanSet)
-					}
-				end
-			}
-		end
-		
-		
-		
-		instConfigListArrLength = instConfigListArr.length
-		if(instConfigListArrLength > 0)
-			xml.instrumentConfigurationList(:count=>instConfigListArrLength) {
-				instConfigListArr.each do |curConfig|
-					xml.instrumentConfiguration(:id=>curConfig.id) {
-						paramPrinter.print(curConfig)
-						curCompListArr = curConfig.componentList
-						if(curConfig.componentList)
-							xml.componentList(:count=>curCompListArr.length) {
-								curCount = 1
-								curCompListArr.each do |curComp|
-									case curComp.name
-									when "source"
-										xml.source(:order=>curCount) {
-											paramPrinter.print(curComp)
-										}
-									when "analyzer"
-										xml.analyzer(:order=>curCount) {
-											paramPrinter.print(curComp)
-										}
-									when "detector"
-										xml.detector(:order=>curCount) {
-											paramPrinter.print(curComp)
-										}
-									else
-										# bad news: throw error?
-									end
-									curCount += 1
-								end
-							}
-						end
-						if(curConfig.softwareRef)
-							xml.softwareRef(:ref=>curConfig.softwareRef) {}
-						end
-					}
-				end
-			}
-		end
-		
-		
-		
-		dataProcListArrLength = dataProcListArr.length
-		if(dataProcListArrLength > 0)
-			xml.dataProcessingList(:count=>dataProcListArrLength) {
-				dataProcListArr.each do |curProc|
-					xml.dataProcessing(:id=>curProc.id) {
-						curCount = 1
-						ProcMethodListArr = curProc.processingMethodList
-						ProcMethodListArr.each do |curMethod|
-							xml.processingMethod(:order=>curCount, :softwareRef=>curMethod.softwareRef) {
-								paramPrinter.print(curMethod)
-							}
-							curCount += 1
-						end
-					}
-				end
-			}
-		end
-		
+  paramPrinter = AnoyceProject::MzmlParamArrPrinter.new(xml)
+  xml.mzML(:xmlns=>"http://psi.hupo.org/ms/mzml", :accession=>mzmlAccession, :version=>"1.1.0", :id=>"default_config") {
+    xml.cvList(:count=>cvListArr.length) {
+      cvListArr.each do |curCv|
+        xml.cv(:id=>curCv.id, :fullName=>curCv.name, :version=>curCv.version, :URI=>curCv.uri)
+      end
+    }
+    
+    
+    
+    xml.fileDescription {
+      xml.fileContent {
+        fileContentArrLength = fileContentArr.length
+        if(fileContentArrLength > 0)
+          fileContentArr.each do |curFile|
+            paramPrinter.print(curFile)
+          end
+        end
+      }
+      srcFileListArrLength = srcFileListArr.length
+      if(srcFileListArrLength > 0)
+        xml.sourceFileList(:count=>srcFileListArrLength) {
+          srcFileListArr.each do |curFile|
+            xml.sourceFile(:id=>curFile.id, :name=>curFile.name, :location=>curFile.location) {
+              paramPrinter.print(curFile)
+            }
+          end
+        }
+      end
+      xml.contact {
+        paramPrinter.print(contactInfo)
+      }
+    }
+    
+    
+    
+    referenceableParamGroupListLength = refParamGrpListArr.length
+    if(referenceableParamGroupListLength > 0) 
+      xml.referenceableParamGroupList(:count=>referenceableParamGroupListLength) {
+        refParamGrpListArr.each do |curRef|
+          xml.referenceableParamGroup(:id=>curRef.id) {
+            curRefcvParamArr = curRef.cvParamArr
+            if(curRefcvParamArr != nil)
+              if(curRefcvParamArr.length > 0)
+                curRefcvParamArr.each do |curcv|
+                  paramPrinter.printcv(curcv)
+                end
+              end
+            end
+            curRefUserParamArr = curRef.userParamArr
+            if(curRefUserParamArr != nil)
+              if(curRefUserParamArr.length > 0)
+                curRefUserParamArr.each do |curUser|
+                  paramPrinter.printuser(curUser)
+                end
+              end
+            end
+          }
+        end
+      }
+    end
+    
+    
+    
+    sampleListArrLength = sampleListArr.length
+    if(sampleListArrLength > 0)
+      xml.sampleList(:count=>sampleListArrLength) {
+        sampleListArr.each do |curSample|
+          xml.sample(:id=>curSample.id, :name=>curSample.name) {
+            paramPrinter.print(curSample)
+          }
+        end
+      }
+    end
+    
+    
+    
+    softwareListArrLength = softwareListArr.length
+    xml.softwareList(:count=>softwareListArrLength) {
+      softwareListArr.each do |curSoft|
+        xml.software(:id=>curSoft.id, :version=>curSoft.version) {
+          paramPrinter.print(curSoft)
+        }
+      end
+    }
+    
+    
+    
+    scanSettingsListArrLength = scanSettingsListArr.length
+    if(scanSettingsListArrLength > 0)
+      xml.scanSettingsList(:count=>scanSettingsListArrLength) {
+        scanSettingsListArr.each do |curScanSet|
+          xml.scanSettings(:id=>curScanSet.id) {
+            curSrcFileRefListArr = curScanSet.sourceFileRefList
+            xml.sourceFileRefList(:count=>curSrcFileRefListArr.length) {
+              curSrcFileRefListArr.each do |curRef|
+                xml.sourceFileRef(:ref=>curRef.ref)
+              end
+            }
+            curTargetListArr = curScanSet.targetList
+            xml.targetList(:count=>curTargetListArr.length) {
+              curTargetListArr.each do |curTarget|
+                xml.target {
+                  paramPrinter.print(curTarget)
+                }
+              end
+            }
+            paramPrinter.print(curScanSet)
+          }
+        end
+      }
+    end
+    
+    
+    
+    instConfigListArrLength = instConfigListArr.length
+    if(instConfigListArrLength > 0)
+      xml.instrumentConfigurationList(:count=>instConfigListArrLength) {
+        instConfigListArr.each do |curConfig|
+          xml.instrumentConfiguration(:id=>curConfig.id) {
+            paramPrinter.print(curConfig)
+            curCompListArr = curConfig.componentList
+            if(curConfig.componentList)
+              xml.componentList(:count=>curCompListArr.length) {
+                curCount = 1
+                curCompListArr.each do |curComp|
+                  case curComp.name
+                  when "source"
+                    xml.source(:order=>curCount) {
+                      paramPrinter.print(curComp)
+                    }
+                  when "analyzer"
+                    xml.analyzer(:order=>curCount) {
+                      paramPrinter.print(curComp)
+                    }
+                  when "detector"
+                    xml.detector(:order=>curCount) {
+                      paramPrinter.print(curComp)
+                    }
+                  else
+                    # bad news: throw error?
+                  end
+                  curCount += 1
+                end
+              }
+            end
+            if(curConfig.softwareRef)
+              xml.softwareRef(:ref=>curConfig.softwareRef) {}
+            end
+          }
+        end
+      }
+    end
+    
+    
+    
+    dataProcListArrLength = dataProcListArr.length
+    if(dataProcListArrLength > 0)
+      xml.dataProcessingList(:count=>dataProcListArrLength) {
+        dataProcListArr.each do |curProc|
+          xml.dataProcessing(:id=>curProc.id) {
+            curCount = 1
+            ProcMethodListArr = curProc.processingMethodList
+            ProcMethodListArr.each do |curMethod|
+              xml.processingMethod(:order=>curCount, :softwareRef=>curMethod.softwareRef) {
+                paramPrinter.print(curMethod)
+              }
+              curCount += 1
+            end
+          }
+        end
+      }
+    end
+    
 =begin
 I didn't have too much trouble debugging up top, but then I started playing with all of the information in run.
 I decided that it would be much easier to know what was coming by printing out the class that the program got and then labeling the printing command with the class I was expecting
-=end		
-		
-		xml.run(:id=>run.id, :defaultInstrumentConfigurationRef=>run.defaultInstrumentConfigurationRef, :sampleRef=>run.sampleRef, :startTimeStamp=>run.startTimeStamp) {
-			
-			specListArr = run.spectrumList
-			#puts specListArr.class #MzmlspectrumList
-			if(specListArr.count > 0)			
-				xml.spectrumList(:count=>specListArr.count, :defaultDataProcessingRef=>specListArr.defaultDataProcessingRef) {
-					specArr = specListArr.spectrumArr
-					if(specArr && specArr.length > 0)
-						specIndex = 0
-						specArr.each do |curSpec|
-							#puts curSpec.class	#Mzmlspectrum
-							xml.spectrum(:id=>curSpec.id, :spotID=>curSpec.spotID, :index=>specIndex, :defaultArrayLength=>curSpec.defaultArrayLength, :dataProcessingRef=>curSpec.dataProcessingRef, :sourceFileRef=>curSpec.sourceFileRef) {
-								scanListArr = curSpec.scanList
-								#puts scanListArr.class #MzmlscanList
-								xml.scanList(:count=>scanListArr.count) {
-									thisScanArr = scanListArr.scanArr
-									thisScanArr.each do |curScan|
-										#puts curScan.class	#Mzmlscan
-										xml.scan(:spectrumRef=>curScan.spectrumRef, :sourceFileRef=>curScan.sourceFileRef, :externalSpectrumID=>curScan.externalSpectrumID, :instrumentConfigurationRef=>curScan.instrumentConfigurationRef) {
-											curScanWindowListArr = curScan.scanWindowListArr
-											#puts curScanWindowListArr.class	#Array
-											curScanWindowListArrLength = curScanWindowListArr.length
-											if(curScanWindowListArrLength > 0)
-												xml.scanWindowList(:count=>curScanWindowListArrLength) {
-													curScanWindowListArr.each do |curScanWindow|
-														#puts curScanWindow.class	#MzmlscanWindow
-														if(curScanWindow)
-															xml.scanWindow{
-																curScanWindow.cvParamArr.each do |curCVParam|				
-																	#puts curCVParam.class #MzmlcvParam
-																	paramPrinter.printcv(curCVParam)
-																end
-															}
-														end
-													end
-												}
-											end
-										}
-									end
-								}
-								
-								curPrecursorListArr = curSpec.precursorList
-								curPrecursorListArrLength = curPrecursorListArr.length
-								if(curPrecursorListArrLength > 0)
-									xml.precursorList(:count=>curPrecursorListArrLength) {
-										curPrecursorListArr.each do |curPrecursor|
-											#puts curPrecursor.class	#Mzmlprecursor
-											xml.precursor(:spectrumRef=>curPrecursor.spectrumRef, :sourceFileRef=>curPrecursor.sourceFileRef, :externalSpectrumID=>curPrecursor.externalSpectrumID) {
-												curIsoWin = curPrecursor.isolationWindow
-												if(curIsoWin)
-													xml.isolationWindow {
-														paramPrinter.print(curIsoWin)
-													}
-												end
-												selIonListArr = curPrecursor.selectedIonList
-												xml.selectedIonList(:count=>selIonListArr.length) {
-													selIonListArr.each do |curSelIon|
-														xml.selectedIon {
-															paramPrinter.print(curSelIon)
-														}
-													end
-												}
-												xml.activation {
-													paramPrinter.print(curPrecursor.activation)
-												}
-											}
-										end
-									}
-								end
-								
-								prodListArr = curSpec.productList
-								#puts prodListArr.class	#Array
-								prodListArrLength = prodListArr.length
-								if(prodListArrLength > 0)
-									xml.productList(:count=>prodListArrLength) {
-										prodListArr.each do |curProd|
-											#puts curProd.class	#Mzmlproduct
-											xml.product {
-												curProd.isolationWindowArr.each do |curWin|
-													xml.isolationWindow {
-														paramPrinter.print(curWin)
-													}
-												end
-											}
-										end
-									}
-								end
-								
-								binDatArrListArr = curSpec.binaryDataArrayList
-								#puts binDatArrListArr.class	#Array
-								binDatArrListArrLength = binDatArrListArr.length
-								if(binDatArrListArrLength > 0)
-									xml.binaryDataArrayList(:count=>binDatArrListArrLength) {
-										binDatArrListArr.each do |curBinDataArr|
-											#puts curBinDataArr.class	#MzmlbinaryDataArray
-											xml.binaryDataArray(:arrayLength=>curBinDataArr.arrayLength, :dataProcessingRef=>curBinDataArr.dataProcessingRef, :encodedLength=>curBinDataArr.encodedLength) {
-												paramPrinter.print(curBinDataArr)
-												xml.binary curBinDataArr.binary
-											}
-										end
-									}
-								end	
-								
-							}
-							specIndex += 1
-						end
-					end
-				}
-			end
-			
-			chromList = run.chromatogramList
-			#puts chromList.class	#MzmlchromatogramList
-			if(chromList.count > 0)
-				xml.chromatogramList(:count=>chromList.count, :defaultDataProcessingRef=>chromList.defaultDataProcessingRef) {
-					chromArr = chromList.chromatogramArr
-					#puts chromArr.class	#Array
-					chromIndex = 0
-					chromArr.each do |curChrom|
-						#puts curChrom.class	#Mzmlchromatogram
-						xml.chromatogram(:id=>curChrom.id, :index=>chromIndex, :defaultArrayLength=>curChrom.defaultArrayLength, :dataProcessingRef=>curChrom.dataProcessingRef) {
-							binDatArrListArr = curChrom.binaryDataArrayList
-							xml.binaryDataArrayList(:count=>binDatArrListArr.length) {
-								binDatArrListArr.each do |curBinDatArr|
-									#puts curBinDataArr.class	#MzmlbinaryDataArray
-									xml.binaryDataArray(:arrayLength=>curBinDatArr.arrayLength, :dataProcessingRef=>curBinDatArr.dataProcessingRef, :encodedLength=>curBinDatArr.encodedLength) {
-										paramPrinter.print(curBinDatArr)
-										xml.binary curBinDatArr.binary
-									}
-								end
-							}
-						}
-						chromIndex += 1
-					end
-				}
-			end
-		}
-	}
-	#xml.indexList
-	#xml.indexListOffset
-	#xml.fileChecksum
-	# I think that these last three are extra options (they weren't in the schema)
+=end    
+    
+    xml.run(:id=>run.id, :defaultInstrumentConfigurationRef=>run.defaultInstrumentConfigurationRef, :sampleRef=>run.sampleRef, :startTimeStamp=>run.startTimeStamp) {
+      
+      specListArr = run.spectrumList
+      #puts specListArr.class #MzmlspectrumList
+      if(specListArr.count > 0)     
+        xml.spectrumList(:count=>specListArr.count, :defaultDataProcessingRef=>specListArr.defaultDataProcessingRef) {
+          specArr = specListArr.spectrumArr
+          if(specArr && specArr.length > 0)
+            specIndex = 0
+            specArr.each do |curSpec|
+              #puts curSpec.class #Mzmlspectrum
+              xml.spectrum(:id=>curSpec.id, :spotID=>curSpec.spotID, :index=>specIndex, :defaultArrayLength=>curSpec.defaultArrayLength, :dataProcessingRef=>curSpec.dataProcessingRef, :sourceFileRef=>curSpec.sourceFileRef) {
+                scanListArr = curSpec.scanList
+                #puts scanListArr.class #MzmlscanList
+                xml.scanList(:count=>scanListArr.count) {
+                  thisScanArr = scanListArr.scanArr
+                  thisScanArr.each do |curScan|
+                    #puts curScan.class #Mzmlscan
+                    xml.scan(:spectrumRef=>curScan.spectrumRef, :sourceFileRef=>curScan.sourceFileRef, :externalSpectrumID=>curScan.externalSpectrumID, :instrumentConfigurationRef=>curScan.instrumentConfigurationRef) {
+                      curScanWindowListArr = curScan.scanWindowListArr
+                      #puts curScanWindowListArr.class  #Array
+                      curScanWindowListArrLength = curScanWindowListArr.length
+                      if(curScanWindowListArrLength > 0)
+                        xml.scanWindowList(:count=>curScanWindowListArrLength) {
+                          curScanWindowListArr.each do |curScanWindow|
+                            #puts curScanWindow.class #MzmlscanWindow
+                            if(curScanWindow)
+                              xml.scanWindow{
+                                curScanWindow.cvParamArr.each do |curCVParam|       
+                                  #puts curCVParam.class #MzmlcvParam
+                                  paramPrinter.printcv(curCVParam)
+                                end
+                              }
+                            end
+                          end
+                        }
+                      end
+                    }
+                  end
+                }
+                
+                curPrecursorListArr = curSpec.precursorList
+                curPrecursorListArrLength = curPrecursorListArr.length
+                if(curPrecursorListArrLength > 0)
+                  xml.precursorList(:count=>curPrecursorListArrLength) {
+                    curPrecursorListArr.each do |curPrecursor|
+                      #puts curPrecursor.class  #Mzmlprecursor
+                      xml.precursor(:spectrumRef=>curPrecursor.spectrumRef, :sourceFileRef=>curPrecursor.sourceFileRef, :externalSpectrumID=>curPrecursor.externalSpectrumID) {
+                        curIsoWin = curPrecursor.isolationWindow
+                        if(curIsoWin)
+                          xml.isolationWindow {
+                            paramPrinter.print(curIsoWin)
+                          }
+                        end
+                        selIonListArr = curPrecursor.selectedIonList
+                        xml.selectedIonList(:count=>selIonListArr.length) {
+                          selIonListArr.each do |curSelIon|
+                            xml.selectedIon {
+                              paramPrinter.print(curSelIon)
+                            }
+                          end
+                        }
+                        xml.activation {
+                          paramPrinter.print(curPrecursor.activation)
+                        }
+                      }
+                    end
+                  }
+                end
+                
+                prodListArr = curSpec.productList
+                #puts prodListArr.class #Array
+                prodListArrLength = prodListArr.length
+                if(prodListArrLength > 0)
+                  xml.productList(:count=>prodListArrLength) {
+                    prodListArr.each do |curProd|
+                      #puts curProd.class #Mzmlproduct
+                      xml.product {
+                        curProd.isolationWindowArr.each do |curWin|
+                          xml.isolationWindow {
+                            paramPrinter.print(curWin)
+                          }
+                        end
+                      }
+                    end
+                  }
+                end
+                
+                binDatArrListArr = curSpec.binaryDataArrayList
+                #puts binDatArrListArr.class  #Array
+                binDatArrListArrLength = binDatArrListArr.length
+                if(binDatArrListArrLength > 0)
+                  xml.binaryDataArrayList(:count=>binDatArrListArrLength) {
+                    binDatArrListArr.each do |curBinDataArr|
+                      #puts curBinDataArr.class #MzmlbinaryDataArray
+                      xml.binaryDataArray(:arrayLength=>curBinDataArr.arrayLength, :dataProcessingRef=>curBinDataArr.dataProcessingRef, :encodedLength=>curBinDataArr.encodedLength) {
+                        paramPrinter.print(curBinDataArr)
+                        xml.binary curBinDataArr.binary
+                      }
+                    end
+                  }
+                end 
+                
+              }
+              specIndex += 1
+            end
+          end
+        }
+      end
+      
+      chromList = run.chromatogramList
+      #puts chromList.class #MzmlchromatogramList
+      if(chromList.count > 0)
+        xml.chromatogramList(:count=>chromList.count, :defaultDataProcessingRef=>chromList.defaultDataProcessingRef) {
+          chromArr = chromList.chromatogramArr
+          #puts chromArr.class  #Array
+          chromIndex = 0
+          chromArr.each do |curChrom|
+            #puts curChrom.class  #Mzmlchromatogram
+            xml.chromatogram(:id=>curChrom.id, :index=>chromIndex, :defaultArrayLength=>curChrom.defaultArrayLength, :dataProcessingRef=>curChrom.dataProcessingRef) {
+              binDatArrListArr = curChrom.binaryDataArrayList
+              xml.binaryDataArrayList(:count=>binDatArrListArr.length) {
+                binDatArrListArr.each do |curBinDatArr|
+                  #puts curBinDataArr.class #MzmlbinaryDataArray
+                  xml.binaryDataArray(:arrayLength=>curBinDatArr.arrayLength, :dataProcessingRef=>curBinDatArr.dataProcessingRef, :encodedLength=>curBinDatArr.encodedLength) {
+                    paramPrinter.print(curBinDatArr)
+                    xml.binary curBinDatArr.binary
+                  }
+                end
+              }
+            }
+            chromIndex += 1
+          end
+        }
+      end
+    }
+  }
+  #xml.indexList
+  #xml.indexListOffset
+  #xml.fileChecksum
+  # I think that these last three are extra options (they weren't in the schema)
 end
 
 puts builder.to_xml
 # The line above simply prints out the mzML file to the terminal.
 File.open(outFileName, 'w') do |output|
-	output.write(builder.to_xml)
+  output.write(builder.to_xml)
 end
 
