@@ -135,14 +135,21 @@ module MS
             # loggerPro curve fit 4 = 0.1669y^(-0.5983)
             # AVG:                    0.3547325y^(-0.595825)
             # Normalized:
-            wobble_int = 0.001086*y**(-0.5561) 
-            wobble_mz = mzmu + RThelper.RandomFloat(wobble_int,(wobble_int*-1))
+            if y > 1.0
+              wobble_int = 0.001086*y**(-0.5561)
+            else
+              wobble_int = 0.002
+            end
+            wobble_mz = mzmu + RThelper.RandomFloat((wobble_int*-1),wobble_int)
+            if wobble_mz < 0
+              wobble_mz = 0.01
+            end
             p.mz = wobble_mz
             
             fraction = RThelper.gaussian(p.mz,mzmu,0.05)
             factor = fraction/max_y
             p.int = p.int * factor
-            p.int = p.int * RThelper.RandomFloat(0.999,1.0)#Jagged-ness
+            p.int = p.int * RThelper.RandomFloat(0.60,1.0)#Jagged-ness
           end
           index = index+1
           neutron = neutron+1.009

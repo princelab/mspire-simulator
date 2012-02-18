@@ -47,13 +47,13 @@ module MS
       rtmu = rand(@run_time-5)+5
     
       peps.each do |pep|
-
         spreadRTs(pep,rtmu)
         if(pep.rt == nil)
           pep.rt = 1
         end
         avg_rt = avg_rt+pep.rt
       end
+      
       avg_rt = avg_rt/(peps.length)
       return peps.sort_by {|pep| pep.rt}[0].rt
     end
@@ -62,7 +62,7 @@ module MS
     # This may not be the correct thing to do.
     #
     def spreadRTs(pep,mu)
-      pep.rt = RThelper.randn(mu,20)
+      pep.rt = RThelper.RandomFloat(mu-75,mu+75)
       pep.rt = @r_time.find {|i| i >= pep.rt}
     end
   end
