@@ -21,7 +21,7 @@ module RThelper
 	float x1, x2, w, y1;   
 	static float y2;   
 	static int use_last   = 0;   
-	static float rand_max = (float)( RAND_MAX);   
+	static float rand_max = (float)(RAND_MAX);   
 
 	if ( use_last){            /* use value from previous call */      
 	  y1 = y2;   
@@ -47,6 +47,11 @@ module RThelper
 
     float gaussian(float mz, float mu, float sd){
       return ((1/(sqrt(2*(PI)*(pow(sd,2)))))*(exp(-((pow((mz-mu),2))/(pow((2*sd),2))))));
+    } 
+    code
+    builder.c <<-code
+    float gaussianI(float x, float mu, float sd, float h){
+      return h*(exp(-((pow((x-mu),2))/(pow(sd,2)))));
     } 
     code
     builder.c <<-code

@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-#ruby -I lib ./bin/ms-simulate.rb testFastaFiles/p53.fasta
+
 
 require 'time'
 require 'progress'
@@ -28,7 +28,7 @@ version "ms-simulate 0.0.1a (c) 2012 Brigham Young University"
   where [options] are:
   EOS
   opt :digestor, "Digestion Enzyme; one of: \n\t\targ_c,\n \t\tasp_n,\n \t\tasp_n_ambic,\n \t\tchymotrypsin,\n \t\tcnbr,\n \t\tlys_c,\n \t\tlys_c_p,\n \t\tpepsin_a,\n\t\ttryp_cnbr,\n \t\ttryp_chymo,\n \t\ttrypsin_p,\n \t\tv8_de,\n \t\tv8_e,\n \t\ttrypsin,\n \t\tv8_e_trypsin,\n\t\tv8_de_trypsin", :default => "trypsin" 
-  opt :sampling_rate, "How many scans per second", :default => 3.0 
+  opt :sampling_rate, "How many scans per second", :default => 1.5 
   opt :run_time, "Run time in seconds", :default => 300.0 
 end
 
@@ -39,8 +39,8 @@ Trollop::die "must supply a .fasta protien sequence file" if ARGV.empty?
 #*************************Main******************************************
 
   digestor = opts[:digestor]
-  sampling_rate = opts[:sampling_rate]
-  run_time = opts[:run_time]
+  sampling_rate = opts[:sampling_rate].to_f
+  run_time = opts[:run_time].to_f
 
   @peptides = []
 
@@ -66,7 +66,6 @@ Trollop::die "must supply a .fasta protien sequence file" if ARGV.empty?
   Progress.progress("Reading file(s):",100,Time.now-@start)
   puts ''
 
-  #filter peptides ??? - in a later version
   @peptides.uniq!
   spectra = MS::Spectra.new(@peptides,sampling_rate, run_time)
   

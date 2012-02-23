@@ -55,7 +55,7 @@ module MS
       end
       
       avg_rt = avg_rt/(peps.length)
-      return peps.sort_by {|pep| pep.rt}[0].rt
+      return avg_rt
     end
     
     # Spreading peaks by a normal density function.

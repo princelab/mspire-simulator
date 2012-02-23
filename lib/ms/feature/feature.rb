@@ -1,5 +1,6 @@
 
 require 'time'
+require 'distribution'
 require 'msplat'
 require 'ms/peptide'
 require 'ms/feature/isotope'
@@ -115,32 +116,35 @@ module MS
       
         index = 0
         neutron = 0
+        front_shape = RThelper.RandomFloat(7.0,10.0)
+        rear_shape = RThelper.RandomFloat(25.0,35.0)
+        
         fins.each do |fin|
           mzmu = fin[0].mz + neutron + 0.5
           max_y = RThelper.gaussian(mzmu,mzmu,0.05) 
           
           #percent_int = intRand*percents[index]
           relative_abundances_int = relative_abundances[index]
+          
           fin.each do |p|
-                
             #Exponentially modified gaussian * gaussian
             #TODO expand and contract
-            p.int = (RThelper.emg(relative_abundances_int,avg,0.1,0.4,p.rt))
+            if p.rt < avg
+              p.int = (RThelper.gaussianI(p.rt,avg,front_shape,relative_abundances_int))
+            else
+              p.int = (RThelper.gaussianI(p.rt,avg,rear_shape,relative_abundances_int))
+            end
             
             #TODO mz noise function goes here; something like:
             y = p.int
-            # loggerPro curve fit 1 = 0.03093y^(-0.4007)
-            # loggerPro curve fit 2 = 0.1301y^(-0.5739)
-            # loggerPro curve fit 3 = 1.091y^(-0.8104)
-            # loggerPro curve fit 4 = 0.1669y^(-0.5983)
-            # AVG:                    0.3547325y^(-0.595825)
-            # Normalized:
-            if y > 1.0
+
+            if y > 0.5
               wobble_int = 0.001086*y**(-0.5561)
             else
-              wobble_int = 0.002
+              wobble_int = 0.001
             end
-            wobble_mz = mzmu + RThelper.RandomFloat((wobble_int*-1),wobble_int)
+      
+            wobble_mz = Distribution::Normal.rng(mzmu,(wobble_int/2.0)).call
             if wobble_mz < 0
               wobble_mz = 0.01
             end
