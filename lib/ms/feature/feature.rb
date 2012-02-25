@@ -116,8 +116,12 @@ module MS
       
         index = 0
         neutron = 0
-        front_shape = RThelper.RandomFloat(7.0,10.0)
-        rear_shape = RThelper.RandomFloat(25.0,35.0)
+        front_shape = RThelper.RandomFloat(10.0,15.0)
+        mid_shape = RThelper.RandomFloat(35.0,45.0)
+        rear_shape = RThelper.RandomFloat(60.0,70.0)
+        
+        #front_shape = front_shape * (relative_abundances[0]*10**(-2))
+        #rear_shape = rear_shape * (relative_abundances[0]*10**(-2))
         
         fins.each do |fin|
           mzmu = fin[0].mz + neutron + 0.5
@@ -131,8 +135,10 @@ module MS
             #TODO expand and contract
             if p.rt < avg
               p.int = (RThelper.gaussianI(p.rt,avg,front_shape,relative_abundances_int))
+            elsif p.rt > avg and p.rt < (avg*2)
+              p.int = (RThelper.gaussianI(p.rt,avg,mid_shape,relative_abundances_int))
             else
-              p.int = (RThelper.gaussianI(p.rt,avg,rear_shape,relative_abundances_int))
+              p.int = (RThelper.gaussianI(p.rt,(avg*2),rear_shape,relative_abundances_int*0.4))
             end
             
             #TODO mz noise function goes here; something like:
@@ -157,6 +163,7 @@ module MS
           end
           index = index+1
           neutron = neutron+1.009
+          fin.delete_if{|p| p.int < 0.05}
         end
         return fins
       end
