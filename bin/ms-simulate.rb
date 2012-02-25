@@ -27,7 +27,7 @@ version "ms-simulate 0.0.1a (c) 2012 Brigham Young University"
   EOS
   opt :digestor, "Digestion Enzyme; one of: \n\t\targ_c,\n \t\tasp_n,\n \t\tasp_n_ambic,\n \t\tchymotrypsin,\n \t\tcnbr,\n \t\tlys_c,\n \t\tlys_c_p,\n \t\tpepsin_a,\n\t\ttryp_cnbr,\n \t\ttryp_chymo,\n \t\ttrypsin_p,\n \t\tv8_de,\n \t\tv8_e,\n \t\ttrypsin,\n \t\tv8_e_trypsin,\n\t\tv8_de_trypsin", :default => "trypsin" 
   opt :sampling_rate, "How many scans per second", :default => 1.5 
-  opt :run_time, "Run time in seconds", :default => 300.0 
+  opt :run_time, "Run time in seconds", :default => 1000.0 
 end
 
 Trollop::die :sampling_rate, "must be greater than 0" if opts[:sampling_rate] <= 0

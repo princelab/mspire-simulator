@@ -116,8 +116,7 @@ module MS
       
         index = 0
         neutron = 0
-        front_shape = RThelper.RandomFloat(10.0,15.0)
-        mid_shape = RThelper.RandomFloat(35.0,45.0)
+        front_shape = RThelper.RandomFloat(7.0,10.0)
         rear_shape = RThelper.RandomFloat(60.0,70.0)
         
         #front_shape = front_shape * (relative_abundances[0]*10**(-2))
@@ -131,14 +130,11 @@ module MS
           relative_abundances_int = relative_abundances[index]
           
           fin.each do |p|
-            #Exponentially modified gaussian * gaussian
             #TODO expand and contract
             if p.rt < avg
               p.int = (RThelper.gaussianI(p.rt,avg,front_shape,relative_abundances_int))
-            elsif p.rt > avg and p.rt < (avg*2)
+            elsif p.rt > avg
               p.int = (RThelper.gaussianI(p.rt,avg,mid_shape,relative_abundances_int))
-            else
-              p.int = (RThelper.gaussianI(p.rt,(avg*2),rear_shape,relative_abundances_int*0.4))
             end
             
             #TODO mz noise function goes here; something like:
@@ -161,6 +157,7 @@ module MS
             p.int = p.int * factor
             p.int = p.int * RThelper.RandomFloat(0.60,1.0)#Jagged-ness
           end
+	  
           index = index+1
           neutron = neutron+1.009
           fin.delete_if{|p| p.int < 0.05}
