@@ -21,7 +21,7 @@ class SpectrumList
     @start = Time.now
     for i in (1..70)
       Progress.progress("Contaminating:",((i/70.to_f)*100).to_i)
-      #contaminate(spectra)
+      contaminate(spectra)
     end
     Progress.progress("Contaminating:",100,Time.now-@start)
     puts ""
@@ -99,7 +99,7 @@ class Spectrum
   end
   
   def init_xml(builder,mzs,ints,time)
-    #add_noise(mzs, ints)
+    add_noise(mzs, ints)
 
     @defaultArrayLength = mzs.length 
 

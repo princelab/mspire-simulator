@@ -116,7 +116,7 @@ module MS
       
         index = 0
         neutron = 0
-	#length = 0.0002062x + 38.76
+		#length = 0.0002062x + 38.76
         front_shape = RThelper.RandomFloat(7.0,10.0)
         rear_shape = RThelper.RandomFloat(60.0,70.0)
         
@@ -129,44 +129,55 @@ module MS
           
           #percent_int = intRand*percents[index]
           relative_abundances_int = relative_abundances[index]
+          x = 0
+          fin = fin.sort_by {|p| p.rt}
           
           fin.each do |p|
-            #TODO expand and contract
-            if p.rt < avg
-              p.int = (RThelper.gaussianI(p.rt,avg,front_shape,relative_abundances_int))
-            elsif p.rt > avg
-              p.int = (RThelper.gaussianI(p.rt,avg,rear_shape,relative_abundances_int))
-            end
+            #TODO expand and contract ???
             
-            #TODO mz noise function goes here; something like:
+            
+            #-------------Tailing-------------------------
+            shape = 0.2*x + 7.0
+            p.int = (RThelper.gaussianI(p.rt,avg,shape,relative_abundances_int))
+            #---------------------------------------------
+            
+            
+            #-------------mz wobble-----------------------
             y = p.int
-
             if y > 0.5
               wobble_int = 0.001086*y**(-0.5561)
             else
               wobble_int = 0.001
             end
-      
             wobble_mz = Distribution::Normal.rng(mzmu,(wobble_int/2.0)).call
             if wobble_mz < 0
               wobble_mz = 0.01
             end
             p.mz = wobble_mz
-	    
-	    fraction = RThelper.gaussian(p.mz,mzmu,0.05)
-	    factor = fraction/max_y
-	    p.int = p.int * factor
-	    #Jagged-ness - diff = 0.07intesity + 1
-	    sd = 0.1418 * p.int + 5.594
-	    diff = (Distribution::Normal.rng(1.025,sd).call)
-	    p diff
-	    p.int = p.int + diff
+            #---------------------------------------------
+            
+            
+            #-------------M/Z Peak shape------------------
+            fraction = RThelper.gaussian(p.mz,mzmu,0.05)
+            factor = fraction/max_y
+            p.int = p.int * factor
+            #---------------------------------------------
+            
+            
+            #-------------Jagged-ness---------------------
+            sd = 0.1418 * p.int
+            diff = (Distribution::Normal.rng(0,sd).call)
+            p.int = p.int + diff
+            #---------------------------------------------
+            
+            
+            x += 1
 
           end
 	  
           index = index+1
           neutron = neutron+1.009
-          fin.delete_if{|p| p.int < 0.05}
+          fin.delete_if{|p| p.int < 0.1}
         end
         return fins
       end
