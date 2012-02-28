@@ -116,6 +116,7 @@ module MS
       
         index = 0
         neutron = 0
+	#length = 0.0002062x + 38.76
         front_shape = RThelper.RandomFloat(7.0,10.0)
         rear_shape = RThelper.RandomFloat(60.0,70.0)
         
@@ -134,7 +135,7 @@ module MS
             if p.rt < avg
               p.int = (RThelper.gaussianI(p.rt,avg,front_shape,relative_abundances_int))
             elsif p.rt > avg
-              p.int = (RThelper.gaussianI(p.rt,avg,mid_shape,relative_abundances_int))
+              p.int = (RThelper.gaussianI(p.rt,avg,rear_shape,relative_abundances_int))
             end
             
             #TODO mz noise function goes here; something like:
@@ -151,11 +152,16 @@ module MS
               wobble_mz = 0.01
             end
             p.mz = wobble_mz
-            
-            fraction = RThelper.gaussian(p.mz,mzmu,0.05)
-            factor = fraction/max_y
-            p.int = p.int * factor
-            p.int = p.int * RThelper.RandomFloat(0.60,1.0)#Jagged-ness
+	    
+	    fraction = RThelper.gaussian(p.mz,mzmu,0.05)
+	    factor = fraction/max_y
+	    p.int = p.int * factor
+	    #Jagged-ness - diff = 0.07intesity + 1
+	    sd = 0.1418 * p.int + 5.594
+	    diff = (Distribution::Normal.rng(1.025,sd).call)
+	    p diff
+	    p.int = p.int + diff
+
           end
 	  
           index = index+1
