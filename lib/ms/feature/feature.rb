@@ -129,15 +129,23 @@ module MS
           
           #percent_int = intRand*percents[index]
           relative_abundances_int = relative_abundances[index]
-          x = 0
+          
+          fin.uniq! {|p| p.rt}
           fin = fin.sort_by {|p| p.rt}
+          
+          #This 'x' is for tailing,
+          #needs to change for different
+          #sampling rates.
+          step = (fin.max_by{|p| p.rt}.rt) - avg
+          step = step/fin.length
+          x = 0.0
           
           fin.each do |p|
             #TODO expand and contract ???
             
             
             #-------------Tailing-------------------------
-            shape = 0.2*x + 7.0
+            shape = 0.2*x + 1.0
             p.int = (RThelper.gaussianI(p.rt,avg,shape,relative_abundances_int))
             #---------------------------------------------
             
@@ -171,7 +179,7 @@ module MS
             #---------------------------------------------
             
             
-            x += 1
+            x += step
 
           end
 	  
