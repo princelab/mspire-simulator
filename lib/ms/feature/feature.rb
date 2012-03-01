@@ -9,12 +9,13 @@ require 'ms/rt/rt_helper'
 module MS
   module Feature
     class Feature 
-      def initialize(peptide_groups)
+      def initialize(peptide_groups,sampling_rate)
         #predict isotopes/relative abundance
         #add noise (wobble)
         @start = Time.now
         @features = []
         @data = {}
+	@sampling_rate = sampling_rate
         peptide_groups.each_with_index do |peptides,ind|
           Progress.progress("Generating features:",(((ind+1)/peptide_groups.size.to_f)*100).to_i)
           relative_abundances = calcPercent(peptides[0][0].sequence)
@@ -106,8 +107,9 @@ module MS
         return rel_intesities
       end
       
-      # Intensities are shaped in the rt direction by the Exponentially
-      # modified gaussian. They are also shaped in the m/z direction 
+      # Intensities are shaped in the rt direction by the gaussian with 
+      # a dynamic standard deviation.
+      # They are also shaped in the m/z direction 
       # by a simple gaussian curve (see 'factor' below). 
       #
       def getInts(fins, relative_abundances, avg)
@@ -116,12 +118,6 @@ module MS
       
         index = 0
         neutron = 0
-		#length = 0.0002062x + 38.76
-        front_shape = RThelper.RandomFloat(7.0,10.0)
-        rear_shape = RThelper.RandomFloat(60.0,70.0)
-        
-        #front_shape = front_shape * (relative_abundances[0]*10**(-2))
-        #rear_shape = rear_shape * (relative_abundances[0]*10**(-2))
         
         fins.each do |fin|
           mzmu = fin[0].mz + neutron + 0.5
@@ -136,17 +132,22 @@ module MS
           #This 'x' is for tailing,
           #needs to change for different
           #sampling rates.
-          step = (fin.max_by{|p| p.rt}.rt) - avg
-          step = step/fin.length
+	  #TODO expand and contract ???
+	  length = 0.749*relative_abundances_int + 48.76
+	  short_fin = fin[(avg-length/2)..(avg+length/2)]
+	  if short_fin == nil;else
+	    fin = short_fin
+	  end
+          step = @sampling_rate
+	  puts "step: #{step}, length: #{length}, fin_length: #{fin.length}"
           x = 0.0
           
           fin.each do |p|
-            #TODO expand and contract ???
             
             
             #-------------Tailing-------------------------
-            shape = 0.2*x + 1.0
-            p.int = (RThelper.gaussianI(p.rt,avg,shape,relative_abundances_int))
+            shape = 0.35*x + 6.65
+	    p.int = (RThelper.gaussianI(p.rt,avg,shape,relative_abundances_int))
             #---------------------------------------------
             
             
@@ -185,9 +186,9 @@ module MS
 	  
           index = index+1
           neutron = neutron+1.009
-          fin.delete_if{|p| p.int < 0.1}
         end
-        return fins
+	#  Filter for low intensities
+        return fins.each {|fin| fin.delete_if {|p| p.int < 0.1}}
       end
     end
   end

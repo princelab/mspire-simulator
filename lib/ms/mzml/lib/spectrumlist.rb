@@ -8,7 +8,7 @@ require 'ms/rt/rt_helper'
 
 class SpectrumList
         
-  def initialize(builder, spectra)
+  def initialize(builder, spectra, noise, contaminate)
   
     #now have Hash rt=>[[mzs],[ints]]
 
@@ -19,16 +19,25 @@ class SpectrumList
     count = 1
     @range_mz = spectra.max_by{|spec| spec[1][0].max}[1][0].max
     @start = Time.now
-    for i in (1..70)
-      Progress.progress("Contaminating:",((i/70.to_f)*100).to_i)
-      contaminate(spectra)
+    
+    
+    #----------------Contaminate-----------------------
+    #should be in spectra
+    if contaminate == "true"
+      for i in (1..70)
+	Progress.progress("Contaminating:",((i/70.to_f)*100).to_i)
+	contaminate(spectra)
+      end
+      Progress.progress("Contaminating:",100,Time.now-@start)
+      puts ""
     end
-    Progress.progress("Contaminating:",100,Time.now-@start)
-    puts ""
+    #---------------------------------------------------
+    
+    
     @start = Time.new
     spectra.each do |time,spectrum|
       Progress.progress("Converting data to mzml:",((count/spectra.size.to_f)*100).to_i)
-      Spectrum.new(builder,time,spectrum,count,@range_mz)
+      Spectrum.new(builder,time,spectrum,count,@range_mz,noise)
       count = count + 1
     end
     Progress.progress("Converting data to mzml:",100,Time.now-@start)
@@ -75,7 +84,7 @@ end
 
 class Spectrum
         
-  def initialize(builder,time,spectrum,count,range_mz)
+  def initialize(builder,time,spectrum,count,range_mz,noise)
   
     mzs = spectrum[0] 
     ints = spectrum[1] 
@@ -88,7 +97,7 @@ class Spectrum
     @id = "spectrum=#{count}"
     @defaultArrayLength = mzs.length 
     @index = (count - 1)
-    init_xml(builder,mzs,ints,time)
+    init_xml(builder,mzs,ints,time,noise)
     #@binaryDataArrayList = BinaryDataArrayList.new(builder,spectrum[0],spectrum[2])
     #builder = @binaryDataArrayList.get_builder
     #-optional
@@ -98,8 +107,16 @@ class Spectrum
   
   end
   
-  def init_xml(builder,mzs,ints,time)
-    add_noise(mzs, ints)
+  def init_xml(builder,mzs,ints,time,noise)
+  
+  
+    #------------------------Noise---------------
+    #should be in spectra
+    if noise == "true"
+      add_noise(mzs, ints)
+    end
+    #--------------------------------------------
+
 
     @defaultArrayLength = mzs.length 
 

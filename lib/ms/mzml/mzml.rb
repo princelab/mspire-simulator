@@ -8,7 +8,7 @@ require 'ms/mzml/lib/run'
 
 class Mzml
 
-  def initialize(spectra)
+  def initialize(spectra, noise, contaminate)
   #spectra is a Hash rt=>[[mzs],[ints]]
   
     builder = Nokogiri::XML::Builder.new do |xml|
@@ -37,7 +37,7 @@ class Mzml
     
     @insturmentConfigurationList = InsturmentConfigurationList.new(builder)
     @dataProcessingList = DataProcessingList.new(builder)
-    @run = Run.new(builder,spectra)
+    @run = Run.new(builder,spectra, noise, contaminate)
     
     #attributes - only version is required
     #version

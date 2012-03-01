@@ -16,6 +16,7 @@ module MS
       
       peptides.delete_if{|pep| pep.charge == 0}
       
+      # Gets retention times from the weka model
       peptides = MS::Weka.predict_rts(peptides)
     
       peptides.each_with_index do |pep,ind|
@@ -27,7 +28,7 @@ module MS
           peps<<MS::Peptide.new(pep.sequence,pep.rt)
         end
   
-        #predict rts and spread them by a normal density func.
+        #Spread them by a normal density func.
         avg_rt = getRTs(peps)
         
         #eliminate redundant rts in pep
@@ -45,8 +46,6 @@ module MS
       return new_peptides
     end
     
-    # Gets retention times from the weka model
-    #
     def getRTs(peps)
         
       avg_rt = 0.0
@@ -68,7 +67,7 @@ module MS
     # This may not be the correct thing to do.
     #
     def spreadRTs(pep,mu)
-      pep.rt = Distribution::Normal.rng(mu,80).call
+      pep.rt = Distribution::Normal.rng(mu,200).call
       pep.rt = @r_time.find {|i| i >= pep.rt}
     end
   end

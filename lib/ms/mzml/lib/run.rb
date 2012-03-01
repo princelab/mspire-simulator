@@ -5,7 +5,7 @@ require 'ms/mzml/lib/chromatogramlist'
 
 class Run
   
-  def initialize(builder,spectra)
+  def initialize(builder,spectra, noise, contaminate)
     
     #required
     @id = 'run1'
@@ -16,7 +16,7 @@ class Run
     @defaultSourceFileRef
     init_xml(builder)
     @params
-    @spectrumList = SpectrumList.new(builder,spectra)
+    @spectrumList = SpectrumList.new(builder,spectra, noise, contaminate)
       builder = @spectrumList.get_builder
     #@chromatogramList = ChromatogramList.new(builder)#maybe put Total Ion Count here
       #builder = @chromatogramList.get_builder
