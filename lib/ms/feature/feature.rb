@@ -9,13 +9,14 @@ require 'ms/rt/rt_helper'
 module MS
   module Feature
     class Feature 
-      def initialize(peptide_groups,sampling_rate)
+      def initialize(peptide_groups,sampling_rate,r_time)
         #predict isotopes/relative abundance
         #add noise (wobble)
         @start = Time.now
         @features = []
         @data = {}
 	@sampling_rate = sampling_rate
+	@r_time = r_time
         peptide_groups.each_with_index do |peptides,ind|
           Progress.progress("Generating features:",(((ind+1)/peptide_groups.size.to_f)*100).to_i)
           relative_abundances = calcPercent(peptides[0][0].sequence)
@@ -133,13 +134,20 @@ module MS
           #needs to change for different
           #sampling rates.
 	  #TODO expand and contract ???
-	  length = 0.749*relative_abundances_int + 48.76
-	  short_fin = fin[(avg-length/2)..(avg+length/2)]
-	  if short_fin == nil;else
-	    fin = short_fin
-	  end
-          step = @sampling_rate
-	  puts "step: #{step}, length: #{length}, fin_length: #{fin.length}"
+	  rt_mean = @r_time/2
+	  length = RThelper.gaussianI(avg,rt_mean,@r_time/2.5,200.0)
+	  mid = fin.index(fin.find {|p| p.rt >= avg})
+	  p mid
+	  avg = avg + mid/4
+	  short_fin = fin[(mid-length/2)..(mid+length/2)]
+	  #puts "short: #{(mid-length/2).round}, #{(mid+length/2).round}, mid: #{mid}"
+
+	  fin = short_fin
+	  
+	  time = fin.max_by {|p| p.rt}.rt - fin.min_by {|p| p.rt}.rt
+	  
+          step = time/length
+	  #puts "step: #{step}, length: #{length}, fin_length: #{fin.length}"
           x = 0.0
           
           fin.each do |p|
