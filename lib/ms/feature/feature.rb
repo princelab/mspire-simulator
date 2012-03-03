@@ -136,18 +136,11 @@ module MS
 	  #TODO expand and contract ???
 	  rt_mean = @r_time/2
 	  length = RThelper.gaussianI(avg,rt_mean,@r_time/2.5,200.0)
-	  mid = fin.index(fin.find {|p| p.rt >= avg})
-	  p mid
-	  avg = avg + mid/4
-	  short_fin = fin[(mid-length/2)..(mid+length/2)]
-	  #puts "short: #{(mid-length/2).round}, #{(mid+length/2).round}, mid: #{mid}"
-
-	  fin = short_fin
 	  
-	  time = fin.max_by {|p| p.rt}.rt - fin.min_by {|p| p.rt}.rt
+	  time = (fin.max_by {|p| p.rt}.rt - fin.min_by {|p| p.rt}.rt)/2
 	  
-          step = time/length
-	  #puts "step: #{step}, length: #{length}, fin_length: #{fin.length}"
+          step = time/(length*10)
+	  puts "step: #{step}, length: #{length}, fin_length: #{fin.length}"
           x = 0.0
           
           fin.each do |p|
