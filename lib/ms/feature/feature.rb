@@ -10,13 +10,15 @@ module MS
   module Feature
     class Feature 
       def initialize(peptide_groups,sampling_rate,r_time)
-        #predict isotopes/relative abundance
-        #add noise (wobble)
+        
         @start = Time.now
         @features = []
         @data = {}
 	@sampling_rate = sampling_rate
 	@r_time = r_time
+	
+	
+	#------------------Each_Group_is_a_Feature----------------------
         peptide_groups.each_with_index do |peptides,ind|
           Progress.progress("Generating features:",(((ind+1)/peptide_groups.size.to_f)*100).to_i)
           relative_abundances = calcPercent(peptides[0][0].sequence)
@@ -37,7 +39,10 @@ module MS
         Progress.progress("Generating features:",100,Time.now-@start)
         puts ""
         @start = Time.now
+	#---------------------------------------------------------------
+	
         
+	#-----------------Transform_to_spectra_data_for_mzml------------
         @features = @features.flatten.group_by{|pep| pep.rt}
         count = 1
         @features.each do |rt, peps|
@@ -53,6 +58,8 @@ module MS
         end
         Progress.progress("Populating structure for mzml:",100,Time.now-@start)
         puts ""
+	#---------------------------------------------------------------
+	
       end
       
       attr_reader :data
@@ -108,7 +115,7 @@ module MS
         return rel_intesities
       end
       
-      # Intensities are shaped in the rt direction by the gaussian with 
+      # Intensities are shaped in the rt direction by a gaussian with 
       # a dynamic standard deviation.
       # They are also shaped in the m/z direction 
       # by a simple gaussian curve (see 'factor' below). 
@@ -119,6 +126,7 @@ module MS
       
         index = 0
         neutron = 0
+	length = RThelper.RandomFloat(0.10,1.0)
         
         fins.each do |fin|
           mzmu = fin[0].mz + neutron + 0.5
@@ -126,29 +134,26 @@ module MS
           
           #percent_int = intRand*percents[index]
           relative_abundances_int = relative_abundances[index]
-          
-          fin.uniq! {|p| p.rt}
-          fin = fin.sort_by {|p| p.rt}
-          
-          #This 'x' is for tailing,
-          #needs to change for different
-          #sampling rates.
-	  #TODO expand and contract ???
+	  
+	  
+	  #--------------Length----------------------------
 	  rt_mean = @r_time/2
-	  length = RThelper.gaussianI(avg,rt_mean,@r_time/2.5,200.0)
-	  
-	  time = (fin.max_by {|p| p.rt}.rt - fin.min_by {|p| p.rt}.rt)/2
-	  
-          step = time/(length*10)
-	  puts "step: #{step}, length: #{length}, fin_length: #{fin.length}"
+          step = 1
+	  puts "length: #{length}"
           x = 0.0
-          
+	  #------------------------------------------------
+	  
+	  
           fin.each do |p|
             
             
             #-------------Tailing-------------------------
             shape = 0.35*x + 6.65
-	    p.int = (RThelper.gaussianI(p.rt,avg,shape,relative_abundances_int))
+	    p.int = (RThelper.gaussianI(p.rt,avg,shape,relative_abundances_int)) * length
+	    # filter for low intensities on the tail
+	    if p.int < 0.1 and p.rt > avg
+	      break
+	    end
             #---------------------------------------------
             
             

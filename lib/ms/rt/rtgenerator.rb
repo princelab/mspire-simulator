@@ -22,17 +22,14 @@ module MS
       peptides.each_with_index do |pep,ind|
         Progress.progress("Generating peptides:",(((ind+1)/peptides.size.to_f)*100).to_i)
         peps = Array.new
+        peps<<pep
         
         #multiply peptides
-        @r_time.length.times do
-          peps<<MS::Peptide.new(pep.sequence,pep.rt)
+        @r_time.each do |t|
+          peps<<MS::Peptide.new(pep.sequence,t)
         end
   
-        #Spread them by a normal density func.
-        avg_rt = getRTs(peps)
-        
-        #eliminate redundant rts in pep
-        peps.uniq!{|pep| pep.rt}
+        avg_rt = @r_time.find {|i| i >= peps[0].rt}
         
         new_peptides<<[peps,avg_rt]
       end
@@ -46,29 +43,5 @@ module MS
       return new_peptides
     end
     
-    def getRTs(peps)
-        
-      avg_rt = 0.0
-      rtmu = peps[0].rt
-    
-      peps.each do |pep|
-        spreadRTs(pep,rtmu)
-        if(pep.rt == nil)
-          pep.rt = 1
-        end
-        avg_rt = avg_rt+pep.rt
-      end
-      
-      avg_rt = avg_rt/(peps.length)
-      return avg_rt
-    end
-    
-    # Spreading peaks by a normal density function.
-    # This may not be the correct thing to do.
-    #
-    def spreadRTs(pep,mu)
-      pep.rt = Distribution::Normal.rng(mu,200).call
-      pep.rt = @r_time.find {|i| i >= pep.rt}
-    end
   end
 end
