@@ -28,7 +28,7 @@ module MS
         
         #multiply peptides
         @r_time.each do |t|
-          # Only need to go from predicted rt to ~1000
+          # Only need to go from predicted rt to ~500
           if t >= (avg_rt-RThelper.RandomFloat(50.0,100.0)) and peps.length < 501
             peps<<MS::Peptide.new(pep.sequence,t)
           end

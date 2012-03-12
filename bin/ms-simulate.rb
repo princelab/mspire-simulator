@@ -4,11 +4,12 @@ require 'time'
 require 'progress'
 require 'nokogiri'
 require 'ms/digester'
-require 'msplat'
+require 'mspire'
 require 'ms/feature/aa'
 require 'ms/peptide'
 require 'ms/rt/rtgenerator'
 require 'ms/spectra/spectra'
+require 'ms/noise/noise'
 require 'ms/mzml/mzml'
 require 'trollop'
 
@@ -20,6 +21,8 @@ version "ms-simulate 0.0.1a (c) 2012 Brigham Young University"
   *********************************************************************
    Description: Simulates ms runs given protien fasta files. Outputs
    a mzML file.
+   
+   
   Usage:
        ms-simulate [options] <filenames>+
        
@@ -30,6 +33,7 @@ version "ms-simulate 0.0.1a (c) 2012 Brigham Young University"
   opt :run_time, "Run time in seconds", :default => 1000.0 
   opt :noise, "Noise on or off", :default => "true"
   opt :contaminate, "Contamination on or off", :default => "true"
+  opt :noise_density, "Determines the density of white noise", :default => 20
 end
 
 Trollop::die :sampling_rate, "must be greater than 0" if opts[:sampling_rate] <= 0
@@ -43,6 +47,7 @@ Trollop::die "must supply a .fasta protien sequence file" if ARGV.empty?
   run_time = opts[:run_time].to_f
   noise = opts[:noise]
   contaminate = opts[:contaminate]
+  density = opts[:noise_density]
 
   @peptides = []
 
@@ -69,12 +74,16 @@ Trollop::die "must supply a .fasta protien sequence file" if ARGV.empty?
   puts ''
 
   @peptides.uniq!
-  spectra = MS::Spectra.new(@peptides,sampling_rate, run_time)
+  spectra = MS::Spectra.new(@peptides,sampling_rate, run_time).data
   
-  mzml = Mzml.new(spectra.data, noise, contaminate)
+  if noise == 'true'
+    spectra = MS::Noise.noiseify(spectra,density)
+  elsif contaminate == 'true'
+    spectra = MS::Noise.contaminate(spectra)
+  end
+  
+  mzml = Mzml_Wrapper.new(spectra)
   
   puts "Writing to file..."
-  File.open('test.mzml', 'w') do |output|
-    output.write(mzml.get_builder.to_xml)
-  end
+  mzml.to_xml('test.mzml')
   puts "Done."

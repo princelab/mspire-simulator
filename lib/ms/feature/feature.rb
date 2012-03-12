@@ -1,7 +1,6 @@
 
 require 'time'
 require 'distribution'
-require 'msplat'
 require 'ms/peptide'
 require 'ms/feature/isotope'
 require 'ms/rt/rt_helper'
@@ -128,8 +127,8 @@ module MS
         neutron = 0
 	
 	#--------------Length----------------------------
-	length = RThelper.RandomFloat(0.10,1.0)
-	#puts "length: #{length}, avg: #{avg}"
+	ints_factor = RThelper.RandomFloat(0.10,1.0)
+	#puts "ints_factor: #{ints_factor}, avg: #{avg}"
 	#------------------------------------------------
         
         fins.each do |fin|
@@ -146,11 +145,11 @@ module MS
             
             #-------------Tailing-------------------------
             shape = 0.35*x + 6.65
-	    p.int = (RThelper.gaussianI(p.rt,avg,shape,relative_abundances_int)) * length
+	    p.int = (RThelper.gaussianI(p.rt,avg,shape,relative_abundances_int)) * ints_factor
 	    # filter for low intensities on the tail
-	    #if p.int < 0.1 and p.rt > avg
-	    #  break
-	    #end
+	    if p.int < 0.1 and p.rt > avg
+	      break
+	    end
             #---------------------------------------------
             
             

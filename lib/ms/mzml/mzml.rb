@@ -1,57 +1,60 @@
-require 'msplat'
+
 require 'nokogiri'
-require 'ms/mzml/lib/filedescription'
-require 'ms/mzml/lib/softwarelist'
-require 'ms/mzml/lib/insturmentconfigurationlist'
-require 'ms/mzml/lib/dataprocessinglist'
-require 'ms/mzml/lib/run'
+require 'progress'
+require 'ms/mzml' 
 
-class Mzml
+class Mzml_Wrapper
 
-  def initialize(spectra, noise, contaminate)
+  def initialize(spectra)
   #spectra is a Hash rt=>[[mzs],[ints]]
+    @start = Time.now
   
-    builder = Nokogiri::XML::Builder.new do |xml|
-
-      xml.mzML(:xmlns=>"http://psi.hupo.org/ms/mzml", :'xmlns:xsi'=>"http://www.w3.org/2001/XMLSchema-instance", :'xsi:schemaLocation'=>"http://psi.hupo.org/ms/mzml http://psidev.info/files/ms/mzML/xsd/mzML1.1.0.xsd", :id=>"", :version=>"1.1.0"){
-        xml.cvList(:count=>2){
-          xml.cv(:id=>"MS", :fullName=>"Proteomics Standards Initiative Mass Spectrometry Ontology", :version=>"1.18.2", :URI=>"http://psidev.cvs.sourceforge.net/*checkout*/psidev/psi/psi-ms/mzML/controlledVocabulary/psi-ms.obo")
-          xml.cv(:id=>"UO", :fullName=>"Unit Ontology", :version=>"04:03:2009", :URI=>"http://obo.cvs.sourceforge.net/*checkout*/obo/obo/ontology/phenotype/unit.obo")
-        }
-      }
-
+    @mzml = MS::Mzml.new do |mzml|
+      mzml.id = 'ms1'
+      mzml.cvs = MS::Mzml::CV::DEFAULT_CVS
+      mzml.file_description = MS::Mzml::FileDescription.new  do |fd|
+	fd.file_content = MS::Mzml::FileContent.new
+	fd.source_files << MS::Mzml::SourceFile.new
+      end
+      default_instrument_config = MS::Mzml::InstrumentConfiguration.new("IC",[], params: ['MS:1000031'])
+      mzml.instrument_configurations << default_instrument_config
+      software = MS::Mzml::Software.new
+      mzml.software_list << software
+      default_data_processing = MS::Mzml::DataProcessing.new("did_nothing")
+      mzml.data_processing_list << default_data_processing
+      mzml.run = MS::Mzml::Run.new("simulated_run", default_instrument_config) do |run|
+	spectrum_list = MS::Mzml::SpectrumList.new(default_data_processing)
+	
+	#spectrum_list.push(spec1, spec2)
+	count = 0.0
+	spectra.each do |rt,data|
+	  Progress.progress("Converting to mzml:",(((count/spectra.size)*100).to_i))
+	
+	  spc = MS::Mzml::Spectrum.new('scan=1', params: ['MS:1000127', ['MS:1000511', 1]]) do |spec|
+	    spec.data_arrays = data
+	    spec.scan_list = MS::Mzml::ScanList.new do |sl|
+	      scan = MS::Mzml::Scan.new do |scan|
+		scan.describe! ['MS:1000016', rt, 'UO:0000010']
+	      end
+	      sl << scan
+	    end
+	  end
+	  spectrum_list.push(spc)
+	  count += 1
+	end
+	Progress.progress("Converting to mzml:",100,Time.now-@start)
+	puts ''
+	
+	run.spectrum_list = spectrum_list
+      end
     end
-
-    builder.doc.encoding = 'ISO-8859-1'
-  
-    #cvList # may not be needed
     
-    @fileDescription = FileDescription.new(builder)
-    
-    #referenceableParamGroupList # may not be needed
-    #sampleList # may not be needed
-    
-    @softwareList = SoftwareList.new(builder)
-    
-    #scanSettingsList # may not be needed
-    
-    @insturmentConfigurationList = InsturmentConfigurationList.new(builder)
-    @dataProcessingList = DataProcessingList.new(builder)
-    @run = Run.new(builder,spectra, noise, contaminate)
-    
-    #attributes - only version is required
-    #version
-    #id
-    #accession
-    
-    @builder = @run.get_builder
-
+    return @mzml
   end
   
-  def get_builder
-    return @builder
+  def to_xml(file)
+    return @mzml.to_xml(file)
   end
+
 end
-
-
 
