@@ -126,23 +126,20 @@ module MS
       
         index = 0
         neutron = 0
+	
+	#--------------Length----------------------------
 	length = RThelper.RandomFloat(0.10,1.0)
+	#puts "length: #{length}, avg: #{avg}"
+	#------------------------------------------------
         
         fins.each do |fin|
-          mzmu = fin[0].mz + neutron + 0.5
+	  #puts "fin_length: #{fin.length}"
+          mzmu = fin[0].mz + neutron 
           max_y = RThelper.gaussian(mzmu,mzmu,0.05) 
           
-          #percent_int = intRand*percents[index]
           relative_abundances_int = relative_abundances[index]
 	  
-	  
-	  #--------------Length----------------------------
-	  rt_mean = @r_time/2
-          step = 1
-	  puts "length: #{length}"
           x = 0.0
-	  #------------------------------------------------
-	  
 	  
           fin.each do |p|
             
@@ -151,9 +148,9 @@ module MS
             shape = 0.35*x + 6.65
 	    p.int = (RThelper.gaussianI(p.rt,avg,shape,relative_abundances_int)) * length
 	    # filter for low intensities on the tail
-	    if p.int < 0.1 and p.rt > avg
-	      break
-	    end
+	    #if p.int < 0.1 and p.rt > avg
+	    #  break
+	    #end
             #---------------------------------------------
             
             
@@ -186,7 +183,7 @@ module MS
             #---------------------------------------------
             
             
-            x += step
+            x += 1
 
           end
 	  

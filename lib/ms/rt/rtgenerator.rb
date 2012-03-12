@@ -23,13 +23,16 @@ module MS
         Progress.progress("Generating peptides:",(((ind+1)/peptides.size.to_f)*100).to_i)
         peps = Array.new
         peps<<pep
+        avg_rt = @r_time.find {|i| i >= peps[0].rt}
+        peps.delete_at(0)
         
         #multiply peptides
         @r_time.each do |t|
-          peps<<MS::Peptide.new(pep.sequence,t)
+          # Only need to go from predicted rt to ~1000
+          if t >= (avg_rt-RThelper.RandomFloat(50.0,100.0)) and peps.length < 501
+            peps<<MS::Peptide.new(pep.sequence,t)
+          end
         end
-  
-        avg_rt = @r_time.find {|i| i >= peps[0].rt}
         
         new_peptides<<[peps,avg_rt]
       end
