@@ -1,5 +1,30 @@
-Shoes.app :width => 320, :height => 420 do
-  #background "sim.png"
+trails = [[0, 0]] * 60
+Shoes.app :width => 320, :height => 700, :title => "ms-simulate" do
+
+  background do
+    
+    animate(60) do
+      trails.shift
+      trails << self.mouse[1, 2]
+
+      clear do
+        # change the background based on where the pointer is
+        background rgb(
+          20 + (70 * (trails.last[0].to_f / self.width)).to_i, 
+          20 + (70 * (trails.last[1].to_f / self.height)).to_i,
+          51)
+
+        # draw circles progressively bigger
+        trails.each_with_index do |(x, y), i|
+          i += 1
+          oval :left => x, :top => y, :radius => (i*0.5), :center => true
+        end
+      end
+    end
+  end
+
+
+  @filename = "No file chosen."
 
   stack :margin => 40 do
     stack :margin => 10 do
@@ -51,10 +76,14 @@ Shoes.app :width => 320, :height => 420 do
     end
     
     stack :margin => 10 do
-      button "Choose Fasta File" do
-	@filename = ask_open_file 
-	para "#{@filename}"
+      @b1 = button "Choose Fasta File" do
+      @filename = ask_open_file 
+      @b1.click(@p1.replace(@filename))
       end
+    end
+    
+    stack :margin => 10 do
+      @p1 = para "#{@filename}"
     end
     
     stack :margin => 10 do
