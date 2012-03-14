@@ -1,24 +1,27 @@
-trails = [[0, 0]] * 60
+trails = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]
 Shoes.app :width => 550, :height => 300, :title => "ms-simulate" do
-
+  background gradient(white,gray)
   @filename = "No file chosen."
 
     @links = stack :margin => 2, :width => 200, :height => 300 do
-      background gradient(white,gray)
       caption "ms-simulate"
-      para link("Choose a Digestor") {@d.show; @s.hide; @r.hide; @n.hide; @nd.hide; @c.hide} 
-      para link("Sampling rate") {@d.hide; @s.show; @r.hide; @n.hide; @nd.hide; @c.hide}
-      para link("Run time") {@d.hide; @s.hide; @r.show; @n.hide; @nd.hide; @c.hide}
-      para link("Noise") {@d.hide; @s.hide; @r.hide; @n.show; @nd.show; @c.hide}
-      para link("Contaminate") {@d.hide; @s.hide; @r.hide; @n.hide; @nd.hide; @c.show}
-      stack :margin => 10 do
-        @p1 = para "#{@filename}"
+      para link("Choose a Digestor") {@disp.replace(@d)} 
+      para link("Sampling rate") {@disp.replace(@s)}
+      para link("Run time") {@disp.replace(@r)}
+      para link("Noise") {@disp.replace(@n)}
+      para link("Contaminate") {@disp.replace(@c)}
+      @disp = stack :margin => 10 do
+        para "Select Above Option"
       end
+      @p1 = para "#{@filename}"
     end
 
+  @top = flow :width => 200, :height => 300 do
+    @i = image "ani/peaks1.png"
+    @i.width = 200
+  end
 
-  @top = flow :width => 350, :height => 300 do
-  
+  @hid = flow :width => 350, :height => 300 do
     stack do 
       @d = stack :margin => 10 do
         @digestor = list_box :items => ["arg_c",
@@ -81,19 +84,12 @@ Shoes.app :width => 550, :height => 300, :title => "ms-simulate" do
       end
     end
     
-    @d.hide; @s.hide; @r.hide; @n.hide; @nd.hide; @c.hide
-    
   end
+  @hid.hide
 
-  @top.animate(10) do 
-      trails.shift
-      trails << self.mouse[1, 2]
-
-        # change the background based on where the pointer is
-        @top.background gradient(white,rgb(
-          20 + (70 * (trails.last[0].to_f / self.width)).to_i, 
-          20 + (70 * (trails.last[1].to_f / self.height)).to_i,
-          51))
+  @top.animate(24) do 
+      trails << trails.shift
+        @i.path = "ani/peaks#{trails[0]}.png"
         
     end
 
