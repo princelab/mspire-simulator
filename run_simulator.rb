@@ -79,7 +79,7 @@ Shoes.app :width => 620, :height => 400, :title => "ms-simulate" do
     
   stack :margin => 10, :width => 200 do
     button "Run Simulation" do
-      if @filename == "No file chosen."
+      if @filename == "No file chosen." or @filename == ""
         alert("No file chosen")
       else
         if @digestor.text == nil or @s_per_sec.text == nil or @run_time.text == nil or @noise.text == nil or @noised.text == nil or @contaminate.text == nil
