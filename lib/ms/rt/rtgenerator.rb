@@ -1,5 +1,6 @@
 
 require 'time'
+require 'progress'
 require 'ms/feature/feature'
 require 'ms/rt/weka'
 require 'ms/peptide'

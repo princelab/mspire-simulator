@@ -3,12 +3,12 @@ require 'ms/feature/aa'
 
 module MS
   class Peptide
-    def initialize(sequence, rt = 0, mass = 0, charge = 0)
+    def initialize(sequence, rt = 0)
       @sequence = sequence
       @hydro = calc_hydro(@sequence)
       @pi = calc_pi(@sequence)
-      @mass   = mass
-      @charge = charge
+      @mass = 0
+      @charge = 0
       @rt = rt
       @int = 0
       @mz = calc_mz
