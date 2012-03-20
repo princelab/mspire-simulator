@@ -7,9 +7,11 @@ require 'ms/peptide'
 require 'ms/rt/rt_helper'
 
 module MS
-  class Rtgenerator
+  module Rtgenerator
     
+    module_function
     def generateRT(peptides, r_time,run_time)
+      
       @start = Time.now
       new_peptides = []
       @r_time = r_time
@@ -28,6 +30,11 @@ module MS
         peps.delete_at(0)
         
         #multiply peptides
+	
+	if avg_rt == nil
+	  raise "None predicted in time range: try increasing run time."
+	end
+	
         @r_time.each do |t|
           # Only need to go from predicted rt to ~500
           if t >= (avg_rt-RThelper.RandomFloat(50.0,100.0)) and peps.length < 501
@@ -40,11 +47,9 @@ module MS
       new_peptides.delete_if{|pep_group| pep_group[1] == 1}
       Progress.progress("Generating peptides:",100,Time.now-@start)
       puts ""
-      if new_peptides.empty?
-        puts "None predicted in time range: try increasing run time."
-        abort
-      end
+      
       return new_peptides
+      
     end
     
   end

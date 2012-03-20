@@ -7,7 +7,7 @@ describe Progress, "#progress" do
   it "Prints out a given message and percentage, refreshing the current line with each call." do
     101.times do |i|
       Progress.progress("Message:",i)
-      sleep 0.1
+      sleep 0.01
     end
   end
   
@@ -15,7 +15,7 @@ describe Progress, "#progress" do
     start = Time.now
     101.times do |i|
       Progress.progress("Message:",i)
-      sleep 0.1
+      sleep 0.01
     end
     Progress.progress("Message:",100,Time.now - start)
   end

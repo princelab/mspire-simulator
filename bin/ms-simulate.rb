@@ -13,6 +13,8 @@ require 'ms/noise/noise'
 require 'ms/mzml/mzml'
 require 'trollop'
 
+module MSsimulate
+
 @start = Time.now
 opts = Trollop::options do
 version "ms-simulate 0.0.1a (c) 2012 Brigham Young University"
@@ -87,3 +89,5 @@ Trollop::die "must supply a .fasta protien sequence file" if ARGV.empty?
   puts "Writing to file..."
   mzml.to_xml('test.mzml')
   puts "Done."
+  
+end
