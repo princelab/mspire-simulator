@@ -18,7 +18,7 @@ require 'fftw3'
 #R.pause
 
 
-module Isotope
+module Isotope_dist
   #MAX_MASS needs to be highest possible nominal mass
   MAX_MASS=2**16;
   ORDER = [:h, :c, :n, :o, :s]

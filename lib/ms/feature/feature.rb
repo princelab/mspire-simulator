@@ -2,7 +2,7 @@
 require 'time'
 require 'distribution'
 require 'ms/peptide'
-require 'ms/feature/isotope'
+require 'ms/feature/isotope_dist'
 require 'ms/rt/rt_helper'
 
 module MS
@@ -108,8 +108,9 @@ module MS
         var<<atoms[5].to_s
         var<<"SE"
         var<<atoms[6].to_s
+        
   
-        rel_intesities = Isotope.dist(var)
+        rel_intesities = Isotope_dist.dist(var)
         #puts percents
         return rel_intesities
       end
