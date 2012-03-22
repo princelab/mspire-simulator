@@ -3,14 +3,13 @@
 require 'time'
 require 'progress'
 require 'nokogiri'
-require 'ms/digester'
+require 'mspire/digester'
 require 'mspire'
-require 'ms/feature/aa'
-require 'ms/peptide'
+require 'ms/sim_peptide'
 require 'ms/rt/rtgenerator'
 require 'ms/spectra/spectra'
 require 'ms/noise/noise'
-require 'ms/mzml/mzml'
+require 'ms/sim_mzml'
 require 'trollop'
 
 module MSsimulate
@@ -64,7 +63,7 @@ Trollop::die "must supply a .fasta protien sequence file" if ARGV.empty?
       end
     end
     inFile.close
-    trypsin = MS::Digester[digestor]
+    trypsin = Mspire::Digester[digestor]
     digested = trypsin.digest(seq)
 
     digested.each do |peptide_seq|

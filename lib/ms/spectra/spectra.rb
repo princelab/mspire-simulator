@@ -1,6 +1,6 @@
 
 require 'ms/rt/rtgenerator'
-require 'ms/feature/feature'
+require 'ms/sim_feature'
 
 module MS
   class Spectra
@@ -19,8 +19,8 @@ module MS
       pre_features = MS::Rtgenerator.generateRT(peptides,r_times,run_time)
       
       rescue
-	puts "\n\n\tNone predicted in time range."
-	puts "\tTrying again...increasing run time by 1000\n\n"
+	puts "\n\n\tNone predicted in time range: #{run_time} seconds."
+	puts "\tTrying again...increasing run time by 1000 + #{run_time} = #{run_time + 1000}\n\n"
 	
 	run_time += 1000.0
 	r_times = []
@@ -35,7 +35,7 @@ module MS
       end
       
       #Features
-      @data = MS::Feature::Feature.new(pre_features,sampling_rate,run_time).data
+      @data = MS::Sim_Feature.new(pre_features,sampling_rate,run_time).data
       #create_spectrum(@data)
     end
     

@@ -1,5 +1,5 @@
 
-require 'ms/feature/aa'
+require 'ms/sim_feature/aa'
 
 module MS
   class Peptide
@@ -23,7 +23,7 @@ module MS
     
     def calc_mz
       @sequence.each_char do |aa|
-        @mass = @mass + MS::Mass::AA::MONO[aa]
+        @mass = @mass + Mspire::Mass::AA::MONO[aa]
         h = 'H'
         k = 'K'
         r = 'R'

@@ -1,7 +1,7 @@
 
 require 'nokogiri'
 require 'progress'
-require 'ms/mzml' 
+require 'mspire/mzml' 
 
 class Mzml_Wrapper
 

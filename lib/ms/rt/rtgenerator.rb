@@ -1,9 +1,9 @@
 
 require 'time'
 require 'progress'
-require 'ms/feature/feature'
+require 'ms/sim_feature'
 require 'ms/rt/weka'
-require 'ms/peptide'
+require 'ms/sim_peptide'
 require 'ms/rt/rt_helper'
 
 module MS
