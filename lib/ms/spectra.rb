@@ -16,7 +16,7 @@ module MS
       end
       
       begin
-      pre_features = MS::Rtgenerator.generateRT(peptides,r_times,run_time)
+	pre_features = MS::Rtgenerator.generateRT(peptides,r_times,run_time)
       
       rescue
 	puts "\n\n\tNone predicted in time range: #{run_time} seconds."

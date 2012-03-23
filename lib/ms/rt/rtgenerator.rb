@@ -32,7 +32,7 @@ module MS
         #multiply peptides
 	
 	if avg_rt == nil
-	  raise "None predicted in time range: try increasing run time."
+	  raise "\n\n\tNone predicted in time range: try increasing run time (see final run time above)\n\n."
 	end
 	
         @r_time.each do |t|

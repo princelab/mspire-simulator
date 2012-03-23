@@ -105,13 +105,11 @@ module MS
       var<<atoms[4].to_s
       var<<"P"
       var<<atoms[5].to_s
-      var<<"SE"
+      var<<"Se"
       var<<atoms[6].to_s
       
-      puts "\n\n"
-      p var
       rel_intesities = Mspire::Isotope::Distribution.calculate(var, :max)
-      #puts percents
+
       return rel_intesities
     end
     
