@@ -1,6 +1,6 @@
 #aa_spec.rb
 
-require 'ms/feature/aa'
+require 'ms/sim_feature/aa'
 
 describe MS::Feature::AA do 
   

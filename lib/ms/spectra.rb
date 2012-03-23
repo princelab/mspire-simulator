@@ -37,6 +37,7 @@ module MS
       #Features
       @data = MS::Sim_Feature.new(pre_features,sampling_rate,run_time).data
       #create_spectrum(@data)
+      
     end
     
     attr_reader :data

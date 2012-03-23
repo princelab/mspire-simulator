@@ -1,7 +1,7 @@
 #peptide_spec.rb
 
 require 'mspire'
-require 'ms/peptide'
+require 'ms/sim_peptide'
 
 describe MS::Peptide do
   it "Creates a peptide object given a amino acid sequence" do 

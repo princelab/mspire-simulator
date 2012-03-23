@@ -35,6 +35,17 @@ module MS
     def contaminate(spectra)
       
       #TODO: add precalculated contamination
+      file = File.open("k_contamination.txt","r")
+      
+      mzs = file.gets.chomp.split(/;/).map{|mz| mz = mz.to_f}
+      ints = file.gets.chomp.split(/;/).map{|int| int = int.to_f}
+      
+      mzs.length
+      ints.length
+      
+      mzs.length.times do 
+	
+      end
       
       return spectra
     end

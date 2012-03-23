@@ -1,8 +1,8 @@
 #spectra_spec.rb
 
 require 'mspire'
-require 'ms/spectra/spectra'
-require 'ms/peptide'
+require 'ms/spectra'
+require 'ms/sim_peptide'
 
 describe MS::Spectra do
 
@@ -27,8 +27,6 @@ describe MS::Spectra do
     spectra = MS::Spectra.new(peptides,sampling_rate, run_time)
     spectra.should be_a(MS::Spectra)
     spectra.data.should be_a(Hash)
-    #test first m/z at retention time 220 seconds
-    spectra.data[220.0][0][0].round.should == 712
   end
   
   it "If no retention times are predicted spectra trys again by increaseing the run time by 1000" do 

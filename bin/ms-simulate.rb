@@ -8,7 +8,7 @@ require 'mspire'
 require 'ms/sim_peptide'
 require 'ms/rt/rtgenerator'
 require 'ms/spectra'
-require 'ms/noise/noise'
+require 'ms/noise'
 require 'ms/sim_mzml'
 require 'trollop'
 

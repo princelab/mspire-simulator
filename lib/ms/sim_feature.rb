@@ -40,6 +40,7 @@ module MS
       #---------------------------------------------------------------
       
       
+      
       #-----------------Transform_to_spectra_data_for_mzml------------
       @features = @features.flatten.group_by{|pep| pep.rt}
       count = 1
@@ -109,6 +110,7 @@ module MS
       var<<atoms[6].to_s
       
       rel_intesities = Mspire::Isotope::Distribution.calculate(var, :max)
+      rel_intesities.map!{|i| i = i*100.0}
 
       return rel_intesities
     end
@@ -119,14 +121,12 @@ module MS
     # by a simple gaussian curve (see 'factor' below). 
     #
     def getInts(fins, relative_abundances, avg)
-      intRand = (fins[0][0].charge)*10**2
-      stddev = rand+2
     
       index = 0
       neutron = 0
       
       #--------------Length----------------------------
-      ints_factor = RThelper.RandomFloat(0.10,1.0)
+      ints_factor = RThelper.RandomFloat(0.1,0.3)
       #puts "ints_factor: #{ints_factor}, avg: #{avg}"
       #------------------------------------------------
       
@@ -143,7 +143,7 @@ module MS
 	  
 	  
 	  #-------------Tailing-------------------------
-	  shape = 0.35*x + 6.65
+	  shape = 0.30*x + 6.65
 	  p.int = (RThelper.gaussianI(p.rt,avg,shape,relative_abundances_int)) * ints_factor
 	  # filter for low intensities on the tail
 	  if p.int < 0.1 and p.rt > avg
@@ -189,7 +189,7 @@ module MS
 	neutron = neutron+1.009
       end
       #  Filter for low intensities
-      return fins.each {|fin| fin.delete_if {|p| p.int < 0.1}}
+      return (fins.each{|fin| fin.delete_if{|p| p.int < 0.1}}).delete_if{|f| f == []}
     end
   end
 end

@@ -1,7 +1,7 @@
 #weka_spec.rb
 
 require 'mspire'
-require 'ms/peptide'
+require 'ms/sim_peptide'
 require 'ms/rt/weka'
 
 describe MS::Weka do 
