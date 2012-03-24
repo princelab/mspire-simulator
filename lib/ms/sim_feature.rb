@@ -7,7 +7,7 @@ require 'ms/rt/rt_helper'
 
 module MS
   class Sim_Feature 
-    def initialize(peptide_groups,sampling_rate,r_time)
+    def initialize(peptides,sampling_rate,r_time)
       
       @start = Time.now
       @features = []
@@ -16,22 +16,12 @@ module MS
       @r_time = r_time
       
       
-      #------------------Each_Group_is_a_Feature----------------------
-      peptide_groups.each_with_index do |peptides,ind|
-	Progress.progress("Generating features:",(((ind+1)/peptide_groups.size.to_f)*100).to_i)
-	relative_abundances = calcPercent(peptides[0][0].sequence)
-	avg_rt = peptides[1]
-	waves = []
+      #------------------Each_Peptide_=>_Feature----------------------
+      peptides.each_with_index do |pep,ind|
+	Progress.progress("Generating features:",(((ind+1)/peptides.size.to_f)*100).to_i)	
 	
-	relative_abundances.length.times do
-	  newpeps = []
-	  peptides[0].each do |peptide|
-	    newpeps<<MS::Peptide.new(peptide.sequence,peptide.rt)
-	  end
-	  waves<<newpeps
-	end
-	
-	feature = getInts(waves,relative_abundances,avg_rt)
+	feature = getInts(pep)
+
 	@features<<feature
       end
       Progress.progress("Generating features:",100,Time.now-@start)
@@ -42,21 +32,21 @@ module MS
       
       
       #-----------------Transform_to_spectra_data_for_mzml------------
-      @features = @features.flatten.group_by{|pep| pep.rt}
-      count = 1
-      @features.each do |rt, peps|
-	Progress.progress("Populating structure for mzml:",((count/@features.size.to_f)*100).to_i)
-	mzs = []
-	ints = []
-	peps.each do |pep|
-	  mzs<<pep.mz
-	  ints<<pep.int
+      # rt => [[mzs],[ints]]
+      @features.each_with_index do |fe,k|
+	Progress.progress("Populating structure for mzml:",((k/@features.size.to_f)*100).to_i)
+	
+	fe.rts.each_with_index do |rt,i|
+	  rt_mzs = []
+	  rt_ints = []
+	  fe.core_mzs.size.times{|j| rt_mzs<<fe.mzs[j][i]}
+	  fe.core_mzs.size.times{|j| rt_ints<<fe.ints[j][i]}
+	  @data[rt] = [rt_mzs, rt_ints]
 	end
-	@data[rt] = [mzs,ints]
-	count += 1
       end
       Progress.progress("Populating structure for mzml:",100,Time.now-@start)
       puts ""
+      
       #---------------------------------------------------------------
       
     end
@@ -64,96 +54,48 @@ module MS
     attr_reader :data
     attr_writer :data
     
-    # Counts the number of each atom in the peptide sequence.
-    #
-    def countAtoms(seq)
-      o = 0
-      n = 0
-      c = 0
-      h = 0
-      s = 0
-      p = 0
-      se = 0
-      seq.each_char do |aa|
-	o = o + MS::Feature::AA::ATOM_COUNTS[aa][:o]
-	n = n + MS::Feature::AA::ATOM_COUNTS[aa][:n]
-	c = c + MS::Feature::AA::ATOM_COUNTS[aa][:c]
-	h = h + MS::Feature::AA::ATOM_COUNTS[aa][:h]
-	s = s + MS::Feature::AA::ATOM_COUNTS[aa][:s]
-	p = p + MS::Feature::AA::ATOM_COUNTS[aa][:p]
-	se = se + MS::Feature::AA::ATOM_COUNTS[aa][:se]
-      end
-      return o,n,c,h,s,p,se
-    end
-    
-    # Calculates the relative intensities of the isotopic 
-    # envelope.
-    #
-    def calcPercent(seq)
-      #isotope.rb from Dr. Prince
-      atoms = countAtoms(seq)
-      
-      var = ""
-      var<<"O"
-      var<<atoms[0].to_s
-      var<<"N"
-      var<<atoms[1].to_s
-      var<<"C"
-      var<<atoms[2].to_s
-      var<<"H"
-      var<<atoms[3].to_s
-      var<<"S"
-      var<<atoms[4].to_s
-      var<<"P"
-      var<<atoms[5].to_s
-      var<<"Se"
-      var<<atoms[6].to_s
-      
-      rel_intesities = Mspire::Isotope::Distribution.calculate(var, :total, 0.001)
-      rel_intesities.map!{|i| i = i*100.0}
-
-      return rel_intesities
-    end
-    
     # Intensities are shaped in the rt direction by a gaussian with 
     # a dynamic standard deviation.
     # They are also shaped in the m/z direction 
     # by a simple gaussian curve (see 'factor' below). 
     #
-    def getInts(fins, relative_abundances, avg)
-    
+    def getInts(pep)
+      
+      mzs = pep.mzs
+      relative_ints = pep.core_ints
+      avg = pep.p_rt
+      
       index = 0
       neutron = 0
       
       #--------------Length----------------------------
-      ints_factor = RThelper.RandomFloat(0.1,0.3)
+      ints_factor = RThelper.RandomFloat(0.1,1.0)
       #puts "ints_factor: #{ints_factor}, avg: #{avg}"
       #------------------------------------------------
       
-      fins.each do |fin|
-	#puts "fin_length: #{fin.length}"
-	mzmu = fin[0].mz + neutron 
+      pep.core_mzs.each do |mzmu|
+	fin_mzs = []
+	fin_ints = []
 	max_y = RThelper.gaussian(mzmu,mzmu,0.05) 
 	
-	relative_abundances_int = relative_abundances[index]
+	relative_abundances_int = relative_ints[index]
 	
 	x = 0.0
 	
-	fin.each do |p|
-	  
+	pep.rts.each_with_index do |rt,i|
 	  
 	  #-------------Tailing-------------------------
 	  shape = 0.30*x + 6.65
-	  p.int = (RThelper.gaussianI(p.rt,avg,shape,relative_abundances_int)) * ints_factor
+	  fin_ints << (RThelper.gaussianI(rt,avg,shape,relative_abundances_int)) * ints_factor
 	  # filter for low intensities on the tail
-	  if p.int < 0.1 and p.rt > avg
+	  if fin_ints[i] < 0.1 and rt > avg
 	    break
 	  end
 	  #---------------------------------------------
 	  
 	  
 	  #-------------mz wobble-----------------------
-	  y = p.int
+	  y = fin_ints[i]
 	  if y > 0.5
 	    wobble_int = 0.001086*y**(-0.5561)
 	  else
@@ -163,24 +105,25 @@ module MS
 	  if wobble_mz < 0
 	    wobble_mz = 0.01
 	  end
-	  p.mz = wobble_mz
+	  fin_mzs<<wobble_mz
 	  #---------------------------------------------
 	  
 	  
 	  #-------------M/Z Peak shape------------------
-	  fraction = RThelper.gaussian(p.mz,mzmu,0.05)
+	  fraction = RThelper.gaussian(fin_mzs[i],mzmu,0.05)
 	  factor = fraction/max_y
-	  p.int = p.int * factor
+	  fin_ints[i] = fin_ints[i] * factor
 	  #---------------------------------------------
 	  
 	  
 	  #-------------Jagged-ness---------------------
-	  sd = 0.1418 * p.int
+	  sd = 0.1418 * fin_ints[i]
 	  diff = (Distribution::Normal.rng(0,sd).call)
-	  p.int = p.int + diff
+	  fin_ints[i] = fin_ints[i] + diff
 	  #---------------------------------------------
 	  
-	  
+	  pep.ints<<fin_ints
+	  pep.mzs<<fin_mzs
 	  x += 1
 
 	end
@@ -189,7 +132,7 @@ module MS
 	neutron = neutron+1.009
       end
       #  Filter for low intensities
-      return (fins.each{|fin| fin.delete_if{|p| p.int < 0.1}}).delete_if{|f| f == []}
+      return pep
     end
   end
 end

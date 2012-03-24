@@ -24,31 +24,28 @@ module MS
     
       peptides.each_with_index do |pep,ind|
         Progress.progress("Generating peptides:",(((ind+1)/peptides.size.to_f)*100).to_i)
-        peps = Array.new
-        peps<<pep
-        avg_rt = @r_time.find {|i| i >= peps[0].rt}
-        peps.delete_at(0)
+
+        pep.p_rt = @r_time.find {|i| i >= pep.p_rt}
         
         #multiply peptides
 	
-	if avg_rt == nil
-	  raise "\n\n\tNone predicted in time range: try increasing run time (see final run time above)\n\n."
-	end
+        if pep.p_rt == nil
+          raise "\n\n\t#{pep} :: Peptide not predicted in time range: try increasing run time\n\n."
+        end
 	
         @r_time.each do |t|
           # Only need to go from predicted rt to ~500
-          if t >= (avg_rt-RThelper.RandomFloat(50.0,100.0)) and peps.length < 501
-            peps<<MS::Peptide.new(pep.sequence,t)
+          if t >= (pep.p_rt-RThelper.RandomFloat(50.0,100.0)) and pep.rts.length < 501
+            pep.rts<<t
           end
         end
         
-        new_peptides<<[peps,avg_rt]
       end
-      new_peptides.delete_if{|pep_group| pep_group[1] == 1}
+  
       Progress.progress("Generating peptides:",100,Time.now-@start)
       puts ""
       
-      return new_peptides
+      return peptides
       
     end
     

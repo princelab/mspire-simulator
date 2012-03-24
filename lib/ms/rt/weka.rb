@@ -10,7 +10,7 @@ module MS
       #make arrf file to feed weka model
       data = []
       peptides.each do |pep|
-        data<<[pep.mz,pep.charge,pep.int,pep.rt,
+        data<<[pep.mono_mz,pep.charge,0,0,
         pep.sequence.count("A"),
         pep.sequence.count("R"),
         pep.sequence.count("N"),
@@ -45,7 +45,7 @@ module MS
       count = 0
       while line = file.gets
         if line =~ /(\d*\.\d{0,3}){1}/
-          peptides[count].rt = line.match(/(\d*\.\d{0,3}){1}/)[0].to_f
+          peptides[count].p_rt = line.match(/(\d*\.\d{0,3}){1}/)[0].to_f
           count += 1
         end
       end
