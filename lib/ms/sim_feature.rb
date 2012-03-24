@@ -109,7 +109,7 @@ module MS
       var<<"Se"
       var<<atoms[6].to_s
       
-      rel_intesities = Mspire::Isotope::Distribution.calculate(var, :max)
+      rel_intesities = Mspire::Isotope::Distribution.calculate(var, :total, 0.001)
       rel_intesities.map!{|i| i = i*100.0}
 
       return rel_intesities
