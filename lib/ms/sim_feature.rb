@@ -39,9 +39,26 @@ module MS
 	fe.rts.each_with_index do |rt,i|
 	  rt_mzs = []
 	  rt_ints = []
-	  fe.core_mzs.size.times{|j| rt_mzs<<fe.mzs[j][i]}
-	  fe.core_mzs.size.times{|j| rt_ints<<fe.ints[j][i]}
-	  @data[rt] = [rt_mzs, rt_ints]
+	  
+	  fe.core_mzs.size.times do |j| 
+	    mz = fe.mzs[j][i]
+	    int = fe.ints[j][i]
+	    if int > 0.1
+	      rt_mzs<<mz
+	      rt_ints<<int
+	    end
+	  end
+	  
+	  if rt_mzs.include?(nil) or rt_mzs.empty?; else
+	    if @data.key?(rt)
+	      mzs = @data[rt][0]
+	      ints = @data[rt][1]
+	      @data[rt][0] = mzs + rt_mzs
+	      @data[rt][1] = ints + rt_ints
+	    else
+	      @data[rt] = [rt_mzs, rt_ints]
+	    end
+	  end
 	end
       end
       Progress.progress("Populating structure for mzml:",100,Time.now-@start)
@@ -61,7 +78,6 @@ module MS
     #
     def getInts(pep)
       
-      mzs = pep.mzs
       relative_ints = pep.core_ints
       avg = pep.p_rt
       
@@ -74,6 +90,7 @@ module MS
       #------------------------------------------------
       
       pep.core_mzs.each do |mzmu|
+
 	fin_mzs = []
 	fin_ints = []
 	max_y = RThelper.gaussian(mzmu,mzmu,0.05) 
@@ -83,14 +100,10 @@ module MS
 	x = 0.0
 	
 	pep.rts.each_with_index do |rt,i|
-	  
+
 	  #-------------Tailing-------------------------
 	  shape = 0.30*x + 6.65
 	  fin_ints << (RThelper.gaussianI(rt,avg,shape,relative_abundances_int)) * ints_factor
-	  # filter for low intensities on the tail
-	  if fin_ints[i] < 0.1 and rt > avg
-	    break
-	  end
 	  #---------------------------------------------
 	  
 	  
@@ -105,6 +118,7 @@ module MS
 	  if wobble_mz < 0
 	    wobble_mz = 0.01
 	  end
+
 	  fin_mzs<<wobble_mz
 	  #---------------------------------------------
 	  
@@ -122,11 +136,13 @@ module MS
 	  fin_ints[i] = fin_ints[i] + diff
 	  #---------------------------------------------
 	  
-	  pep.ints<<fin_ints
-	  pep.mzs<<fin_mzs
+	 
 	  x += 1
 
 	end
+	
+	pep.ints<<fin_ints
+	pep.mzs<<fin_mzs
 	
 	index = index+1
 	neutron = neutron+1.009
