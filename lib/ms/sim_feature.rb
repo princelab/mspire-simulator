@@ -7,13 +7,12 @@ require 'ms/rt/rt_helper'
 
 module MS
   class Sim_Feature 
-    def initialize(peptides,sampling_rate,r_time)
+    def initialize(peptides,run_time)
       
       @start = Time.now
+      @run_time = run_time
       @features = []
       @data = {}
-      @sampling_rate = sampling_rate
-      @r_time = r_time
       
       
       #------------------Each_Peptide_=>_Feature----------------------
@@ -84,9 +83,8 @@ module MS
       index = 0
       neutron = 0
       
-      #--------------Length----------------------------
-      ints_factor = RThelper.RandomFloat(0.1,1.0)
-      #puts "ints_factor: #{ints_factor}, avg: #{avg}"
+      #--------------Intensity----------------------------
+      ints_factor = RThelper.gaussianI(avg,@run_time/2,@run_time/4,200)
       #------------------------------------------------
       
       pep.core_mzs.each do |mzmu|

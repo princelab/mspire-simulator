@@ -10,11 +10,10 @@ module MS
   module Rtgenerator
     
     module_function
-    def generateRT(peptides, r_time, run_time)
+    def generateRT(peptides, r_time)
       
       @start = Time.now
       @r_time = r_time
-      @run_time = run_time
       
       peptides.delete_if{|pep| pep.charge == 0}
       
@@ -30,15 +29,18 @@ module MS
 	
         if pep.p_rt == nil
           puts "\n\n\t#{pep} :: Peptide not predicted in time range: try increasing run time\n\n."
-        end
+	  
+	else
 	
-	rand_length = RThelper.RandomFloat(50.0,100.0)
-        @r_time.each do |t|
-          # Only need to go from predicted rt to ~500
-          if t >= (pep.p_rt-rand_length) and pep.rts.length < 501
-            pep.rts<<t
-          end
-        end
+	  rand_length = RThelper.RandomFloat(50.0,100.0)
+	  @r_time.each do |t|
+	    # Only need to go from predicted rt to ~500
+	    if t >= (pep.p_rt-rand_length) and pep.rts.length < 501
+	      pep.rts<<t
+	    end
+	  end
+	  
+	end
         
       end
   

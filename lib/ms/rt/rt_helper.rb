@@ -17,8 +17,8 @@ module RThelper
       using namespace std;
     code
     builder.c <<-code
-    float gaussian(float mz, float mu, float sd){
-      return ((1/(sqrt(2*(PI)*(pow(sd,2)))))*(exp(-((pow((mz-mu),2))/(pow((2*sd),2))))));
+    float gaussian(float x, float mu, float sd){
+      return ((1/(sqrt(2*(PI)*(pow(sd,2)))))*(exp(-((pow((x-mu),2))/(pow((2*sd),2))))));
     } 
     code
     builder.c <<-code

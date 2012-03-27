@@ -35,6 +35,7 @@ version "ms-simulate 0.0.1a (c) 2012 Brigham Young University"
   opt :noise, "Noise on or off", :default => "true"
   opt :contaminate, "Contamination on or off", :default => "true"
   opt :noise_density, "Determines the density of white noise", :default => 20
+  opt :pH, "The pH that the sample is in - for determining charge", :default => 2.6
 end
 
 Trollop::die :sampling_rate, "must be greater than 0" if opts[:sampling_rate] <= 0
@@ -49,6 +50,7 @@ Trollop::die "must supply a .fasta protien sequence file" if ARGV.empty?
   noise = opts[:noise]
   contaminate = opts[:contaminate]
   density = opts[:noise_density]
+  pH = opts[:pH].to_f
 
   @peptides = []
 
@@ -67,7 +69,7 @@ Trollop::die "must supply a .fasta protien sequence file" if ARGV.empty?
     digested = trypsin.digest(seq)
 
     digested.each do |peptide_seq|
-      peptide = MS::Peptide.new(peptide_seq)
+      peptide = MS::Peptide.new(peptide_seq, pH)
       @peptides<<peptide
     end
   end

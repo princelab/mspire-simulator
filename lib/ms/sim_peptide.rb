@@ -1,15 +1,17 @@
 
+require 'ms/isoelectric_calc'
 require 'ms/sim_feature/aa'
 
 module MS
   class Peptide
-    def initialize(sequence)
+    def initialize(sequence, pH)
       @sequence = sequence
       @hydro = calc_hydro(@sequence)
       @pi = calc_pi(@sequence)
       @p_rt = 0
       @rts = []
-      @charge = calc_z
+      @pH = pH
+      @charge = charge_at_pH(identify_potential_charges(@sequence), @pH).round
       
       spec = calcPercent(@sequence, @charge)
       
@@ -26,19 +28,6 @@ module MS
     
     def to_s
       "Peptide: #{@sequence}"
-    end
-    
-    def calc_z
-      charge = 0
-      @sequence.each_char do |aa|
-        h = 'H'
-        k = 'K'
-        r = 'R'
-        if aa == h or aa == k or aa == r
-          charge = charge + 1
-        end
-      end
-      return charge
     end
     
     
