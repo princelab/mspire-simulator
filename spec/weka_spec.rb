@@ -13,7 +13,7 @@ describe MS::Weka do
     peptides<<MS::Peptide.new("PEPTIDE")
     
     predicted = MS::Weka.predict_rts(peptides)
-    p predicted[0].rt.should_not == 0
+    predicted[0].p_rt.should_not == 0
   end
 
 end

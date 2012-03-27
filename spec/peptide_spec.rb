@@ -4,18 +4,13 @@ require 'mspire'
 require 'ms/sim_peptide'
 
 describe MS::Peptide do
-  it "Creates a peptide object given a amino acid sequence" do 
+  it "Creates a peptide object given an amino acid sequence" do 
     pep = MS::Peptide.new("HSVVVPYEPPEVGSDCTTIHYNYMCNSSCMGGMNR")
     pep.should be_a(MS::Peptide)
     pep.sequence.should == "HSVVVPYEPPEVGSDCTTIHYNYMCNSSCMGGMNR"
-    pep.mz.should == 1286.2009040485332
-  end
-  
-  it "Can also be initialized with retention time and intensity can be set." do
-    rt = 10.0
-    pep = MS::Peptide.new("HSVVVPYEPPEVGSDCTTIHYNYMCNSSCMGGMNR",rt)
-    pep.rt.should == 10.0
-    pep.int = 100.1
-    pep.int.should == 100.1
+    pep.mono_mz.should == 4490.98980760639
+    #Contains the core theoretical spectrum
+    pep.core_mzs[0].round.should == 4489
+    pep.core_ints[0].round.should == 8
   end
 end

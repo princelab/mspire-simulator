@@ -29,7 +29,7 @@ module MS
         #multiply peptides
 	
         if pep.p_rt == nil
-          raise "\n\n\t#{pep} :: Peptide not predicted in time range: try increasing run time\n\n."
+          puts "\n\n\t#{pep} :: Peptide not predicted in time range: try increasing run time\n\n."
         end
 	
 	rand_length = RThelper.RandomFloat(50.0,100.0)

@@ -30,7 +30,7 @@ describe MS::Rtgenerator do
   
   
   
-  it "#generateRT Returns an array such that [ [[peptides], average retention time] ] where each element in first level represents a fin or feature in the chromatogram" do
+  it "#generateRT Returns an array of peptide objects with predicted retention times" do
     peptides = []
     peptides<<MS::Peptide.new("ANDY")
     peptides<<MS::Peptide.new("PRINCE")
@@ -50,8 +50,8 @@ describe MS::Rtgenerator do
     pre_features = MS::Rtgenerator.generateRT(peptides,scan_times,run_time)
     #returns array of peptides
     pre_features.should be_a(Array)
-    pre_features[0][0][0].sequence.should == "PRINCE"
-    pre_features[0][1].should == 263
+    pre_features[0].sequence.should == "PRINCE"
+    pre_features[0].p_rt.should == 304.0
     
   end
   

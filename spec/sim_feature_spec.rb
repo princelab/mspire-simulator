@@ -17,13 +17,11 @@ describe MS::Sim_Feature do
     avg_rt = 0
     
     peptides.each_with_index do |pep,i|
-      pep.rt = i
-      avg_rt += avg_rt
+      pep.p_rt = i
     end
     
-    avg_rt = avg_rt/3.0
     
-    features = MS::Sim_Feature.new([[peptides, avg_rt]],sampling_rate,run_time)
+    features = MS::Sim_Feature.new(peptides,sampling_rate,run_time)
     features.should be_a(MS::Sim_Feature)
   end
   
@@ -38,13 +36,11 @@ describe MS::Sim_Feature do
     avg_rt = 0
     
     peptides.each_with_index do |pep,i|
-      pep.rt = i
-      avg_rt += avg_rt
+      pep.p_rt = i
     end
     
-    avg_rt = avg_rt/3.0
     
-    features = MS::Sim_Feature.new([[peptides, avg_rt]],sampling_rate,run_time)
+    features = MS::Sim_Feature.new(peptides,sampling_rate,run_time)
     features.data.should be_a(Hash)
   end
   
