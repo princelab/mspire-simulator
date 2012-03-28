@@ -21,7 +21,7 @@ describe MS::Sim_Feature do
     end
     
     
-    features = MS::Sim_Feature.new(peptides,sampling_rate,run_time)
+    features = MS::Sim_Feature.new(peptides,run_time)
     features.should be_a(MS::Sim_Feature)
   end
   
@@ -40,7 +40,7 @@ describe MS::Sim_Feature do
     end
     
     
-    features = MS::Sim_Feature.new(peptides,sampling_rate,run_time)
+    features = MS::Sim_Feature.new(peptides,run_time)
     features.data.should be_a(Hash)
   end
   

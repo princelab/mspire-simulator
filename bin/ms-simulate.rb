@@ -34,8 +34,9 @@ version "ms-simulate 0.0.1a (c) 2012 Brigham Young University"
   opt :run_time, "Run time in seconds", :default => 1000.0 
   opt :noise, "Noise on or off", :default => "true"
   opt :contaminate, "Contamination on or off", :default => "true"
-  opt :noise_density, "Determines the density of white noise", :default => 20
+  opt :noise_density, "Determines the density of white noise", :default => 10
   opt :pH, "The pH that the sample is in - for determining charge", :default => 2.6
+  opt :out_file, "Name of the output file", :default => "test.mzml"
 end
 
 Trollop::die :sampling_rate, "must be greater than 0" if opts[:sampling_rate] <= 0
@@ -51,6 +52,7 @@ Trollop::die "must supply a .fasta protien sequence file" if ARGV.empty?
   contaminate = opts[:contaminate]
   density = opts[:noise_density]
   pH = opts[:pH].to_f
+  out_file = opts[:out_file]
 
   @peptides = []
 
@@ -81,14 +83,16 @@ Trollop::die "must supply a .fasta protien sequence file" if ARGV.empty?
   
   if noise == 'true'
     spectra = MS::Noise.noiseify(spectra,density)
-  elsif contaminate == 'true'
-    spectra = MS::Noise.contaminate(spectra)
   end
-  
+  if contaminate == 'true'
+    spectra = MS::Noise.contaminate(spectra)
+  else
+    spectra.delete_if{|k,v| v == nil}
+  end
   mzml = Mzml_Wrapper.new(spectra)
   
   puts "Writing to file..."
-  mzml.to_xml('test.mzml')
+  mzml.to_xml(out_file)
   puts "Done."
   
 end

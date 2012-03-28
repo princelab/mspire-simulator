@@ -4,14 +4,14 @@ require 'ms/sim_feature/aa'
 
 module MS
   class Peptide
-    def initialize(sequence, pH)
+    def initialize(sequence, pH = 2.6)
       @sequence = sequence
       @hydro = calc_hydro(@sequence)
       @pi = calc_pi(@sequence)
       @p_rt = 0
       @rts = []
       @pH = pH
-      @charge = charge_at_pH(identify_potential_charges(@sequence), @pH).round
+      @charge = charge_at_pH(identify_potential_charges(@sequence), @pH)
       
       spec = calcPercent(@sequence, @charge)
       

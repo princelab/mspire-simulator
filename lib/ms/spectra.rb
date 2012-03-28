@@ -18,7 +18,7 @@ module MS
       pre_features = MS::Rtgenerator.generateRT(peptides,r_times)
       
       #Features
-      @data = MS::Sim_Feature.new(pre_features,run_time).data
+      @data = MS::Sim_Feature.new(pre_features,r_times).data
       #create_spectrum(@data)
 
     end

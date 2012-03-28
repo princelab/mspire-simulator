@@ -29,17 +29,4 @@ describe MS::Spectra do
     spectra.data.should be_a(Hash)
   end
   
-  it "If no retention times are predicted spectra trys again by increaseing the run time by 1000" do 
-    peptides = []
-    peptides<<MS::Peptide.new("ANDY")
-    peptides<<MS::Peptide.new("PRINCE")
-    peptides<<MS::Peptide.new("PEPTIDE")
-    sampling_rate = 1.0
-    #not enough run time
-    run_time = 200.0
-    spectra = MS::Spectra.new(peptides,sampling_rate, run_time)
-    spectra.should be_a(MS::Spectra)
-    spectra.data.should be_a(Hash)
-  end
-  
 end

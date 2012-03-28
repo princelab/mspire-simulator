@@ -7,12 +7,13 @@ require 'ms/rt/rt_helper'
 
 module MS
   class Sim_Feature 
-    def initialize(peptides,run_time)
+    def initialize(peptides,r_times)
       
       @start = Time.now
-      @run_time = run_time
       @features = []
       @data = {}
+      @max_int = 0.0
+      r_times.each{|t| @data[t] = nil}
       
       
       #------------------Each_Peptide_=>_Feature----------------------
@@ -44,12 +45,12 @@ module MS
 	    int = fe.ints[j][i]
 	    if int > 0.1
 	      rt_mzs<<mz
-	      rt_ints<<int
+	      rt_ints<<((int/@max_int)*100.0)
 	    end
 	  end
 	  
 	  if rt_mzs.include?(nil) or rt_mzs.empty?; else
-	    if @data.key?(rt)
+	    if @data.key?(rt) and @data[rt] != nil
 	      mzs = @data[rt][0]
 	      ints = @data[rt][1]
 	      @data[rt][0] = mzs + rt_mzs
@@ -84,7 +85,7 @@ module MS
       neutron = 0
       
       #--------------Intensity----------------------------
-      ints_factor = RThelper.gaussianI(avg,@run_time/2,@run_time/4,200)
+      ints_factor = RThelper.gaussian(pep.charge,2,0.25)
       #------------------------------------------------
       
       pep.core_mzs.each do |mzmu|
@@ -108,11 +109,11 @@ module MS
 	  #-------------mz wobble-----------------------
 	  y = fin_ints[i]
 	  if y > 0.5
-	    wobble_int = 0.001086*y**(-0.5561)
+	    wobble_int = 0.001071*y**(-0.5430)
 	  else
 	    wobble_int = 0.001
 	  end
-	  wobble_mz = Distribution::Normal.rng(mzmu,(wobble_int/2.0)).call
+	  wobble_mz = Distribution::Normal.rng(mzmu,(wobble_int*4.5)).call
 	  if wobble_mz < 0
 	    wobble_mz = 0.01
 	  end
@@ -134,7 +135,10 @@ module MS
 	  fin_ints[i] = fin_ints[i] + diff
 	  #---------------------------------------------
 	  
-	 
+	  if fin_ints[i] > @max_int
+	    @max_int = fin_ints[i]
+	  end
+	  
 	  x += 1
 
 	end

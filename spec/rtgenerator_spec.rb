@@ -23,7 +23,7 @@ describe MS::Rtgenerator do
         spec_time = spec_time + (1/sampling_rate)
       end
     
-    pre_features = MS::Rtgenerator.generateRT(peptides,scan_times,run_time)
+    pre_features = MS::Rtgenerator.generateRT(peptides,scan_times)
     #returns array of peptides
     pre_features.should be_a(Array)
   end
@@ -47,7 +47,7 @@ describe MS::Rtgenerator do
         spec_time = spec_time + (1/sampling_rate)
       end
     
-    pre_features = MS::Rtgenerator.generateRT(peptides,scan_times,run_time)
+    pre_features = MS::Rtgenerator.generateRT(peptides,scan_times)
     #returns array of peptides
     pre_features.should be_a(Array)
     pre_features[0].sequence.should == "PRINCE"
@@ -75,7 +75,7 @@ describe MS::Rtgenerator do
       end
     
     begin
-      pre_features = MS::Rtgenerator.generateRT(peptides,scan_times,run_time)
+      pre_features = MS::Rtgenerator.generateRT(peptides,scan_times)
     rescue
     
        peptides = []
@@ -94,7 +94,7 @@ describe MS::Rtgenerator do
 	    spec_time = spec_time + (1/sampling_rate)
 	  end
 	  
-      pre_features = MS::Rtgenerator.generateRT(peptides,scan_times, run_time)
+      pre_features = MS::Rtgenerator.generateRT(peptides,scan_times)
       
     end
   end
