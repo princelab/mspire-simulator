@@ -57,7 +57,7 @@ Trollop::die "must supply a .fasta protien sequence file" if ARGV.empty?
   @peptides = []
 
   ARGV.each do |file|
-    Progress.progress("Reading file(s):",(((ARGV.index(file)+1)/ARGV.size.to_f)*100).to_i)
+    start = Time.now
     inFile = File.open(file,"r")
     seq = ""
     inFile.each_line do |sequence| 
@@ -67,16 +67,18 @@ Trollop::die "must supply a .fasta protien sequence file" if ARGV.empty?
       end
     end
     inFile.close
+    
     trypsin = Mspire::Digester[digestor]
     digested = trypsin.digest(seq)
 
-    digested.each do |peptide_seq|
+    digested.each_with_index do |peptide_seq,i|
+      Progress.progress("Generating peptides '#{file}' :",((i/digested.size.to_f)*100).to_i)
       peptide = MS::Peptide.new(peptide_seq, pH)
       @peptides<<peptide
     end
+    Progress.progress("Generating peptides '#{file}' :",100,Time.now-start)
+    puts ''
   end
-  Progress.progress("Reading file(s):",100,Time.now-@start)
-  puts ''
 
   @peptides.uniq!
   spectra = MS::Spectra.new(@peptides,sampling_rate, run_time).data

@@ -21,7 +21,7 @@ module MS
       peptides = MS::Weka.predict_rts(peptides)
     
       peptides.each_with_index do |pep,ind|
-        Progress.progress("Generating peptides:",(((ind+1)/peptides.size.to_f)*100).to_i)
+        Progress.progress("Generating retention times:",(((ind+1)/peptides.size.to_f)*100).to_i)
 
         pep.p_rt = @r_time.find {|i| i >= pep.p_rt}
         
@@ -44,7 +44,7 @@ module MS
         
       end
   
-      Progress.progress("Generating peptides:",100,Time.now-@start)
+      Progress.progress("Generating retention times:",100,Time.now-@start)
       puts ""
       
       return peptides

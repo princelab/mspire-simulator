@@ -98,6 +98,7 @@ module MS
 	
 	x = 0.0
 	
+	
 	pep.rts.each_with_index do |rt,i|
 
 	  #-------------Tailing-------------------------
@@ -134,6 +135,7 @@ module MS
 	  diff = (Distribution::Normal.rng(0,sd).call)
 	  fin_ints[i] = fin_ints[i] + diff
 	  #---------------------------------------------
+    
 	  
 	  if fin_ints[i] > @max_int
 	    @max_int = fin_ints[i]

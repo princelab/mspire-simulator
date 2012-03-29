@@ -13,10 +13,11 @@ module Progress
     # reset lines
     reset = cr + clear
     if time == ''
-      print "#{reset} #{message} #{num}%"
+      print "#{reset} #{message}" + "#{num}%".rjust(60-message.length)
       $stdout.flush
     else
-      print "#{reset} #{message} #{num}%\t Took: #{time} sec."
+      str = "#{reset} #{message}" + "#{num}%".rjust(60-message.length)
+      print  str + "Took: #{"%.2f" % time} sec.".rjust(100-str.length)
       $stdout.flush
     end
   end
