@@ -33,7 +33,7 @@ class Mzml_Wrapper
 	    spec.data_arrays = data
 	    spec.scan_list = Mspire::Mzml::ScanList.new do |sl|
 	      scan = Mspire::Mzml::Scan.new do |scan|
-		scan.describe! ['MS:1000016', rt, 'UO:0000010']
+		scan.describe_many! ['MS:1000016', rt, 'UO:0000010']
 	      end
 	      sl << scan
 	    end
