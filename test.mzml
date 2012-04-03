@@ -29,15 +29,2490 @@
     </dataProcessing>
   </dataProcessingList>
   <run id="simulated_run" defaultInstrumentConfigurationRef="IC">
-    <spectrumList count="106" defaultDataProcessingRef="did_nothing">
+    <spectrumList count="108" defaultDataProcessingRef="did_nothing">
       <spectrum id="scan=1" index="0" defaultArrayLength="1">
         <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
         <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
         <scanList count="1">
           <scan>
-            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time"/>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1432.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
           </scan>
         </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="24">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJw78NRqforLdAcAFIwD/g==</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="24">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJz7xc2j47JB3wEADQcCoQ==</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="1" defaultArrayLength="1">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1433.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="24">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJw7/fiWVqbLdAcAFmEENw==</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="24">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJzrLPhT0Pde3wEAFRsEUg==</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="2" defaultArrayLength="1">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1434.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="24">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJz7YKjxN8dlugMAEqoDzg==</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="24">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJy7eXDH4mh/IwcAFpMEEg==</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="3" defaultArrayLength="3">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1435.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="44">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJzzu10xR8B5usPnLr3FyS7THaYoivXtd53uAACHGQpo</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="44">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJxLq0tdzyBj4tBrITD12xVjhx8a/5m/7TRyAAB48gpz</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="4" defaultArrayLength="2">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1436.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="32">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwT4z7Ckeky3WH+/xS/Xa7THQAyJwaY</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="32">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJx79l+pfV+XocPs2raVzKuNHABKfQev</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="5" defaultArrayLength="4">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1437.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="56">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJz7mjLrtqjzdAeDPU48CS7THX7+F6g+4DrdITL5S5e4+3QHAPZjDoE=</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="56">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJzLkdDPFGIxdMh5rJ3I/svUYWLkL9tpMYYO+1UUSrT1DBwArs0KuQ==</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="6" defaultArrayLength="4">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1438.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="56">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJzrmMqWIeY83eHC80eRiS7THd4v0H+6x3W6g5rgxgvi7tMdAPQaDpI=</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="60">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBIADf/0oFvE7TsDZAv+TY59+YNEA30+G+YbwyQP+2SL4f0jBAG0oQ9A==</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="7" defaultArrayLength="4">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1439.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="56">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJz78uZmMJ/zdIdy2wd1aS7THbbEBm3c7jrd4cezZmdZ9+kOAA1hD44=</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="56">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJyzbXsq+y/G2sG384rT8skODpPnbeRe8sDEoWS9YPTcNFMHAPTeDi0=</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="8" defaultArrayLength="4">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1440.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="56">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJxj/yi1jdt5ukNDSVpCgct0h3VTuyz3uk53UDmbES/hPt0BANccDQA=</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="56">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJzjnPg0U/GojYNvfozXpt32Ds694goRhg4Oa/kzpvFmmjgAAMl9C00=</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="9" defaultArrayLength="5">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1441.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="68">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBKADX/wp589i8QZdApqa3whJDl0DdM5mJaESXQGBDlMC7RZdAD6K5JhVHl0CT9xJa</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="68">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJzzF+z23lRn4LDh1JZ1izvsHTYERBtE2jg4mMgphHJucnRY9KZCYtdzcwcAUDcQNg==</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="10" defaultArrayLength="4">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1442.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="56">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwznLV+B7fzdIeHKso3Ml2mO1iF2n/Z4TrdgZ95Y660+3QHAN74DNs=</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="56">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJy78GaJ5LIXNg7MjMufsvc4OnRNMTknxOziMCthd86FYyYOAPGgDgw=</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="11" defaultArrayLength="6">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1443.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="80">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBMADP/wi+yYm8QZdAsdkJOg9Dl0D1nWWObkSXQAIxO/e6RZdALHVM2BVHl0C3Kv4RbkiXQAn/FKE=</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="76">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJzbfHtmyYvphg55Zi9n6Vs7ObA9rPm38LWjg958gep+SweHACEtoaIH9g6xpkoccscNHAAZ4BMt</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="12" defaultArrayLength="5">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1444.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="68">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBKADX/33giI8VQ5dAaXuZc2lEl0AytsooukWXQNaSEdsYR5dA3f9zDGdIl0B5jxIz</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="68">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBKADX/zwBBQd8bkBA/cXi86Q/REC6ls+YvDtFQAabOa8tD0FA8+Na8WwxMkBd0RFb</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="13" defaultArrayLength="6">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1445.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="80">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBMADP/+g0nFO6QZdA3vQhvBdDl0DtZ88pa0SXQIyFVN3HRZdAMjuD5g9Hl0BHJwGwcEiXQDQHFWY=</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="80">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBMADP/wIZky+WUjFAzghFD46PR0BnePI0F9tCQPP3Q8vpgkJA5cxwlMlWQUBCYwP2/zQ4QN3VFQE=</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="14" defaultArrayLength="6">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1446.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="80">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBMADP/3Lumz26QZdAICWUmBdDl0DcDl/PakSXQIkjyMPGRZdAUQL+UAtHl0AfC8LEZUiXQAI8FGE=</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="80">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBMADP/3cxJn3HXzpAegElvExWPkDyDghgE3dEQN/P8b1T50pAen/H7suwQkDG6w+PXsM0QOGLFY0=</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="15" defaultArrayLength="6">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1447.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="80">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBMADP/6N+nT27QZdA/B4PtwxDl0CTa1GPZkSXQEzTDk28RZdA3NqqxRpHl0Asvo0mc0iXQAjvFRI=</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="80">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBMADP/1sGruvt0zZAryJxtgXhSEBN1ZLhZH9MQObSKn/nTkxA1J9u2H6xRkAIdZoHDu4zQEhPFrg=</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="16" defaultArrayLength="6">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1448.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="80">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBMADP/9Dqrwu9QZdAq+bOSxhDl0A32WOHakSXQFQEhEy8RZdAQml9gg9Hl0D+C/opaUiXQClnFTA=</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="76">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJyb0hTo9bfKwmGzzNauWi93B9/EcO6yTmeHhCkflvrdd3a4oObz7W+Kq8Mf144jnE+tHQAJ5RXc</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="17" defaultArrayLength="6">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1449.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="80">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBMADP/6BI7BS7QZdAc/sJRAxDl0Cd6fk9ZUSXQJn3v3nDRZdAb0LlHBlHl0DhSRv1aUiXQCddFis=</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="76">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJw7W/eiqKDUxIF/P9+2aGZnB9PKREOrsx4OTxWSn1a+cHWocti/vsLW1WExd8r7//pWDgD0FRR/</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="18" defaultArrayLength="7">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1450.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="92">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBOADH/5L23+e4QZdAowuyfw1Dl0BMbMUfakSXQKUu+4i8RZdAorV0IRpHl0D8W0ucbkiXQAKMhCbBSZdAA1cZfA==</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="92">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBOADH/xzkJmKPwDhAjPzHbJ5jS0AudT2wXxdQQG2V6oiF4E9AS4vYMLwrREDD8XawmGw7QDuwE41uADJA2NIYog==</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="19" defaultArrayLength="7">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1451.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="92">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBOADH/4yKqi2zQZdAK/Nw5BNDl0DV1HzKa0SXQJIqoKLFRZdAeePFPxFHl0Bkd6hRdUiXQGnk/bO6SZdACq0beg==</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="92">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBOADH/08+iPpWejlAIYjDm/UFS0DyVYRtLldVQDSOBH17AlFA7F3SqlhEQ0CLGcpZw+84QEXJyMeeFzBApnkYHw==</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="20" defaultArrayLength="6">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1452.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="80">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBMADP/7ABC6G0QZdA/vLlBhRDl0DC2/X8ZkSXQGiqYuO+RZdAMreAjBVHl0C/XQkRbUiXQERZFl0=</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="76">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJzzPmdYetXOxsGv2Z+1X9nHoWqX3I6DP3wcRA1q43RqAxxk+z4HvLri5XAj3nrRqX5bBwDfTBR6</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="21" defaultArrayLength="7">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1453.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="92">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBOADH/yjvD6S2QZdAVfhPeRBDl0DhqIUcZkSXQFQoIt+0RZdAjmwpVw9Hl0DkoRKCa0iXQHlbKF7ESZdAqbMXWA==</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="92">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBOADH/5jnQp+iwzhAKIjedYOtS0DU4QkqzUlRQBWtTVHQAklAlxCzJCvQSUBTpHfiyMY4QNhWK9Z4azBA4lQZIA==</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="22" defaultArrayLength="7">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1454.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="92">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBOADH/0+GQMu7QZdA6rjHhBRDl0ADZPXFbUSXQEU2bqG+RZdApiLt6xRHl0C/nGx1aUiXQDXVTHHASZdA9CgaGQ==</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="92">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBOADH/8MF/ggTZEBAp8UKiXM8TkDOpy2NyddOQDwyLMWKk1BAcnK0ovEwR0D6CBAJ/Sw7QLpedte4IC9ApU4XuA==</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="23" defaultArrayLength="7">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1455.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="92">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBOADH/6GWZOy8QZdAxBUSZxFDl0D28HJOZkSXQGlTVmi6RZdAHvt9nxdHl0CLuCwKckiXQCrH/kTDSZdA0I8Y2g==</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="92">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBOADH/80AJpvLtTtA259xFH6CUEDWGVJ69GtVQOpeaOABllFAn1aISh2kSkDl/39w1JpEQLGqz5Uz/TFA5WQatw==</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="24" defaultArrayLength="7">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1456.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="92">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBOADH/2IT//S/QZdAHhZ93RtDl0CHT35+cESXQLiweM/FRZdArwHy1wxHl0CsZChba0iXQAYQlVDBSZdA19QYjA==</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="92">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBOADH//XPlHr81j9A4VGwj0TlT0Ay83wyyedMQCsSdAmZhlFAm6EJ6L1RQUCygDwAR19AQGJAombmzDRAJl8Z5g==</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="25" defaultArrayLength="7">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1457.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="92">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBOADH/1gURwi5QZdA5YiKHhFDl0ANpKCYakSXQL8bY8G/RZdAbfETzCFHl0B37r4XcUiXQAcP9m2/SZdAi8sXsg==</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="92">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBOADH/7rKsBdja0BA1ZeO6R/UT0A1V3oBxDBSQLES6ZsvV1BAY3yL/dcIR0ACNLe2hnVGQIIbw2g5Sy9AyfAXlQ==</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="26" defaultArrayLength="7">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1458.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="92">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBOADH/4UtkBS8QZdA/vGx5wpDl0A9ukbBZUSXQG3wRiC5RZdA0pkSexpHl0CukxQNYkiXQHaRETLCSZdA2QAYKw==</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="92">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBOADH/2FewepXejtAQt1HmXMCUUB+VQRamYtQQFk2kN01k01Aa6eiBNvXSkBkqfsG7pM8QHmoop1KbjdAreUYgA==</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="27" defaultArrayLength="7">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1459.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="92">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBOADH/5VMLya6QZdAJ0NGKhBDl0CR21a2dkSXQEnVfffFRZdAk0h0eBJHl0Dr0DX6ZkiXQH/CIWvISZdAlwAYpA==</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="92">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBOADH/6J3u06oA0JAEYcTGrcATUAi86kQ72VVQNjtqRneE1ZAEUpp5jAOTECNlU3rwWFCQIruQrMMDjZAgoQWjQ==</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="28" defaultArrayLength="7">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1460.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="92">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBOADH/4TWk8e2QZdAD/NjzBNDl0C5d/jjakSXQIidLUTBRZdA3KkR5RJHl0DLkzVkaEiXQIN3XyzDSZdAHJ0adQ==</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="92">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBOADH/4DhYfg6mD9AbgQbEI9pT0CTElhVUGtXQOVv6plCsVdApPZgEVQTUECaoQ69iXA+QNiYWsze8zRAnFoYjw==</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="29" defaultArrayLength="7">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1461.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="92">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBOADH/0OqwWa3QZdAv0m1QRxDl0DI5wURZESXQOQwUenBRZdAKzxcEhVHl0CB4T3WZkiXQEsmzTPBSZdAuXoX2w==</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="88">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJxLsQ9qmRht77D/5ylZBq4gh798Ufr1nREOSS/7A7xYAhyWnX6YM1He2yHksH3ZxUUuDv2BzvVOc0wdAI+EFw0=</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="30" defaultArrayLength="7">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1462.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="92">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBOADH///2k+i/QZdAUv9OkghDl0B+4Z6dVkSXQOE/KJK8RZdA6wrfnwtHl0Aa1fGraUiXQBr0s726SZdARB4cXw==</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="92">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBOADH/xBZreX7wT5Aei4f+dMiUECqE9WluFJQQG7ZHcOEV1NAglpJ8u0IRkDoCbT1SgxDQIwYOSOyFTNA5u0YIA==</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="31" defaultArrayLength="7">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1463.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="92">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBOADH/8U2CGm7QZdADF2YNgxDl0BcJMmOZkSXQHEaV5a+RZdArTh38hdHl0BQK4RNcUiXQGuBQm/CSZdAaDkWJQ==</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="92">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBOADH/52ZUAjJmz1AplTK8ncfUEB6Ft5xQtJRQNGrzWqjIFZA7/84GF1JUEAHNklhRwhCQImSqKiwxjJA0QAYWw==</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="32" defaultArrayLength="7">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1464.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="92">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBOADH//mSFJDCQZdAujw0chJDl0BWSmdrVkSXQL0d5Y/ARZdATl8NtBVHl0DXPWugckiXQOz5FyK5SZdArckYJw==</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="92">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBOADH/8/fJ70O/zlAeJg4QLhEUkCNbOSEAhpUQJ1L/iRId1RAbAbjt+zOTUCD1dgfQ6pCQG3rwqc69TVA2MUaEw==</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="33" defaultArrayLength="7">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1465.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="92">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBOADH//HpJU6yQZdAvGoT4hRDl0DVleIKY0SXQHxeqEDCRZdAUgHi2BVHl0AQYCXkZkiXQCA+PT69SZdA1WYXyQ==</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="92">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBOADH/yLDjcGaTjtAssKlM9aeUkDevm61DCRVQIDeR/cD5FNA6C0fzz5TUkCBNvubk8s9QBNy85X96TlABmEbPQ==</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="34" defaultArrayLength="7">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1466.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="92">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBOADH/7Q+mly9QZdApWS/QBZDl0BO5rKrbkSXQLBTcsLHRZdACVPQUhNHl0Bilz6Nb0iXQNgjttq+SZdA2f8ZlA==</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="92">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBOADH/yhaRV5sOD1ATN6Lc87pTkC/Px3d3MxWQFnEIA79UlNAhPW64gX/UEBqkgTToPlCQDfrB0diSjNA0toZPQ==</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="35" defaultArrayLength="7">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1467.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="92">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBOADH/wv9r0y+QZdAH2GZ7A1Dl0BX8Bi8aUSXQKKQBwa+RZdAZdHN+BNHl0At1Z3vakiXQHXXlue5SZdA2QYaow==</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="92">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBOADH/55HNartKDtAQgE2n65UU0BEVQ08+xFSQLcSI2Ghy1JAX9/zTK2cSEA9gGswvoxDQPWBazN1HzFAco0WWQ==</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="36" defaultArrayLength="7">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1468.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="92">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBOADH/5Jn6x62QZdAfpmzcRNDl0D2JfmBZ0SXQP8Swp29RZdApQvePhJHl0AUchxnaUiXQId2SQXDSZdA4pwYVA==</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="92">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBOADH/3/cGDavFD1A4JLot8vlUUB3j27QG1pXQObFYL89zFRAQ639HE4ASkDq0x18KVBCQJdwrU0XzDRAAUkZfQ==</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="37" defaultArrayLength="7">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1469.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="92">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBOADH/0CnZB2zQZdAQSON3AlDl0CddYkgYESXQK8V5Yi8RZdARfiVHQ1Hl0DSoXciY0iXQEwaAFfBSZdAjykWqQ==</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="88">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJyTtzBrNeR1dnDzsss7ahXkcCFG5pyac6hDW5Lo8Q25AQ4mDUJ7u0O9HP7oHLsgdNrWQeK0psfiemMHADD+FRQ=</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="38" defaultArrayLength="7">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1470.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="92">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBOADH//cUPOe8QZdAArgJdBNDl0AFnwwZZkSXQPuCDXrFRZdAvxXpohBHl0Dsq5FWaEiXQOhqnaTASZdAlvAYmw==</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="92">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBOADH/8/32kWcS0VA0dqdKlpyU0Dxjr4zfzFYQMKPklJrf1JAtvsucXF8TEAEoXtnvrtBQKwgzWN5xDVAGVQahA==</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="39" defaultArrayLength="7">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1471.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="92">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBOADH//bOaxW8QZdARlGTWBFDl0CLPk3Ba0SXQMiaw4a8RZdAUbeSDBdHl0BZ2aRibEiXQHncEca2SZdAzr4ZRg==</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="92">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBOADH/0AZPja4lEBAIFhj8jWoTEB7ghjcYCdUQEyaWWq1tVRAMBV3oP+gSUDbfpzii35BQLDP4A5BYjZAgzcX7g==</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="40" defaultArrayLength="7">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1472.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="92">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBOADH/yVo53C8QZdAABETEBVDl0AlgFTJbESXQG5K7+q5RZdAkOsBLhJHl0AkimaDZUiXQL+L1h3GSZdAbAEW4w==</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="92">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBOADH/xnfXy6+9z5ATUdavMsHTEDLTyKi1yBSQGCOe3HAllBAyMw5hAITUUCPALY2h+VEQMafXTzTljBAsxMYIQ==</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="41" defaultArrayLength="7">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1473.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="92">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBOADH/1MfpJLCQZdAXpA7VhBDl0CdTw1BXUSXQGgabDG5RZdAA4FtlxhHl0B/+SD3X0iXQIq/POSySZdAZYQW2A==</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="92">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBOADH/09Dac/JlkFAI3vaPqd5U0AyXA1BRgBSQKxYSUWy31RATvc4UNrrRkAyqwJloD5CQHUMvncb/jFAhegWew==</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="42" defaultArrayLength="7">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1474.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="92">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBOADH/7azciG6QZdAy+NbYwZDl0DIpb71X0SXQAMR8R2yRZdA6oYgERtHl0D0zxlhZ0iXQNhAmve9SZdA7EsaCA==</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="84">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJyrXb6xmnetg4NZaXJOcJafAwMYRDpM37Cr9GZggMNJ16Vb0iv8HBgP68lv3eHsILzL9tCFQH0HAErmFUo=</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="43" defaultArrayLength="7">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1475.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="92">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBOADH/6325hq0QZdAnOqGHQtDl0BlijKBZUSXQF1xOfi2RZdAAYbB6BBHl0Bb2henZkiXQI398KS0SZdA6+AaeQ==</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="88">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwTOu6hsk7G0UFOSdiF45Sfw9v8lxuLvUMd2H5pX2P2CXXg3c+aEj/dx0FKZuo5/hRXhys59w20RYwcADkSE/4=</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="44" defaultArrayLength="7">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1476.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="92">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBOADH/857dkW/QZdAsullXxZDl0AWW1tfWkSXQHw1oDrDRZdATiZEthlHl0BFoJANZ0iXQClBbX3BSZdAlwMWVw==</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="92">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBOADH/7Dq/BirMEBAfxaEiE28R0DIHqoE+itVQHv3/WFEKktAs0z/X+s0SUB+aIz3XYRAQEbN4bZoRDVA6egZ7A==</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="45" defaultArrayLength="7">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1477.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="92">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBOADH/0BjOXu4QZdAkdqHSQ9Dl0BQ/j3WY0SXQNJaNFnARZdAulH2ghhHl0C5Y311ZUiXQMIP/sPESZdAxnAZwQ==</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="88">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJxz72/K6p1k65Cb9NtWs8/X4WHGUbGNQeEOD9PkG0oNwh16Au3CljEFOHiEB+86k+bkcCfAm19RxdABAJuVFc8=</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="46" defaultArrayLength="7">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1478.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="92">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBOADH/+wEXIi/QZdAQpo3+BZDl0BF4VobXESXQNZ5lM+9RZdAppBGOxNHl0AdYGRRa0iXQMXYMlXCSZdAuRwYLg==</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="92">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBOADH/x9hAW4+lkBAfoYtNKGGS0B9UMTQlB1SQMhfyJmctVJA5zWHMrv0R0C4Gvn038s5QFIs2NJ+LDJAqfkZmw==</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="47" defaultArrayLength="7">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1479.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="92">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBOADH/0vh7cq5QZdA/4k7EQ9Dl0CfIGkRYUSXQJmPQGy4RZdA/EWhRhJHl0BHdivCZ0iXQNIIZejDSZdAzlMYoQ==</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="92">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBOADH/ziDGjP33z1ARYrJOwLwQ0Cj5Y8zZi5QQI5xcU6bvFJADliT/cdqSEAYu/rp78ZAQJIj2Of7Ii9AyVAaUw==</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="48" defaultArrayLength="7">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1480.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="92">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBOADH/6yWczi4QZdA0QcvDg1Dl0AAK8hoa0SXQHYdIdi8RZdAtfXj5xRHl0ABH+oVbEiXQKDPrZS9SZdAi/cYHA==</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="92">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBOADH/3LswK/7kz1AI9+oqOZyUkCU9I3li2xRQLzh76yi5kxALqQFGT2LSkAFGqj1f+w9QKk5uCRgOTBAaYkbkA==</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="49" defaultArrayLength="7">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1481.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="92">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBOADH/6INzs65QZdAeNFN6g9Dl0BWKfhJYESXQD3PGFi9RZdAAhOpoxZHl0BkBdAZa0iXQIXtDy3BSZdAuwwXVg==</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="92">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBOADH/14GBOFiYz1AbWPXhbXoTED9oZ6L6b5OQKYHwFdPx1JAZB8aj0A1REA/W3V/VsFBQLHQXasCTzBAx5UX3g==</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="50" defaultArrayLength="7">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1482.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="92">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBOADH/23KrTfAQZdAXfaiPRRDl0CqUfygaUSXQNcTOzbBRZdA96fpWBRHl0DjElOyc0iXQI/OOPa3SZdA9zIapg==</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="92">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBOADH/4TZua74mDpAv3FUKAzgRUBQpPXlEJxOQBNMFfZAFVRAGllKV20QREBxuW9YwxNAQHJlOBZ39y9AxVgWpQ==</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="51" defaultArrayLength="7">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1483.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="92">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBOADH/yuGri65QZdA5mgWhQxDl0BAaZ7SZUSXQC6iy9G8RZdApQPU+hBHl0A3parxbUiXQEnWnM7GSZdAzNEaYQ==</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="92">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBOADH/+eqTP1w6TdALDnuC4MPTUBY/WbYlWdTQGugcTnjOUpA1zU7BblKSkC4Egi2Wo5AQB5F76EgeDNA0IkXbA==</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="52" defaultArrayLength="7">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1484.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="92">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBOADH//YXVqe9QZdAz+YppBNDl0BkKgNzXESXQEvrlV+7RZdAqjmwxxZHl0DjtaxLaEiXQI/IKTvASZdA0n0ZSg==</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="92">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBOADH/xItxNyEiTlAnwPFMCttUECC47XIfTpTQLKMq+o77ExAjyndH2NSQ0Dnk9NTx9s8QABA6zMwdzBA0qwY9g==</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="53" defaultArrayLength="6">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1485.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="76">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJx7Y+w4cb/jdAepe7MuCjlPd5i7KKcv2WW6wxEf6b2HXKc7cHv8myDkDpRv+yia6zHdAQAbNRUY</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="76">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJyL6j/DPzfGwaF7dcUUj+XeDgmnGGS6u4IcZu8w79y+JdBhYpfEjXwFZwfLW3WMe1ltHAD76hPj</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="54" defaultArrayLength="6">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1486.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="76">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJzLLbtUvNVxusO/fqdwMefpDi65PHtSXaY78CnuerjTdbrD0i7lj8LuQHFNtgv5HtMdAANGFCk=</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="80">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBMADP/0ZQvgPQXzZADMNZthsATkAc+gvdsQ9PQJfH9XRqg0lAm89r3MbjMUA5MLIw6t1AQOmXFWs=</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="55" defaultArrayLength="6">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1487.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="76">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJw7/caqYrfjdAcWlRXnuJ2nO1hX3xBMdZnu8Dxv39HdrtMdGN13bRJzB9LvtO9keUx3AAASgBU1</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="80">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBMADP/xkE/UUkPEBADdW97j7SS0BI/QC0GZ9QQDHgTLUaYk9AI0Wz2AzhRkAiUpbe1Zs5QNcpE/0=</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="56" defaultArrayLength="6">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1488.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="80">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBMADP/7PYaje5QZdAhUmtww1Dl0BiZDTBZUSXQO38mja8RZdADuLxexBHl0CDFtMKbEiXQCmlFbo=</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="80">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBMADP//xcxSuhSTxA0aEGiK1ZR0Df+Pp2hqBMQIz/1CY5CEtA+u3qJyWeSkCdu0PQgio6QFIuF1w=</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="57" defaultArrayLength="6">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1489.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="80">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBMADP/wiRsk28QZdAJvdFrw5Dl0BqG+IvZESXQBtxAIzARZdA4cQRXRhHl0ANTfX5ZkiXQN5dE8U=</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="80">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBMADP/4yLNBQ3fzlAGx0QZwCZSUDhXYidvo5NQJuWeJHfvEtAy1v5NZWzQ0C732JRqHg5QNR+FQE=</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="58" defaultArrayLength="6">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1490.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="80">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBMADP/x+7dgKuQZdAEhkkVxxDl0CauIfRY0SXQFNJ2Lu8RZdAZQQgIBhHl0AOrJiQbEiXQLz9EnA=</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="80">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBMADP/zB4FvHh5zhA0sdckxhKRUAm+t17vOBQQIPNa4Hu3lBAWgWw0AVeRUD5oGsuhXM8QEtfFwg=</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="59" defaultArrayLength="7">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1491.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="92">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBOADH/40WzUu2QZdAbeA0mAlDl0DyUZ8nX0SXQJXwmynARZdAenCOPRVHl0Ara8R0ZkiXQOtDio/CSZdAwRcY0g==</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="92">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBOADH/zbznx/tYzVAg2Fc8vu2REBscPxA7JZMQAryFmZwfU1AWdi+m3rHQUAiOt/M4HQ6QHGzOZSvOzBADuoamA==</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="60" defaultArrayLength="6">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1492.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="80">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBMADP/2xn5x+6QZdAQIBQlRVDl0Co0ONtX0SXQN3KWoG6RZdAMWBYkBlHl0A9xqDiZUiXQBgrFdM=</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="80">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBMADP/zLZvWL4QTJApzVYL2/9RED1I4Chh4ZJQD+Lkh8qn0VAhtpfPCbrRkDJnFjmp902QBPEFfA=</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="61" defaultArrayLength="6">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1493.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="80">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBMADP/8LCTVK9QZdABNKtihNDl0BDf1beaESXQL7T74y8RZdAG6yWRhtHl0DEXBS0aEiXQChyFds=</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="80">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBMADP/0c853nDiC9AEPLrlwrXSUAUZsAHz2dOQESaAxup3kdAlZthrggiR0Bj26APd4g+QP6gE/U=</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="62" defaultArrayLength="6">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1494.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="80">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBMADP//0iTIa8QZdAbvvIzxlDl0ARpXJ9W0SXQANUaC64RZdAI/T8VBNHl0BprB6yakiXQBNqFNs=</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="80">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBMADP/8VWWjPL+TdAqIHskXf2R0CDg0euS7hMQGu8534zEEVALyeqHK4YQ0AnDbApxX42QC8MFIc=</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="63" defaultArrayLength="6">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1495.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="80">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBMADP/+wa3Dy4QZdAZeknUxNDl0ClH0NHZkSXQOvt4QfCRZdAjlc7RxRHl0BHVHfjbkiXQAFpFGw=</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="80">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBMADP/9FWwLx24DVAvvkgK8j0RUCYyIvdCW5QQFDSA85rdEdAeb+CkJGQQUDOP1rpEVI0QF4OFu0=</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="64" defaultArrayLength="6">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1496.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="80">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBMADP/xFNIga5QZdAm+VnfBJDl0A0ddFzakSXQGJhL1S8RZdANQ2jPBBHl0CTIKTCakiXQLnZEmg=</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="80">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBMADP/5pD+95y5jRAxKxLMpMbREDyVi7coY9OQLFS+f9zKUtAFKs9lewRQkBRpbTkvRk1QEeIFr0=</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="65" defaultArrayLength="6">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1497.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="80">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBMADP/79OHra0QZdAJU5FTRJDl0AivxyoZkSXQHoc8221RZdAFJ2qUxFHl0DNnHgkcEiXQNFaEz0=</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="76">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJxLW1/R9F/HzIHn35ZVScUuDnbV+Vd70wMcVs6NO73xr5sDZ0xLZruEm8OubcGtAf5GDgAm1xVm</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="66" defaultArrayLength="6">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1498.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="80">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBMADP/wTbeXe8QZdAehRZkw5Dl0BkZneTbUSXQINzg57CRZdABupAgxRHl0D3EXX7Z0iXQOxPFHo=</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="80">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBMADP/7WJ9eWadTNApteCgh+HSkDTlcKcvkdLQDqM0dGW2ENAkypnos+6QUBeWtxAzhs2QHLhF/4=</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="67" defaultArrayLength="5">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1499.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="68">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBKADX/5qIKqcSQ5dAbFxwKmVEl0DsJ+vzxUWXQG/775kUR5dABawRgGhIl0BtGxHB</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="68">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBKADX/zNy+XW1qz1ApesKMJmoSUDjiGaSI9BLQC8CA1oE/j5Ap98VnZ6qNkB17BFq</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="68" defaultArrayLength="6">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1500.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="80">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBMADP/zzVNSa3QZdAtstklQlDl0A1vltMZESXQPFkiAGxRZdAn+FHCBJHl0A9KigKZUiXQOvuErk=</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="76">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJzTMv/YFy1q5rBhdnfZmlAXh7cLWCr7Jno41Nj4mTcbeTqsWieYHZ5p5zArsqtOit/YAQDgZBJt</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="69" defaultArrayLength="6">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1501.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="80">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBMADP/0wUl9m7QZdAv1uTZg9Dl0DuMfVmakSXQPfbF8C3RZdAEPJfzhVHl0CJFd1sakiXQCerFi0=</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="76">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJy7V3fFgMFI36G+L3LeNF1HhzwzjUfrbrk5LGJNOqKl5O5QpbV6chujk0NEu4qM9A4TBwDV0BH3</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="70" defaultArrayLength="6">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1502.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="80">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBMADP/9oRgCSyQZdAk5Npvw9Dl0ANR8CtZkSXQCrcYTPARZdAAU4l+BFHl0BnvTSVa0iXQOljE5s=</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="76">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJyz+u7zRWipsYMeR9YsgUoXB6FuhuB0ZlcHham9+fUrnB0+ie5NuRXh5CBYGRd6ztfIAQCuQxHD</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="71" defaultArrayLength="5">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1503.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="68">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJyTvb/ERtZ5uoNpMse3fJfpDlvsM6J2uU53iLbbM5/XfbpDg1nfzGSP6Q4AShEQPQ==</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="68">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJxbNTeiRpDHyUF24bcP/pruDlxx/S1z7V0dJkQlZ71aZuvgdyvjPcsBIwcATRgQsw==</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="72" defaultArrayLength="6">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1504.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="80">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBMADP/xYVRqe8QZdAkMJn4A5Dl0C7ZlqvY0SXQCRNJHe7RZdAWnI19RNHl0C4w7ysakiXQO2CFMw=</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="76">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJzTcV2+cmGPgcNHXlv98m1mDht8bTZrdro4RLCxub5VcnM4f6p3fdRUWwf1z1oq64TNHQDUaRKt</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="73" defaultArrayLength="6">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1505.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="80">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBMADP/7g24rmxQZdAKGYl7Q5Dl0AVghNCb0SXQIFpP2G7RZdApAI3JxZHl0ChsIqra0iXQOGJEzo=</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="80">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBMADP/7zbNnl4KjRAVpPSAvVuQkBsqvTmPgRGQDZ9YEUT+0RAXppjHTgNO0Dimsmhw4kyQP2HFH0=</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="74" defaultArrayLength="6">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1506.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="80">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBMADP/wnTa1i5QZdA0C+jNxJDl0ALibV7a0SXQEWP0v2/RZdAjrMFxRZHl0DsP5F6cEiXQABWFUI=</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="76">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJzLansm/CnFwKFkgVRXVaerg1bU833bf7o52E2Q383jZu8Qv1iMbWqdlcPLA3UfWgoMHAAHmRTu</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="75" defaultArrayLength="5">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1507.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="68">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBKADX/8GaWNy0QZdAiF1rFRRDl0DvxK4XaUSXQGJXOqa5RZdAVJXsEhxHl0B6FBF6</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="68">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJzzL9pQ2PrAwIG5nm3joUMODqoPCw48qnN2kDoo826egLNDvXOo7IlCMwcAbUsRBw==</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="76" defaultArrayLength="5">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1508.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="68">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBKADX/7j9lpkLQ5dAPwbl8GJEl0Cz3eytvUWXQIvP5ZYYR5dAFPKtiWJIl0Ct7BRr</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="68">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJw7xB+08HeTo0POzlR3xlAHh46S53FS95wd7iwT2vo1z9rh+uaozTwiBg4AbrMRdA==</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="77" defaultArrayLength="4">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1509.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="56">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJy7xDGrRcR5usPqpTolMS7THfYHsnDud53uMO3y4xx+9+kOANw/DWs=</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="56">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJybMdFq0XYVB4essgq7C/MdHNSeaStW3XJ0WPPZf6VAu40DAOacDb0=</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="78" defaultArrayLength="5">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1510.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="68">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBKADX/wHQ34AKQ5dA5BPK7WpEl0DV762eukWXQHNUGnASR5dAlczx6W1Il0CTqhO1</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="68">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBKADX/+92XsaihTlAg4aXXZz2QEAfyBzeIPFBQIuF43L+bTVABf273eGuMECjuhSK</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="79" defaultArrayLength="4">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1511.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="56">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJz7uWHxIU7n6Q46oi3JqS7THdpLWtN3uE53qOT4/F/MfboDAPFRDjw=</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="56">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJw7pWUclSLk4GC1cV9M1h5bhyI2biX2GksHNcnX/zaHWjoAALj5C2o=</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="80" defaultArrayLength="5">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1512.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="68">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBKADX/8iNppERQ5dAwEfzdGFEl0DnoDxIvUWXQLigECoSR5dAl8M71GJIl0CFIhIy</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="68">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBKADX/9Yg6XWU8TVAHMxwzhZqQUAe1hk0yt08QGG4mJtt/jRAnpC5/FsWMECJDRLJ</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="81" defaultArrayLength="5">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1513.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="68">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBKADX/0+Xo8QXQ5dArp1laWJEl0DPhszmskWXQNp5EPYPR5dAfxWrSnBIl0CKfxKI</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="68">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBKADX/wiZmuop2DZAdANAC/bbQED0ds7/4sw4QHKYROtQ/ThAxse7naVKMUCVhBRQ</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="82" defaultArrayLength="4">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1514.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="56">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJzbJJeRKeg83eHGla6AFJfpDnuSfZbud53ukFpx5aeQ+3QHAOsDDpc=</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="60">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBIADf/9/vp+RHKjZAlT2+x83PPUDv32vvo44+QP5c/vXCITlANA8SMQ==</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="83" defaultArrayLength="4">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1515.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="56">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJyrU5Ti5Hee7rDZUOhMtst0h9WxbD07Xac7fDCtnibsPt0BALamDAo=</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="56">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwruGsgwrDCxsEmqFhrppqjwyELy6nLvM0cXmtzTtfSMnUAALezCs8=</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="84" defaultArrayLength="4">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1516.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="56">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJybvH9zOL/zdIfusvD5GS7THapLeU0Ouk532H+gnUPIfboDAOYVDUw=</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="56">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJy733zk1cYMG4d9PmG/j4RbOORa7JcK+uXg4CPXPGH6FGMHABGqDvk=</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="85" defaultArrayLength="4">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1517.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="56">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJz7e0nOmst5ukPiqbWtiS7THW7osU4/4DrdofRMlrmk+3QHAO1VDb0=</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="56">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJz71Hvi8I0qG4cFhYuuGf+wdrD8f2UOc7Spg2vaHIsjEWYOACIkD5Q=</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="86" defaultArrayLength="4">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1518.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="56">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJxr/bRnK5/zdIcGJ86l2S7THZYvbGrZ4zrd4Vn3dRVR9+kOAPw3Dsw=</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="56">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJy7v1Dyx7yZlg55dbPj+ywtHBKc2Z5z/TF28Hx1h8lM2cwBAPOPDVA=</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="87" defaultArrayLength="3">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1519.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="44">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJyztz6vkuQy3WEZ/63Qw67THa5t850l4T7dAQB+eQpX</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="44">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwTSrvicyzC3OHMVn2RSXzmDqeep080rzF2AAB9IwnY</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="88" defaultArrayLength="4">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1520.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="56">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJzL5TT5K+g83WFOVpxPmst0h/k+M57udJ3ukNtseE3AfboDANdlDWY=</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="56">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJz7uZnFN0nV1OFMLPelqXI2DnfmSdn9KzR22OGr2bmqxdQBAN1NDT0=</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="89" defaultArrayLength="4">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1521.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="56">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwTvbvLRNB5ukOVzpXobJfpDj0llRd3uE53EJu2tl7MfboDAN+BDZE=</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="56">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJxr9RBeUT7X1iHn9HpWyTcmDvbdK/UMz1k6bFec/43pmpkDANmVDVI=</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="90" defaultArrayLength="4">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1522.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="56">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJxL9+KeIuI83aFx5YSVCS7THcwlBdbsdJ3uMEUrn1/WfboDAMV3C7U=</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="56">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJzbtmxLRgG3gcPDZYHvTdSsHAq33mQ932bhECptM+lTq74DAPF4DfQ=</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="91" defaultArrayLength="4">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1523.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="56">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJxbrO14nN95ugOn1r75aS7THSY5PP2223W6wxP1SkU+9+kOANv0DWY=</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="56">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJyriK8tMDhl6FDoNCtrP6uFwwNGsyOzf5k6nFy9P7Ev0dgBAOBODf4=</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="92" defaultArrayLength="2">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1524.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="32">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJxrkVhVL+483UF9LptUqst0BwAviQVb</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="32">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJw7I905+8VfYwfPhpMrGbusHQBH4gel</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="93" defaultArrayLength="4">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1525.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="56">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJzLLohZLOw83aFuIv+XFJfpDrHxzTXbXac7ONZqKUm4T3cAANctDGc=</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="56">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJxz4z7KNM3D2EHNaDrb5tu2DjEvWWJfWxo6HGM40nWl0NABAL34DG8=</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="94" defaultArrayLength="4">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1526.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="56">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJw7MeVIhIjzdIeEv8zq+S7THdYqb512ynW6w33O1Osi7tMdAO3qDg8=</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="56">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJzr1lbWulWg76Csyftt20szB4PFsT/UWQ0d+la0+HRVGDoAAMhPDF8=</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="95" defaultArrayLength="3">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1527.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="44">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJybEmWygtd5usM3vc5TcS7THY4n3zTY4zrdAQCElQrt</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="44">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJyrPPFosfUHIwfGE5ul3x60cMjrm3THRN3IAQCcHgtY</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="96" defaultArrayLength="3">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1528.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="44">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJyLCszV4nGe7vBDoDAsyWW6w8z5fjO2uE53AABvBgmj</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="44">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwrWzXH9txyIwfNPWmvuxqsHX53Pp24TdbAAQCYTgvZ</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="97" defaultArrayLength="3">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1529.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="44">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJy70zjPmst5uoNkX2J+pst0B17hI5z7XKc7AAB3EQkd</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="44">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJzzuanVYzDd0CFwgo3mZn5zhxRBN/6CuyYOAGtHCB4=</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="98" defaultArrayLength="3">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1530.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="44">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJyTapO8wuM83WFZ5rf9cS7THb5I/Nc94jrdAQCCewsJ</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="44">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwzXNWTb7jYyOHwl/cfzi43dQjX/tDyssLEAQCbcAxn</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="99" defaultArrayLength="4">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1531.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="60">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwBIADf/wvn7/YRQ5dAyw72zWdEl0BSlFwwu0WXQKtOrNIZR5dABYgPGA==</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="56">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJzjMCvLqjYxcZiatz1L6I2RQ2vHbrlfxoYOgsbJ5gLx+g4AwFYLFg==</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="100" defaultArrayLength="3">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1532.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="44">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwrWe3iwOs83WFN4N3fsS7THQ78K1fkdZ/uAACE4gqZ</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="44">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJxz2rZ7Qi+7vkPcUf1NvYnGDhNSPu0MtjFwAACEzApK</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="101" defaultArrayLength="3">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1533.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="44">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJyL/GOqIew83eG64U6+FJfpDgvVJXsOuk53AAB1zgl4</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="44">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJxbsufK40etxg56r/w+z+szckjRm/Tk1U9DBwCu7g1F</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="102" defaultArrayLength="2">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1534.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="32">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJzTz1aR4nKe7vB30UWTdJfpDgAuJAYj</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="36">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJxbMu/qfDZfAwcj78LDCzebOgAAPlsG9A==</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="103" defaultArrayLength="3">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1535.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="44">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJwzmBCuxe883eEqy8MVqS7THQ5buYfvcJ3uAABzzwm8</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="44">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJz7x/7jo1uzgcNMsVzelrX6Dp8feW6U8DFwAACQcgqU</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="104" defaultArrayLength="1">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1536.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="24">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJybJWFiXeIy3QEAC+kCsQ==</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="24">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJxTyNvpxc5p5AAACq0CFA==</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="105" defaultArrayLength="2">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1537.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="36">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJxz/nxYJctlusOfn8vP7Hed7gAAStMI5g==</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="32">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJy7v0ijzqrC0KFx/vfbUawGDgBApwcM</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="106" defaultArrayLength="2">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1538.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="32">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJzLDr24O9lluoOX0Oay7a7THQA+xQcj</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="32">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJw73b4rwibO0OFH+6a3wrL6DgBD0Act</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
+      </spectrum>
+      <spectrum id="scan=1" index="107" defaultArrayLength="2">
+        <cvParam cvRef="MS" accession="MS:1000127" name="centroid spectrum"/>
+        <cvParam cvRef="MS" accession="MS:1000511" name="ms level" value="1"/>
+        <scanList count="1">
+          <scan>
+            <cvParam cvRef="MS" accession="MS:1000016" name="scan start time" value="1539.0" unitCvRef="UO" unitAccession="UO:0000010" unitName="second"/>
+          </scan>
+        </scanList>
+        <binaryDataArrayList count="2">
+          <binaryDataArray encodedLength="36">
+            <cvParam cvRef="MS" accession="MS:1000514" name="m/z array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJzbcq8hNc1luoOb4cUt21ynOwAARVMHxw==</binary>
+          </binaryDataArray>
+          <binaryDataArray encodedLength="32">
+            <cvParam cvRef="MS" accession="MS:1000515" name="intensity array"/>
+            <cvParam cvRef="MS" accession="MS:1000523" name="64-bit float"/>
+            <cvParam cvRef="MS" accession="MS:1000574" name="zlib compression"/>
+            <binary>eJz7G3hRrOu0scNpZ8u/ocv0HQBG8ges</binary>
+          </binaryDataArray>
+        </binaryDataArrayList>
       </spectrum>
     </spectrumList>
   </run>
