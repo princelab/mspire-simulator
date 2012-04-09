@@ -19,37 +19,37 @@ module MS
       
       # Gets retention times from the weka model
       peptides = MS::Weka.predict_rts(peptides)
-    
+      
+      
+      #-----------------------------------------------------------------
       peptides.each_with_index do |pep,ind|
         Progress.progress("Generating retention times:",(((ind+1)/peptides.size.to_f)*100).to_i)
-
+	
+	#Fit retention times into scan times
         pep.p_rt = @r_time.find {|i| i >= pep.p_rt}
-        
-        #multiply peptides
 	
         if pep.p_rt == nil
           puts "\n\n\t#{pep} :: Peptide not predicted in time range: try increasing run time\n\n."
-	  
 	else
 	
-	  rand_length = RThelper.RandomFloat(50.0,100.0)
+	#Give peptide retention times
+	  head_length = 50.0
 	  @r_time.each do |t|
 	    # Only need to go from predicted rt to ~500
-	    if t >= (pep.p_rt-rand_length) and pep.rts.length < 501
+	    if t >= (pep.p_rt-head_length) and pep.rts.length < 501
 	      pep.rts<<t
 	    end
 	  end
-	  
 	end
-        
       end
+      #-----------------------------------------------------------------
+      
   
       Progress.progress("Generating retention times:",100,Time.now-@start)
       puts ""
       
       return peptides
       
-    end
-    
+    end    
   end
 end

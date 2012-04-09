@@ -41,18 +41,17 @@ module MS
 	  rt_ints = []
 	  
 	  fe.core_mzs.size.times do |j| 
-	    mz = fe.mzs[j][i]
-	    int = fe.ints[j][i]
+	    mz,int = [ fe.mzs[j][i], fe.ints[j][i] ]
 	    if int > 0.1
 	      rt_mzs<<mz
+	      #Normalizing Intensities
 	      rt_ints<<((int/@max_int)*100.0)
 	    end
 	  end
 	  
 	  if rt_mzs.include?(nil) or rt_mzs.empty?; else
 	    if @data.key?(rt) and @data[rt] != nil
-	      mzs = @data[rt][0]
-	      ints = @data[rt][1]
+	      mzs,ints = @data[rt]
 	      @data[rt][0] = mzs + rt_mzs
 	      @data[rt][1] = ints + rt_ints
 	    else
@@ -95,14 +94,12 @@ module MS
 	max_y = RThelper.gaussian(mzmu,mzmu,0.05) 
 	
 	relative_abundances_int = relative_ints[index]
-	
-	x = 0.0
-	
+  
 	
 	pep.rts.each_with_index do |rt,i|
 
 	  #-------------Tailing-------------------------
-	  shape = 0.30*x + 6.65
+	  shape = 0.30*i + 6.65
 	  fin_ints << (RThelper.gaussianI(rt,avg,shape,relative_abundances_int)) * ints_factor
 	  #---------------------------------------------
 	  
@@ -137,21 +134,19 @@ module MS
 	  #---------------------------------------------
     
 	  
+	  #Keep max_intensity for normalization
 	  if fin_ints[i] > @max_int
 	    @max_int = fin_ints[i]
 	  end
-	  
-	  x += 1
 
 	end
 	
 	pep.ints<<fin_ints
 	pep.mzs<<fin_mzs
 	
-	index = index+1
-	neutron = neutron+1.009
+	index += 1
+	neutron += 1.00866491600
       end
-      #  Filter for low intensities
       return pep
     end
   end

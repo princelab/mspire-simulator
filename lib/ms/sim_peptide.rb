@@ -63,7 +63,7 @@ module MS
     end
     
       
-      # Counts the number of each atom in the peptide sequence.
+    # Counts the number of each atom in the peptide sequence.
     #
     def countAtoms(seq)
       o = 0

@@ -15,8 +15,7 @@ module MS
       
 	Progress.progress("Adding noise:",(((count/spectra.size)*100).to_i))
       
-	mzs = data[0]
-	ints = data[1]
+	mzs,ints = data
 	
 	density.times do
 	  rmz = RThelper.RandomFloat(0.0,max_mz)
@@ -29,24 +28,6 @@ module MS
       end
       Progress.progress("Adding noise:",100,Time.now-@start)
       puts ''
-      
-      return spectra
-    end
-    
-    def contaminate(spectra)
-      
-      #TODO: add precalculated contamination
-      file = File.open("k_contamination.txt","r")
-      
-      mzs = file.gets.chomp.split(/;/).map{|mz| mz = mz.to_f}
-      ints = file.gets.chomp.split(/;/).map{|int| int = int.to_f}
-      
-      mzs.length
-      ints.length
-      
-      mzs.length.times do 
-	
-      end
       
       return spectra
     end

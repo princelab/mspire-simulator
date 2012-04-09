@@ -7,7 +7,7 @@ require 'mspire/digester'
 require 'mspire'
 require 'ms/sim_peptide'
 require 'ms/rt/rtgenerator'
-require 'ms/spectra'
+require 'ms/sim_spectra'
 require 'ms/noise'
 require 'ms/sim_mzml'
 require 'trollop'
@@ -20,7 +20,7 @@ version "ms-simulate 0.0.1a (c) 2012 Brigham Young University"
   banner <<-EOS
   
   *********************************************************************
-   Description: Simulates ms runs given protien fasta files. Outputs
+   Description: Simulates ms runs given protein fasta files. Outputs
    a mzML file.
    
    
@@ -37,6 +37,7 @@ version "ms-simulate 0.0.1a (c) 2012 Brigham Young University"
   opt :noise_density, "Determines the density of white noise", :default => 10
   opt :pH, "The pH that the sample is in - for determining charge", :default => 2.6
   opt :out_file, "Name of the output file", :default => "test.mzml"
+  opt :contaminants, "Fasta file containing contaminant sequences", :default => "testFiles/contam/hum_keratin.fasta"
 end
 
 Trollop::die :sampling_rate, "must be greater than 0" if opts[:sampling_rate] <= 0
@@ -53,8 +54,13 @@ Trollop::die "must supply a .fasta protien sequence file" if ARGV.empty?
   density = opts[:noise_density]
   pH = opts[:pH].to_f
   out_file = opts[:out_file]
+  contaminants = opts[:contaminants]
 
   @peptides = []
+
+  if contaminate == 'true'
+    ARGV<<contaminants
+  end
 
   ARGV.each do |file|
     start = Time.now
@@ -72,22 +78,19 @@ Trollop::die "must supply a .fasta protien sequence file" if ARGV.empty?
     digested = trypsin.digest(seq)
 
     digested.each_with_index do |peptide_seq,i|
-      Progress.progress("Generating peptides '#{file}' :",((i/digested.size.to_f)*100).to_i)
+      Progress.progress("Creating peptides '#{file}':",((i/digested.size.to_f)*100).to_i)
       peptide = MS::Peptide.new(peptide_seq, pH)
       @peptides<<peptide
     end
-    Progress.progress("Generating peptides '#{file}' :",100,Time.now-start)
+    Progress.progress("Creating peptides '#{file}':",100,Time.now-start)
     puts ''
   end
 
   @peptides.uniq!
-  spectra = MS::Spectra.new(@peptides,sampling_rate, run_time).data
+  spectra = MS::Sim_Spectra.new(@peptides,sampling_rate, run_time).data
   
   if noise == 'true'
     spectra = MS::Noise.noiseify(spectra,density)
-  end
-  if contaminate == 'true'
-    spectra = MS::Noise.contaminate(spectra)
   else
     spectra.delete_if{|k,v| v == nil}
   end
