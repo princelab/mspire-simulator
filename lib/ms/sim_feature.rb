@@ -77,7 +77,7 @@ module MS
     #
     def getInts(pep)
       
-      p relative_ints = pep.core_ints
+      relative_ints = pep.core_ints
       avg = pep.p_rt
       
       index = 0
@@ -95,7 +95,7 @@ module MS
 	relative_abundances_int = relative_ints[index]
   
 	if relative_abundances_int == relative_ints.max
-	file = File.open("sim_new.txt","w")
+	file = File.open("sim_mzw.txt","w")
 	end
 	pep.rts.each_with_index do |rt,i|
 
@@ -130,19 +130,18 @@ module MS
 	  
 	  #-------------Jagged-ness---------------------
 	  int_raw = fin_ints[i]
-	  sd = 10.34 * (1-Math.exp(-0.02512 * fin_ints[i]))
-	  #sd = (1.574 * fin_ints[i]) ** 0.5421
+	  sd = 10.34 * (1-Math.exp(-0.00712 * fin_ints[i])) + 0.12
 	  diff = (Distribution::Normal.rng(0,sd).call)
 	  fin_ints[i] = fin_ints[i] + diff
 	  #---------------------------------------------
-	  puts "#{fin_ints[i]}\t#{sd}"
+	  
 	  
 	  #Keep max_intensity for normalization
 	  if fin_ints[i] > @max_int
 	    @max_int = fin_ints[i]
 	  end
 	  if relative_abundances_int == relative_ints.max
-	  file<<fin_ints[i]<<"\t"<<diff.abs<<"\n"
+	  file<<fin_ints[i]<<","<<wobble_int<<"\n"
 	  end
 
 	end

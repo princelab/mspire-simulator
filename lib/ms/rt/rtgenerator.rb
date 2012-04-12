@@ -26,7 +26,8 @@ module MS
         Progress.progress("Generating retention times:",(((ind+1)/peptides.size.to_f)*100).to_i)
 	
 	#Fit retention times into scan times
-        pep.p_rt = @r_time.find {|i| i >= pep.p_rt}
+	max_rt = @r_time.max 
+        pep.p_rt = @r_time.find {|i| i >= (pep.p_rt * max_rt)}
 	
         if pep.p_rt == nil
           puts "\n\n\t#{pep} :: Peptide not predicted in time range: try increasing run time\n\n."
