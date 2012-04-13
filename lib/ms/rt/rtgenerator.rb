@@ -27,10 +27,15 @@ module MS
 	
 	#Fit retention times into scan times
 	max_rt = @r_time.max 
-        pep.p_rt = @r_time.find {|i| i >= (pep.p_rt * max_rt)}
+	p_rt = pep.p_rt
+	if p_rt > 1
+	  pep.p_rt = @r_time.max
+	else
+	  pep.p_rt = @r_time.find {|i| i >= (p_rt * max_rt)}
+	end
 	
         if pep.p_rt == nil
-          puts "\n\n\t#{pep} :: Peptide not predicted in time range: try increasing run time\n\n."
+          puts "\n\n\t#{pep} TIME-> #{p_rt*max_rt} :: Peptide not predicted in time range: try increasing run time\n\n."
 	else
 	
 	#Give peptide retention times

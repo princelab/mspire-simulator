@@ -42,7 +42,7 @@ module MS
 	  
 	  fe.core_mzs.size.times do |j| 
 	    mz,int = [ fe.mzs[j][i], fe.ints[j][i] ]
-	    if int > 0.1
+	    if int > 0.9
 	      rt_mzs<<mz
 	      #Normalizing Intensities
 	      rt_ints<<((int/@max_int)*100.0)
@@ -83,8 +83,9 @@ module MS
       index = 0
       
       #--------------Intensity----------------------------
-      ints_factor = 1#RThelper.gaussian(pep.charge,2,0.25)
+      ints_factor = RThelper.gaussian(pep.charge,2,0.25)
       #------------------------------------------------
+      
       
       pep.core_mzs.each do |mzmu|
 
@@ -93,6 +94,7 @@ module MS
 	max_y = RThelper.gaussian(mzmu,mzmu,0.05) 
 	
 	relative_abundances_int = relative_ints[index]
+	
   
 	if relative_abundances_int == relative_ints.max
 	file = File.open("sim_mzw.txt","w")
@@ -129,7 +131,6 @@ module MS
 	  
 	  
 	  #-------------Jagged-ness---------------------
-	  int_raw = fin_ints[i]
 	  sd = 10.34 * (1-Math.exp(-0.00712 * fin_ints[i])) + 0.12
 	  diff = (Distribution::Normal.rng(0,sd).call)
 	  fin_ints[i] = fin_ints[i] + diff
