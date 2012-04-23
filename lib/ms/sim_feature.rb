@@ -96,13 +96,10 @@ module MS
 	relative_abundances_int = relative_ints[index]
 	
   
-	if relative_abundances_int == relative_ints.max
-	file = File.open("sim_mzw.txt","w")
-	end
 	pep.rts.each_with_index do |rt,i|
 
 	  #-------------Tailing-------------------------
-	  shape = 0.30*i + 6.65
+	  shape = 0.30*i + 6.65 + RThelper.RandomFloat(-0.5,0.5)
 	  fin_ints << (RThelper.gaussianI(rt,avg,shape,relative_abundances_int)) * ints_factor
 	  #---------------------------------------------
 	  
@@ -141,15 +138,10 @@ module MS
 	  if fin_ints[i] > @max_int
 	    @max_int = fin_ints[i]
 	  end
-	  if relative_abundances_int == relative_ints.max
-	  file<<fin_ints[i]<<","<<wobble_int<<"\n"
-	  end
+
 
 	end
-	if relative_abundances_int == relative_ints.max
-	file.close
-	end
-	#abort
+
 	
 	pep.ints<<fin_ints
 	pep.mzs<<fin_mzs

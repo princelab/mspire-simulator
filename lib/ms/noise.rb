@@ -8,7 +8,8 @@ module MS
     def noiseify(spectra,density)
     # spectra is {rt => [[mzs],[ints]]}
       @start = Time.now
-      spectra.each_key{|k| if spectra[k] == nil; spectra[k] = [[0.001],[0.001]]; end; k += RThelper.RandomFloat(-0.5,0.5)}
+      spectra.each_key{|k| if spectra[k] == nil; spectra[k] = [[0.001],[0.001]]; end}
+      spectra = Hash[ spectra.map {|k,v| [k+RThelper.RandomFloat(-0.5,0.5), v] } ]
       max_mz = spectra.max_by{|key,val| val[0].max}[1][0].max
       
       count = 0.0
