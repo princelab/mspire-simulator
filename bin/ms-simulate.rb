@@ -9,7 +9,7 @@ require 'ms/sim_peptide'
 require 'ms/rt/rtgenerator'
 require 'ms/sim_spectra'
 require 'ms/noise'
-require 'ms/sim_mzml'
+require 'ms/mzml_wrapper'
 require 'trollop'
 
 module MSsimulate
@@ -38,11 +38,13 @@ version "ms-simulate 0.0.1a (c) 2012 Brigham Young University"
   opt :pH, "The pH that the sample is in - for determining charge", :default => 2.6
   opt :out_file, "Name of the output file", :default => "test.mzml"
   opt :contaminants, "Fasta file containing contaminant sequences", :default => "testFiles/contam/hum_keratin.fasta"
+  opt :dropout_percentage, "Defines the percentage of random dropouts in the run. 0.0 <= percentage < 1.0", :default => 0.12
 end
 
 Trollop::die :sampling_rate, "must be greater than 0" if opts[:sampling_rate] <= 0
 Trollop::die :run_time, "must be non-negative" if opts[:run_time] < 0
 Trollop::die "must supply a .fasta protien sequence file" if ARGV.empty?
+Trollop::die :dropout_percentage, "must be between greater than or equal to 0.0 or less than 1.0" if opts[:dropout_percentage] < 0.0 or opts[:dropout_percentage] >= 1.0
 
 #*************************Main******************************************
 
@@ -55,6 +57,7 @@ Trollop::die "must supply a .fasta protien sequence file" if ARGV.empty?
   pH = opts[:pH].to_f
   out_file = opts[:out_file]
   contaminants = opts[:contaminants]
+  drop_percentage = opts[:dropout_percentage]
 
   @peptides = []
 
@@ -90,7 +93,7 @@ Trollop::die "must supply a .fasta protien sequence file" if ARGV.empty?
   spectra = MS::Sim_Spectra.new(@peptides,sampling_rate, run_time).data
   
   if noise == 'true'
-    spectra = MS::Noise.noiseify(spectra,density)
+    spectra = MS::Noise.noiseify(spectra,density,drop_percentage)
   else
     spectra.delete_if{|k,v| v == nil}
   end
@@ -99,5 +102,5 @@ Trollop::die "must supply a .fasta protien sequence file" if ARGV.empty?
   puts "Writing to file..."
   mzml.to_xml(out_file)
   puts "Done."
-  
+
 end

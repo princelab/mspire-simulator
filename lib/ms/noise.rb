@@ -5,7 +5,7 @@ require 'ms/rt/rt_helper'
 module MS
   module Noise
     module_function
-    def noiseify(spectra,density)
+    def noiseify(spectra,density,drop_percentage)
     # spectra is {rt => [[mzs],[ints]]}
       @start = Time.now
       spectra.each_key{|k| if spectra[k] == nil; spectra[k] = [[0.001],[0.001]]; end}
@@ -29,10 +29,11 @@ module MS
 	count += 1
       end
       
+      #Dropouts
       r_times = spectra.keys
       l = r_times.length
       drops = []
-      num_drops = 0.20 * l
+      num_drops = drop_percentage * l
       num_drops.to_i.times do 
 	drops<<r_times[rand(l+1)]
       end
