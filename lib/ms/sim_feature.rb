@@ -4,16 +4,17 @@ require 'distribution'
 require 'ms/sim_peptide'
 require 'mspire/isotope/distribution'
 require 'ms/rt/rt_helper'
+require 'ms/tr_file_writer'
 
 module MS
   class Sim_Feature 
-    def initialize(peptides,r_times)
+    def initialize(peptides,r_times,one_d)
       
       @start = Time.now
       @features = []
       @data = {}
       @max_int = 0.0
-      r_times.each{|t| @data[t] = nil}
+      @one_d = one_d
       
       
       #------------------Each_Peptide_=>_Feature----------------------
@@ -33,6 +34,7 @@ module MS
       
       #-----------------Transform_to_spectra_data_for_mzml------------
       # rt => [[mzs],[ints]]
+      xml_file_data = []
       @features.each_with_index do |fe,k|
 	Progress.progress("Populating structure for mzml:",((k/@features.size.to_f)*100).to_i)
 	
@@ -50,7 +52,7 @@ module MS
 	  end
 	  
 	  if rt_mzs.include?(nil) or rt_mzs.empty?; else
-	    if @data.key?(rt) and @data[rt] != nil
+	    if @data.key?(rt) 
 	      mzs,ints = @data[rt]
 	      @data[rt][0] = mzs + rt_mzs
 	      @data[rt][1] = ints + rt_ints
@@ -67,8 +69,8 @@ module MS
       
     end
     
-    attr_reader :data
-    attr_writer :data
+    attr_reader :data, :features
+    attr_writer :data, :features
     
     # Intensities are shaped in the rt direction by a gaussian with 
     # a dynamic standard deviation.
@@ -83,26 +85,30 @@ module MS
       index = 0
       
       #--------------Intensity----------------------------
-      ints_factor = RThelper.gaussian(pep.charge,2,0.25)
+      ints_factor = RThelper.gaussian(pep.charge + RThelper.RandomFloat(-0.3,0.3),2,0.65,1)
       #------------------------------------------------
       
-      
+      shuff = RThelper.RandomFloat(0.05,1.0)
       pep.core_mzs.each do |mzmu|
 
 	fin_mzs = []
 	fin_ints = []
-	max_y = RThelper.gaussian(mzmu,mzmu,0.05) 
 	
 	relative_abundances_int = relative_ints[index]
 	
   
 	pep.rts.each_with_index do |rt,i|
-
-	  #-------------Tailing-------------------------
-	  shape = 0.30*i + 6.65 + RThelper.RandomFloat(-0.5,0.5)
-	  fin_ints << (RThelper.gaussianI(rt,avg,shape,relative_abundances_int)) * ints_factor
-	  #---------------------------------------------
-	  
+	
+	  if !@one_d
+	    #-------------Tailing-------------------------
+	    shape = 0.30*i + 6.65 + RThelper.RandomFloat(-0.5,0.5)
+	    fin_ints << (RThelper.gaussian(rt,avg,shape,relative_abundances_int)) * ints_factor
+	    #---------------------------------------------
+	  else
+	    #-----------Random 1d data--------------------
+	    fin_ints<<(relative_abundances_int * ints_factor) * shuff
+	    #---------------------------------------------
+	  end
 	  
 	  #-------------mz wobble-----------------------
 	  y = fin_ints[i]
@@ -118,14 +124,14 @@ module MS
 
 	  fin_mzs<<wobble_mz
 	  #---------------------------------------------
-	  
-	  
-	  #-------------M/Z Peak shape------------------
-	  fraction = RThelper.gaussian(fin_mzs[i],mzmu,0.05)
-	  factor = fraction/max_y
-	  fin_ints[i] = fin_ints[i] * factor
-	  #---------------------------------------------
-	  
+
+	  if !@one_d
+	    #-------------M/Z Peak shape------------------
+	    fraction = RThelper.gaussian(fin_mzs[i],mzmu,0.05,1)
+	    factor = fraction/1.0
+	    fin_ints[i] = fin_ints[i] * factor
+	    #---------------------------------------------
+	  end
 	  
 	  #-------------Jagged-ness---------------------
 	  sd = 10.34 * (1-Math.exp(-0.00712 * fin_ints[i])) + 0.12

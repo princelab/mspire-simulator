@@ -1,17 +1,16 @@
 
-require 'ms/isoelectric_calc'
 require 'ms/sim_feature/aa'
 
 module MS
   class Peptide
-    def initialize(sequence, pH = 2.6)
+    def initialize(sequence, charge)
       @sequence = sequence
       @hydro = calc_hydro(@sequence)
       @pi = calc_pi(@sequence)
       @p_rt = 0
       @rts = []
-      @pH = pH
-      @charge = charge_at_pH(identify_potential_charges(@sequence), @pH)
+      @charge = charge
+      @c_ratio = nil
       
       spec = calcPercent(@sequence, @charge)
       
@@ -23,8 +22,8 @@ module MS
       @mass = @mono_mz * @charge
     end
     
-    attr_reader :sequence, :mass, :charge, :mono_mz, :mzs, :core_mzs, :p_rt, :rts, :core_ints, :ints, :hydro, :pi
-    attr_writer :sequence, :mass, :charge, :mono_mz, :mzs, :core_mzs, :p_rt, :rts, :core_ints, :ints, :hydro, :pi
+    attr_reader :sequence, :mass, :charge, :c_ratio, :mono_mz, :mzs, :core_mzs, :p_rt, :rts, :core_ints, :ints, :hydro, :pi
+    attr_writer :sequence, :mass, :charge, :c_ratio, :mono_mz, :mzs, :core_mzs, :p_rt, :rts, :core_ints, :ints, :hydro, :pi
     
     def to_s
       "Peptide: #{@sequence}"
@@ -74,6 +73,22 @@ module MS
       p = 0
       se = 0
       seq.each_char do |aa|
+      
+	#poly amino acids
+	#"X" is for any (I exclude uncommon "U" and "O")
+	if aa == "X"
+	  aas = MS::Feature::AA::ATOM_COUNTS.keys[0..19]
+	  aa = aas[rand(20)]
+	#"B" is "N" or "D"
+	elsif aa == "B"
+	  aas = ["N","D"]
+	  aa = aas[rand(3)]
+	#"Z" is "Q" or "E"
+	elsif aa == "Z"
+	  aas = ["Q","E"]
+	  aa = aas[rand(3)]
+	end
+	
         o = o + MS::Feature::AA::ATOM_COUNTS[aa][:o]
         n = n + MS::Feature::AA::ATOM_COUNTS[aa][:n]
         c = c + MS::Feature::AA::ATOM_COUNTS[aa][:c]

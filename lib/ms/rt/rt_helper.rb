@@ -2,7 +2,7 @@
 module RThelper
   
   module_function
-  def gaussian(x,mu,sd)
+  def normalized_gaussian(x,mu,sd)
     x = x.to_f
     mu = mu.to_f
     sd = sd.to_f
@@ -10,7 +10,7 @@ module RThelper
   end
   
   module_function
-  def gaussianI(x,mu,sd,h)
+  def gaussian(x,mu,sd,h)
     x = x.to_f
     mu = mu.to_f
     sd = sd.to_f

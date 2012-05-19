@@ -5,44 +5,46 @@ require 'ms/rt/rt_helper'
 module MS
   module Noise
     module_function
-    def noiseify(spectra,density,drop_percentage)
+    def noiseify(r_times,density,max_mz)
     # spectra is {rt => [[mzs],[ints]]}
       @start = Time.now
-      spectra.each_key{|k| if spectra[k] == nil; spectra[k] = [[0.001],[0.001]]; end}
-      spectra = Hash[ spectra.map {|k,v| [k+RThelper.RandomFloat(-0.5,0.5), v] } ]
-      max_mz = spectra.max_by{|key,val| val[0].max}[1][0].max
+      @noise = {}
       
       count = 0.0
-      spectra.each_value do |data|
+      r_times.each do |rt|
       
-	Progress.progress("Adding noise:",(((count/spectra.size)*100).to_i))
+	Progress.progress("Adding noise:",(((count/r_times.size)*100).to_i))
       
-	mzs,ints = data
+	nmzs = []
+	nints = []
 	
 	density.times do
 	  rmz = RThelper.RandomFloat(0.0,max_mz)
 	  rint = RThelper.RandomFloat(0.01,1.0)
 	  
-	  mzs<<rmz
-	  ints<<rint
+	  nmzs<<rmz
+	  nints<<rint
 	end
+	@noise[rt] = [nmzs,nints]
 	count += 1
       end
       
-      #Dropouts
-      r_times = spectra.keys
-      l = r_times.length
-      drops = []
-      num_drops = drop_percentage * l
-      num_drops.to_i.times do 
-	drops<<r_times[rand(l+1)]
-      end
-      
-      spectra.delete_if{|k,v| drops.include?(k)}
       Progress.progress("Adding noise:",100,Time.now-@start)
       puts ''
       
-      return spectra
+      return @noise
     end
+    
+    
+    def spec_drops(r_times,drop_percentage)
+      l = r_times.length
+      num_drops = drop_percentage * l
+      num_drops.to_i.times do 
+	r_times.delete_at(rand(l+1))
+      end
+
+      return r_times
+    end
+    
   end
 end

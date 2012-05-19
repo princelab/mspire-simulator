@@ -11,6 +11,8 @@ require 'ms/sim_spectra'
 require 'ms/noise'
 require 'ms/mzml_wrapper'
 require 'trollop'
+require 'ms/tr_file_writer'
+require 'ms/isoelectric_calc'
 
 module MSsimulate
 
@@ -39,6 +41,9 @@ version "ms-simulate 0.0.1a (c) 2012 Brigham Young University"
   opt :out_file, "Name of the output file", :default => "test.mzml"
   opt :contaminants, "Fasta file containing contaminant sequences", :default => "testFiles/contam/hum_keratin.fasta"
   opt :dropout_percentage, "Defines the percentage of random dropouts in the run. 0.0 <= percentage < 1.0", :default => 0.12
+  opt :shuffle, "Option shuffles the scans to simulate 1d data", :default => "false"
+  opt :one_d, "Turns on one dimension simulation; run_time is automatically set to 300.0", :default => "false"
+  opt :truth, "Determines truth file type; false gives no truth file; one of: xml or csv", :default => "false"
 end
 
 Trollop::die :sampling_rate, "must be greater than 0" if opts[:sampling_rate] <= 0
@@ -58,8 +63,17 @@ Trollop::die :dropout_percentage, "must be between greater than or equal to 0.0 
   out_file = opts[:out_file]
   contaminants = opts[:contaminants]
   drop_percentage = opts[:dropout_percentage]
+  shuffle = opts[:shuffle]
+  one_d = opts[:one_d]
+  if one_d == "true"
+    one_d = true
+    run_time = 300.0
+  else
+    one_d = false
+  end
+  truth = opts[:truth]
 
-  @peptides = []
+  peptides = []
 
   if contaminate == 'true'
     ARGV<<contaminants
@@ -70,7 +84,7 @@ Trollop::die :dropout_percentage, "must be between greater than or equal to 0.0 
     inFile = File.open(file,"r")
     seq = ""
     inFile.each_line do |sequence| 
-      if sequence =~ />/
+      if sequence =~ />/ or sequence == "\n"
       else
         seq = seq<<sequence.chomp!
       end
@@ -82,22 +96,49 @@ Trollop::die :dropout_percentage, "must be between greater than or equal to 0.0 
 
     digested.each_with_index do |peptide_seq,i|
       Progress.progress("Creating peptides '#{file}':",((i/digested.size.to_f)*100).to_i)
-      peptide = MS::Peptide.new(peptide_seq, pH)
-      @peptides<<peptide
+      
+      charge_ratio = charge_at_pH(identify_potential_charges(peptide_seq), pH)
+      charge_f = charge_ratio.floor
+      charge_c = charge_ratio.ceil
+      
+      peptide_f = MS::Peptide.new(peptide_seq, charge_f)
+      peptide_c = MS::Peptide.new(peptide_seq, charge_c)
+      
+      ratio = charge_ratio % 1
+      inverse = 1 - ratio
+      
+      peptide_c.c_ratio = ratio
+      peptide_f.c_ratio = inverse
+
+      peptides<<peptide_f
+      peptides<<peptide_c
     end
     Progress.progress("Creating peptides '#{file}':",100,Time.now-start)
     puts ''
   end
 
-  @peptides.uniq!
-  spectra = MS::Sim_Spectra.new(@peptides,sampling_rate, run_time).data
+  peptides.uniq!
+  spectra = MS::Sim_Spectra.new(peptides,sampling_rate, run_time, drop_percentage,out_file,density,one_d)
+  data = spectra.data
   
-  if noise == 'true'
-    spectra = MS::Noise.noiseify(spectra,density,drop_percentage)
-  else
-    spectra.delete_if{|k,v| v == nil}
+  if noise == "true"
+    noise = spectra.noise
   end
-  mzml = Mzml_Wrapper.new(spectra)
+  
+  
+  #------------------------Truth Files----------------------------------
+  if truth != "false"
+    if truth == "xml"
+      MS::Txml_file_writer.new(spectra.features,spectra.spectra,out_file)
+    elsif truth == "csv"
+      MS::Tcsv_file_writer.new(data,noise,spectra.features,out_file)
+    end
+  end
+  #---------------------------------------------------------------------
+  
+  data = spectra.spectra
+  
+  mzml = Mzml_Wrapper.new(data)
   
   puts "Writing to file..."
   mzml.to_xml(out_file)

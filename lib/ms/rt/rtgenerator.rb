@@ -10,7 +10,7 @@ module MS
   module Rtgenerator
     
     module_function
-    def generateRT(peptides, r_time)
+    def generateRT(peptides, r_time, one_d)
       
       @start = Time.now
       @r_time = r_time
@@ -39,10 +39,18 @@ module MS
 	else
 	
 	#Give peptide retention times
-	  head_length = 50.0
+	  head_length = nil
+	  tail_length = nil
+	  if one_d
+	    head_length = 300.0
+	    tail_length = 701
+	  else
+	    head_length = 50.0
+	    tail_length = 501
+	  end
 	  @r_time.each do |t|
 	    # Only need to go from predicted rt to ~500
-	    if t >= (pep.p_rt-head_length) and pep.rts.length < 501
+	    if t >= (pep.p_rt-head_length) and pep.rts.length < tail_length
 	      pep.rts<<t
 	    end
 	  end
