@@ -5,7 +5,7 @@ require 'ms/noise'
 
 module MS
   class Sim_Spectra
-    def initialize(peptides,sampling_rate, run_time, drop_percentage,file_name,density,one_d)
+    def initialize(peptides,sampling_rate, run_time, drop_percentage = 0.12,density = 10.0,one_d = false)
       @data
       @max_mz
       #RTS

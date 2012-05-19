@@ -4,13 +4,13 @@ require 'mspire'
 require 'ms/sim_peptide'
 
 describe MS::Peptide do
-  it "Creates a peptide object given an amino acid sequence" do 
-    pep = MS::Peptide.new("HSVVVPYEPPEVGSDCTTIHYNYMCNSSCMGGMNR")
+  it "Creates a peptide object given an amino acid sequence and charge state" do 
+    pep = MS::Peptide.new("HSVVVPYEPPEVGSDCTTIHYNYMCNSSCMGGMNR",2)
     pep.should be_a(MS::Peptide)
     pep.sequence.should == "HSVVVPYEPPEVGSDCTTIHYNYMCNSSCMGGMNR"
-    pep.mono_mz.should == 4490.98980760639
+    pep.mono_mz.should == 2245.494355203195
     #Contains the core theoretical spectrum
-    pep.core_mzs[0].round.should == 4489
+    pep.core_mzs[0].round.should == 2244
     pep.core_ints[0].round.should == 8
   end
 end

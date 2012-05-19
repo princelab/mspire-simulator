@@ -2,7 +2,6 @@
 require 'time'
 require 'distribution'
 require 'ms/sim_peptide'
-require 'mspire/isotope/distribution'
 require 'ms/rt/rt_helper'
 require 'ms/tr_file_writer'
 

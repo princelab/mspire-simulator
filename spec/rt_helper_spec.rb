@@ -8,17 +8,17 @@ describe RThelper do
     x = 5
     mu = 10
     sd = 30
-    RThelper.gaussian(x, mu, sd).should == 0.013206053525209427
+    RThelper.gaussian(x, mu, sd ,1).should == 0.9726044771163483
   end
   
   
   
-  it "#gaussianI Defines a gaussian function with a scaling factor" do 
+  it "#gaussian Defines a gaussian function with a scaling factor" do 
     x = 5
     mu = 10
     sd = 30
     scale = 100
-    RThelper.gaussianI(x, mu, sd, scale).should == 97.26044464111328
+    RThelper.gaussian(x, mu, sd, scale).should == 97.26044771163484
   end
   
   

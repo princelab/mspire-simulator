@@ -1,4 +1,5 @@
 
+require 'mspire/isotope/distribution'
 require 'ms/sim_feature/aa'
 
 module MS
