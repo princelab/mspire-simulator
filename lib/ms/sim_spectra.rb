@@ -6,6 +6,7 @@ require 'ms/noise'
 module MS
   class Sim_Spectra
     def initialize(peptides,sampling_rate, run_time, drop_percentage = 0.12,density = 10.0,one_d = false)
+      @density = density
       @data
       @max_mz
       #RTS
@@ -13,7 +14,7 @@ module MS
       num_of_spec = sampling_rate*run_time
       spec_time = 1/sampling_rate
       num_of_spec.to_i.times do
-        @r_times<<spec_time+RThelper.RandomFloat(-0.5,0.5)
+        @r_times<<spec_time#+RThelper.RandomFloat(-0.5,0.5)
         spec_time = spec_time + (1/sampling_rate)
       end
       @r_times = MS::Noise.spec_drops(@r_times,drop_percentage)
@@ -31,8 +32,8 @@ module MS
       
     end
     
-    def noise
-      @noise = MS::Noise.noiseify(@r_times,density,@max_mz)
+    def noiseify
+      @noise = MS::Noise.noiseify(@r_times,@density,@max_mz)
       
       @r_times.each do |k|
 	s_v = @data[k]

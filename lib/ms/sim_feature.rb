@@ -14,6 +14,7 @@ module MS
       @data = {}
       @max_int = 0.0
       @one_d = one_d
+      @max_time = r_times.max
       
       
       #------------------Each_Peptide_=>_Feature----------------------
@@ -97,10 +98,14 @@ module MS
 	
   
 	pep.rts.each_with_index do |rt,i|
+	  percent_time = rt/@max_time
+	  length_factor = -3.96 * percent_time**2 + 3.96 * percent_time + 0.01
+	  length_factor_tail = -15.96 * percent_time**2 + 15.96 * percent_time + 0.01
+	  
 	
 	  if !@one_d
 	    #-------------Tailing-------------------------
-	    shape = 0.30*i + 6.65 + RThelper.RandomFloat(-0.5,0.5)
+	    shape = (0.30 * length_factor)*i + (6.65 * length_factor_tail)
 	    fin_ints << (RThelper.gaussian(rt,avg,shape,relative_abundances_int)) * ints_factor
 	    #---------------------------------------------
 	  else
@@ -108,15 +113,15 @@ module MS
 	    fin_ints<<(relative_abundances_int * ints_factor) * shuff
 	    #---------------------------------------------
 	  end
-	  
+
 	  #-------------mz wobble-----------------------
 	  y = fin_ints[i]
 	  if y > 0.5
 	    wobble_int = 0.001071*y**(-0.5430)
 	  else
-	    wobble_int = 0.001
+	    wobble_int = 0.003
 	  end
-	  wobble_mz = Distribution::Normal.rng(mzmu,(wobble_int*4.5)).call
+	  wobble_mz = Distribution::Normal.rng(mzmu,(wobble_int)).call
 	  if wobble_mz < 0
 	    wobble_mz = 0.01
 	  end
@@ -137,7 +142,7 @@ module MS
 	  diff = (Distribution::Normal.rng(0,sd).call)
 	  fin_ints[i] = fin_ints[i] + diff
 	  #---------------------------------------------
-	  
+  
 	  
 	  #Keep max_intensity for normalization
 	  if fin_ints[i] > @max_int

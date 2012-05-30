@@ -118,11 +118,11 @@ Trollop::die :dropout_percentage, "must be between greater than or equal to 0.0 
   end
 
   peptides.uniq!
-  spectra = MS::Sim_Spectra.new(peptides,sampling_rate, run_time, drop_percentage,out_file,density,one_d)
+  spectra = MS::Sim_Spectra.new(peptides, sampling_rate, run_time, drop_percentage, density, one_d)
   data = spectra.data
   
-  if noise == "true"
-    noise = spectra.noise
+  if noise == 'true'
+    noise = spectra.noiseify
   end
   
   

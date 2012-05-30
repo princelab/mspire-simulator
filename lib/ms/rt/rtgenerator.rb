@@ -45,7 +45,7 @@ module MS
 	    head_length = 300.0
 	    tail_length = 701
 	  else
-	    head_length = 50.0
+	    head_length = 100.0
 	    tail_length = 501
 	  end
 	  @r_time.each do |t|

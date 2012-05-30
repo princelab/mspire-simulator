@@ -26,10 +26,11 @@ class Mzml_Wrapper
 	spectrum_list = Mspire::Mzml::SpectrumList.new(default_data_processing)
 	
 	count = 0.0
+	scan_number = 1
 	spectra.each do |rt,data|
 	  Progress.progress("Converting to mzml:",(((count/spectra.size)*100).to_i))
 	
-	  spc = Mspire::Mzml::Spectrum.new('scan=1', params: ['MS:1000127', ['MS:1000511', 1]]) do |spec|
+	  spc = Mspire::Mzml::Spectrum.new("scan=#{scan_number}", params: ['MS:1000127', ['MS:1000511', 1]]) do |spec|
 	    spec.data_arrays = data
 	    spec.scan_list = Mspire::Mzml::ScanList.new do |sl|
 	      scan = Mspire::Mzml::Scan.new do |scan|
@@ -40,6 +41,7 @@ class Mzml_Wrapper
 	  end
 	  spectrum_list.push(spc)
 	  count += 1
+	  scan_number += 1
 	end
 	Progress.progress("Converting to mzml:",100,Time.now-@start)
 	puts ''
