@@ -1,13 +1,10 @@
 
 require 'mspire/isotope/distribution'
-require 'ms/sim_feature/aa'
 
 module MS
   class Peptide
     def initialize(sequence, charge)
       @sequence = sequence
-      @hydro = calc_hydro(@sequence)
-      @pi = calc_pi(@sequence)
       @p_rt = 0
       @rts = []
       @charge = charge
@@ -55,7 +52,7 @@ module MS
       var<<atoms[6].to_s
       
       mf = Mspire::MolecularFormula.new(var, charge)
-      spec = Mspire::Isotope::Distribution.spectrum(mf, :total, 0.001)
+      spec = Mspire::Isotope::Distribution.spectrum(mf, :max, 0.001)
 
       spec.intensities.map!{|i| i = i*100.0}
 
@@ -78,7 +75,7 @@ module MS
 	#poly amino acids
 	#"X" is for any (I exclude uncommon "U" and "O")
 	if aa == "X"
-	  aas = MS::Feature::AA::ATOM_COUNTS.keys[0..19]
+	  aas = Mspire::Isotope::AA::ATOM_COUNTS.keys[0..19]
 	  aa = aas[rand(20)]
 	#"B" is "N" or "D"
 	elsif aa == "B"
@@ -90,34 +87,15 @@ module MS
 	  aa = aas[rand(3)]
 	end
 	
-        o = o + MS::Feature::AA::ATOM_COUNTS[aa][:o]
-        n = n + MS::Feature::AA::ATOM_COUNTS[aa][:n]
-        c = c + MS::Feature::AA::ATOM_COUNTS[aa][:c]
-        h = h + MS::Feature::AA::ATOM_COUNTS[aa][:h]
-        s = s + MS::Feature::AA::ATOM_COUNTS[aa][:s]
-        p = p + MS::Feature::AA::ATOM_COUNTS[aa][:p]
-        se = se + MS::Feature::AA::ATOM_COUNTS[aa][:se]
+        o = o + Mspire::Isotope::AA::ATOM_COUNTS[aa][:o]
+        n = n + Mspire::Isotope::AA::ATOM_COUNTS[aa][:n]
+        c = c + Mspire::Isotope::AA::ATOM_COUNTS[aa][:c]
+        h = h + Mspire::Isotope::AA::ATOM_COUNTS[aa][:h]
+        s = s + Mspire::Isotope::AA::ATOM_COUNTS[aa][:s]
+        p = p + Mspire::Isotope::AA::ATOM_COUNTS[aa][:p]
+        se = se + Mspire::Isotope::AA::ATOM_COUNTS[aa][:se]
       end
-      return o,n,c,h,s,p,se
-    end
-  
-    
-    #James Dalg
-    def calc_hydro(seq)
-       sum = 0.0
-       seq.each_char do |ch|
-         sum += MS::Feature::AA::HYDROPHOBICTY[ch]
-       end
-       return sum/seq.length
-    end
-    
-    #James Dalg
-    def calc_pi(seq)
-      sum = 0.0
-       seq.each_char do |ch|
-         sum += MS::Feature::AA::PIHASH[ch]
-       end
-       return sum/seq.length
+      return (o + 1),n,c,(h + 2) ,s,p,se
     end
   end
 end

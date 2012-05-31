@@ -95,12 +95,12 @@ module MS
 	fin_ints = []
 	
 	relative_abundances_int = relative_ints[index]
-	
-  
+
+
 	pep.rts.each_with_index do |rt,i|
 	  percent_time = rt/@max_time
 	  length_factor = -3.96 * percent_time**2 + 3.96 * percent_time + 0.01
-	  length_factor_tail = -15.96 * percent_time**2 + 15.96 * percent_time + 0.01
+	  length_factor_tail = -7.96 * percent_time**2 + 7.96 * percent_time + 0.01
 	  
 	
 	  if !@one_d
