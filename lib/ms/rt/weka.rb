@@ -10,31 +10,7 @@ module MS
       #make arrf file to feed weka model
       data = []
       peptides.each do |pep|
-        data<<[
-        pep.sequence.count("A"),
-        pep.sequence.count("R"),
-        pep.sequence.count("N"),
-        pep.sequence.count("D"),
-        pep.sequence.count("B"),
-        pep.sequence.count("C"),
-        pep.sequence.count("E"),
-        pep.sequence.count("Q"),
-        pep.sequence.count("Z"),
-        pep.sequence.count("G"),
-        pep.sequence.count("H"),
-        pep.sequence.count("I"),
-        pep.sequence.count("L"),
-        pep.sequence.count("K"),
-        pep.sequence.count("M"),
-        pep.sequence.count("F"),
-        pep.sequence.count("P"),
-        pep.sequence.count("S"),
-        pep.sequence.count("T"),
-        pep.sequence.count("W"),
-        pep.sequence.count("Y"),
-        pep.sequence.count("V"),
-        pep.sequence.count("J"),
-        0.0]
+        data<<pep.aa_counts
       end
       arff = makeArff(Time.now.nsec.to_s,data)
       system("java -classpath ./bin/weka/weka.jar weka.classifiers.functions.MultilayerPerceptron -T #{arff} -l bin/weka/M5Rules.model -p 24 > #{arff}.out")

@@ -10,19 +10,19 @@ module MS
       @data
       @max_mz
       #RTS
-      @r_times = []
+      @@r_times = []
       num_of_spec = sampling_rate*run_time
       spec_time = 1/sampling_rate
       num_of_spec.to_i.times do
-        @r_times<<spec_time#+RThelper.RandomFloat(-0.5,0.5)
+        @@r_times<<spec_time#+RThelper.RandomFloat(-0.5,0.5)
         spec_time = spec_time + (1/sampling_rate)
       end
-      @r_times = MS::Noise.spec_drops(@r_times,drop_percentage)
+      @@r_times = MS::Noise.spec_drops(drop_percentage)
       
-      pre_features = MS::Rtgenerator.generateRT(peptides,@r_times,one_d)
+      pre_features = MS::Rtgenerator.generateRT(peptides,one_d)
       
       #Features
-      features_o = MS::Sim_Feature.new(pre_features,@r_times,one_d)
+      features_o = MS::Sim_Feature.new(pre_features,one_d)
       @features = features_o.features
       @data = features_o.data
       @max_mz = @data.max_by{|key,val| if val != nil;val[0].max;else;0;end}[1][0].max
@@ -33,9 +33,9 @@ module MS
     end
     
     def noiseify
-      @noise = MS::Noise.noiseify(@r_times,@density,@max_mz)
+      @noise = MS::Noise.noiseify(@density,@max_mz)
       
-      @r_times.each do |k|
+      @@r_times.each do |k|
 	s_v = @data[k]
 	n_v = @noise[k]
 	if s_v != nil
@@ -46,8 +46,12 @@ module MS
       end
     end
     
-    attr_reader :data, :r_times, :max_mz, :spectra, :noise, :features
-    attr_writer :data, :r_times, :max_mz, :spectra, :noise, :features
+    def self.r_times
+      @@r_times
+    end
+    
+    attr_reader :data, :max_mz, :spectra, :noise, :features
+    attr_writer :data, :max_mz, :spectra, :noise, :features
     
   end
 end

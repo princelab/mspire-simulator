@@ -13,8 +13,11 @@ require 'ms/mzml_wrapper'
 require 'trollop'
 require 'ms/tr_file_writer'
 require 'ms/isoelectric_calc'
+require 'ms/sim_digester'
 
 module MSsimulate
+
+begin
 
 @start = Time.now
 opts = Trollop::options do
@@ -31,7 +34,16 @@ version "ms-simulate 0.0.1a (c) 2012 Brigham Young University"
        
   where [options] are:
   EOS
-  opt :digestor, "Digestion Enzyme; one of: \n\t\targ_c,\n \t\tasp_n,\n \t\tasp_n_ambic,\n \t\tchymotrypsin,\n \t\tcnbr,\n \t\tlys_c,\n \t\tlys_c_p,\n \t\tpepsin_a,\n\t\ttryp_cnbr,\n \t\ttryp_chymo,\n \t\ttrypsin_p,\n \t\tv8_de,\n \t\tv8_e,\n \t\ttrypsin,\n \t\tv8_e_trypsin,\n\t\tv8_de_trypsin", :default => "trypsin" 
+  opt :digestor, "Digestion Enzyme; one of: \n\t\targ_c,\n \t\tasp_n,
+                                            \n \t\tasp_n_ambic,
+                                            \n \t\tchymotrypsin,\n \t\tcnbr,
+                                            \n \t\tlys_c,\n \t\tlys_c_p,
+                                            \n \t\tpepsin_a,\n\t\ttryp_cnbr,
+                                            \n \t\ttryp_chymo,\n \t\ttrypsin_p,
+                                            \n \t\tv8_de,\n \t\tv8_e,
+                                            \n \t\ttrypsin,\n \t\tv8_e_trypsin,
+                                            \n\t\tv8_de_trypsin",
+                                             :default => "trypsin" 
   opt :sampling_rate, "How many scans per second", :default => 1.0 
   opt :run_time, "Run time in seconds", :default => 1000.0 
   opt :noise, "Noise on or off", :default => "true"
@@ -65,6 +77,7 @@ Trollop::die :dropout_percentage, "must be between greater than or equal to 0.0 
   drop_percentage = opts[:dropout_percentage]
   shuffle = opts[:shuffle]
   one_d = opts[:one_d]
+  
   if one_d == "true"
     one_d = true
     run_time = 300.0
@@ -73,60 +86,33 @@ Trollop::die :dropout_percentage, "must be between greater than or equal to 0.0 
   end
   truth = opts[:truth]
 
-  peptides = []
-
   if contaminate == 'true'
     ARGV<<contaminants
   end
-
+  
+  #------------------------Digest-----------------------------------------------
+  peptides = []
+  digester = MS::Sim_Digester.new(digestor,pH)
   ARGV.each do |file|
-    start = Time.now
-    inFile = File.open(file,"r")
-    seq = ""
-    inFile.each_line do |sequence| 
-      if sequence =~ />/ or sequence == "\n"
-      else
-        seq = seq<<sequence.chomp!
-      end
-    end
-    inFile.close
-    
-    trypsin = Mspire::Digester[digestor]
-    digested = trypsin.digest(seq)
-
-    digested.each_with_index do |peptide_seq,i|
-      Progress.progress("Creating peptides '#{file}':",((i/digested.size.to_f)*100).to_i)
-      
-      charge_ratio = charge_at_pH(identify_potential_charges(peptide_seq), pH)
-      charge_f = charge_ratio.floor
-      charge_c = charge_ratio.ceil
-      
-      peptide_f = MS::Peptide.new(peptide_seq, charge_f)
-      peptide_c = MS::Peptide.new(peptide_seq, charge_c)
-      
-      ratio = charge_ratio % 1
-      inverse = 1 - ratio
-      
-      peptide_c.c_ratio = ratio
-      peptide_f.c_ratio = inverse
-
-      peptides<<peptide_f
-      peptides<<peptide_c
-    end
-    Progress.progress("Creating peptides '#{file}':",100,Time.now-start)
-    puts ''
+    peptides<<digester.digest(file)
   end
+  peptides.flatten!
+  #-----------------------------------------------------------------------------
 
-  peptides.uniq!
+
+
+  #------------------------Create Spectrum--------------------------------------
   spectra = MS::Sim_Spectra.new(peptides, sampling_rate, run_time, drop_percentage, density, one_d)
   data = spectra.data
   
   if noise == 'true'
     noise = spectra.noiseify
   end
+  #-----------------------------------------------------------------------------
   
   
-  #------------------------Truth Files----------------------------------
+  
+  #------------------------Truth Files------------------------------------------
   if truth != "false"
     if truth == "xml"
       MS::Txml_file_writer.new(spectra.features,spectra.spectra,out_file)
@@ -134,14 +120,44 @@ Trollop::die :dropout_percentage, "must be between greater than or equal to 0.0 
       MS::Tcsv_file_writer.new(data,noise,spectra.features,out_file)
     end
   end
-  #---------------------------------------------------------------------
+  #-----------------------------------------------------------------------------
   
+  
+  
+  #-----------------------Clean UP----------------------------------------------
+  spectra.features.each{|fe| fe.delete}
+  peptides.clear
+  #-----------------------------------------------------------------------------
+  
+  
+  
+  #-----------------------MZML--------------------------------------------------
   data = spectra.spectra
-  
   mzml = Mzml_Wrapper.new(data)
-  
   puts "Writing to file..."
   mzml.to_xml(out_file)
   puts "Done."
+  #-----------------------------------------------------------------------------
 
+
+
+rescue Exception => e  #Clean up if exception 
+  puts e.message  
+  puts e.backtrace 
+  if digester != nil
+    if File.exists?(digester.digested_file)
+      File.delete(digester.digested_file)
+    end
+  end
+  if spectra != nil
+  spectra.features.each{|fe| fe.delete}
+  end
+  if !peptides.empty?
+    peptides.each{|pep| pep.delete}
+  end
+  puts "Exception - Simulation Failed"
+  system "ruby /home/anoyce/Dropbox/AlertYou.r 18017938728@tmomail.net Exception - Simulation Failed"
+else
+  system "ruby /home/anoyce/Dropbox/AlertYou.r 18017938728@tmomail.net Success!"
+end
 end

@@ -7,14 +7,14 @@ require 'ms/tr_file_writer'
 
 module MS
   class Sim_Feature 
-    def initialize(peptides,r_times,one_d)
+    def initialize(peptides,one_d)
       
       @start = Time.now
       @features = []
       @data = {}
       @max_int = 0.0
       @one_d = one_d
-      @max_time = r_times.max
+      @max_time = Sim_Spectra.r_times.max
       
       
       #------------------Each_Peptide_=>_Feature----------------------
@@ -34,16 +34,21 @@ module MS
       
       #-----------------Transform_to_spectra_data_for_mzml------------
       # rt => [[mzs],[ints]]
-      xml_file_data = []
       @features.each_with_index do |fe,k|
 	Progress.progress("Populating structure for mzml:",((k/@features.size.to_f)*100).to_i)
+	
+	fe_ints = fe.ints
+	fe_mzs = fe.mzs
 	
 	fe.rts.each_with_index do |rt,i|
 	  rt_mzs = []
 	  rt_ints = []
 	  
 	  fe.core_mzs.size.times do |j| 
-	    mz,int = [ fe.mzs[j][i], fe.ints[j][i] ]
+	    mz,int = [ fe_mzs[j][i], fe_ints[j][i] ]
+	    if int == nil
+	      int = 0.0
+	    end
 	    if int > 0.9
 	      rt_mzs<<mz
 	      #Normalizing Intensities
@@ -52,7 +57,7 @@ module MS
 	  end
 	  
 	  if rt_mzs.include?(nil) or rt_mzs.empty?; else
-	    if @data.key?(rt) 
+	    if @data.key?(rt)
 	      mzs,ints = @data[rt]
 	      @data[rt][0] = mzs + rt_mzs
 	      @data[rt][1] = ints + rt_ints
@@ -95,7 +100,6 @@ module MS
 	fin_ints = []
 	
 	relative_abundances_int = relative_ints[index]
-
 
 	pep.rts.each_with_index do |rt,i|
 	  percent_time = rt/@max_time
@@ -153,8 +157,8 @@ module MS
 	end
 
 	
-	pep.ints<<fin_ints
-	pep.mzs<<fin_mzs
+	pep.insert_ints(fin_ints)
+	pep.insert_mzs(fin_mzs)
 	
 	index += 1
       end

@@ -10,10 +10,10 @@ module MS
   module Rtgenerator
     
     module_function
-    def generateRT(peptides, r_time, one_d)
+    def generateRT(peptides, one_d)
       
       @start = Time.now
-      @r_time = r_time
+      @r_times = Sim_Spectra.r_times
       
       peptides.delete_if{|pep| pep.charge == 0}
       
@@ -25,13 +25,14 @@ module MS
       peptides.each_with_index do |pep,ind|
         Progress.progress("Generating retention times:",(((ind+1)/peptides.size.to_f)*100).to_i)
 	
+	
 	#Fit retention times into scan times
-	max_rt = @r_time.max 
+	max_rt = @r_times.max 
 	p_rt = pep.p_rt
 	if p_rt > 1
-	  pep.p_rt = @r_time.max
+	  pep.p_rt = @r_times.max
 	else
-	  pep.p_rt = @r_time.find {|i| i >= (p_rt * max_rt)}
+	  pep.p_rt = @r_times.find {|i| i >= (p_rt * max_rt)}
 	end
 	
         if pep.p_rt == nil
@@ -46,14 +47,24 @@ module MS
 	    tail_length = 701
 	  else
 	    head_length = 100.0
-	    tail_length = 501
+	    tail_length = 150
 	  end
-	  @r_time.each do |t|
-	    # Only need to go from predicted rt to ~500
-	    if t >= (pep.p_rt-head_length) and pep.rts.length < tail_length
-	      pep.rts<<t
-	    end
+
+	  a = @r_times.find {|i| i >= (pep.p_rt-head_length)}
+	  b = @r_times.find {|i| i >= (pep.p_rt+tail_length)}
+	  a = @r_times.index(a)
+	  b = @r_times.index(b)
+	  
+	  if a == nil
+	    a = @r_times[0]
 	  end
+	  
+	  if b == nil
+	    b = @r_times[@r_times.length-1]
+	  end
+	  
+	  pep.set_rts(a,b)
+
 	end
       end
       #-----------------------------------------------------------------
