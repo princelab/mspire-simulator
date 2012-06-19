@@ -74,11 +74,11 @@ module MS
         charge_f = charge_ratio.floor
         charge_c = charge_ratio.ceil
         
-        peptide_f = MS::Peptide.new(peptide_seq, charge_f)
-        peptide_c = MS::Peptide.new(peptide_seq, charge_c)
+        peptide_f = MS::Peptide.new(peptide_seq, charge_f) if charge_f != 0
+        peptide_c = MS::Peptide.new(peptide_seq, charge_c) if charge_c != 0
       
-        peptides<<peptide_f
-        peptides<<peptide_c
+        peptides<<peptide_f if charge_f != 0
+        peptides<<peptide_c if charge_c != 0
         i += 1
       end
       d_file.close

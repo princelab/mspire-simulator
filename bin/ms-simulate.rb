@@ -96,7 +96,7 @@ Trollop::die :dropout_percentage, "must be between greater than or equal to 0.0 
   ARGV.each do |file|
     peptides<<digester.digest(file)
   end
-  peptides.flatten!
+  peptides.flatten!.uniq!
   #-----------------------------------------------------------------------------
 
 

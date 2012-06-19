@@ -15,8 +15,6 @@ module MS
       @start = Time.now
       @r_times = Sim_Spectra.r_times
       
-      peptides.delete_if{|pep| pep.charge == 0}
-      
       # Gets retention times from the weka model
       peptides = MS::Weka.predict_rts(peptides)
       
