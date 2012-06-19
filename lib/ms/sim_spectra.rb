@@ -14,7 +14,7 @@ module MS
       num_of_spec = sampling_rate*run_time
       spec_time = 1/sampling_rate
       num_of_spec.to_i.times do
-        @@r_times<<spec_time#+RThelper.RandomFloat(-0.5,0.5)
+        @@r_times<<spec_time+RThelper.RandomFloat(-0.5,0.5)
         spec_time = spec_time + (1/sampling_rate)
       end
       @@r_times = MS::Noise.spec_drops(drop_percentage)
@@ -26,7 +26,7 @@ module MS
       @features = features_o.features
       @data = features_o.data
       @max_mz = @data.max_by{|key,val| if val != nil;val[0].max;else;0;end}[1][0].max
-      @spectra = @data
+      @spectra = @data.clone
       
       @noise = nil
       
@@ -44,6 +44,7 @@ module MS
 	  @spectra[k] = [n_v[0],n_v[1]]
 	end
       end
+      return @noise
     end
     
     def self.r_times

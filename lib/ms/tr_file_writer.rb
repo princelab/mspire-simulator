@@ -12,15 +12,20 @@ module MS
       file.puts "<simulated_peptides>"
 	total = features.size.to_f
 	features.each_with_index do |fe,k|
+	  sequence = fe.sequence
+	  charge = fe.charge
+	  mzs = fe.mzs
+	  ints = fe.ints
+	  rts = fe.rts
 	  Progress.progress("Writing xml:",(((k/total)*100).to_i))
-	  file.puts "\t<simulated_peptide sequence=\"#{fe.sequence}\" charge=\"#{fe.charge.round}\">"
-	    fe.mzs.each_with_index do |mzs,i|
+	  file.puts "\t<simulated_peptide sequence=\"#{sequence}\" charge=\"#{charge.round}\">"
+	    mzs.each_with_index do |mzs,i|
 	      tags = ""
 	      centroids = ""
 	      tags<<"\t\t<lc_centroids isotopic_index=\"#{i}\">"
 		mzs.each_with_index do |mz,ind|
-		  if fe.ints[i][ind] > 0.9
-		    centroids<<"#{r_times.index(fe.rts[ind])},#{(spectra[fe.rts[ind]][0]).sort.index(mz)};"
+		  if ints[i][ind] > 0.9
+		    centroids<<"#{r_times.index(rts[ind])},#{(spectra[rts[ind]][0]).sort.index(mz)};"
 		  end
 		end
 	      if centroids != ""
@@ -59,7 +64,7 @@ module MS
       data = []
       total = spectra.length
       spectra.each do |k,v|
-	Progress.progress("Writing csv(1 of 2):",(((time_i/total)*100).to_i))
+	Progress.progress("Writing csv(process 1 of 2):",(((time_i/total)*100).to_i))
 	#puts "#{count}/#{total}"
 	#count += 1
 	if noise != "false"
@@ -91,7 +96,7 @@ module MS
       total = data.values.size.to_f
       count = 0
       data.each_value do |val|
-	Progress.progress("Writing csv(2 of 2):",(((count/total)*100).to_i))
+	Progress.progress("Writing csv(process 2 of 2):",(((count/total)*100).to_i))
 	val = val.sort_by{|a| a[1]}
 	val.each do |a|
 	  if a[3] >= 1

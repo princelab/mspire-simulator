@@ -156,8 +156,8 @@ rescue Exception => e  #Clean up if exception
     peptides.each{|pep| pep.delete}
   end
   puts "Exception - Simulation Failed"
-  system "ruby /home/anoyce/Dropbox/AlertYou.r 18017938728@tmomail.net Exception - Simulation Failed"
+  #system "ruby /home/anoyce/Dropbox/AlertYou.r 18017938728@tmomail.net Exception - Simulation Failed"
 else
-  system "ruby /home/anoyce/Dropbox/AlertYou.r 18017938728@tmomail.net Success!"
+  #system "ruby /home/anoyce/Dropbox/AlertYou.r 18017938728@tmomail.net Success!"
 end
 end
