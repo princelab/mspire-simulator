@@ -149,9 +149,7 @@ module MS
   
 	  fin_ints[i] = fin_ints[i]*predicted_int
 
-
 	end
-
 	
 	pep.insert_ints(fin_ints)
 	pep.insert_mzs(fin_mzs)

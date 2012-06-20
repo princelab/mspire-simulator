@@ -21,7 +21,7 @@ module MS
 	
 	density.times do
 	  rmz = RThelper.RandomFloat(0.0,max_mz)
-	  rint = RThelper.RandomFloat(0.01,1.0)
+	  rint = RThelper.RandomFloat(50,1000)
 	  
 	  nmzs<<rmz
 	  nints<<rint
