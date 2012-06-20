@@ -51,8 +51,7 @@ module MS
 	    end
 	    if int > 0.9
 	      rt_mzs<<mz
-	      #Normalizing Intensities
-	      rt_ints<<((int/@max_int)*100.0)
+	      rt_ints<<int
 	    end
 	  end
 	  
@@ -84,13 +83,14 @@ module MS
     #
     def getInts(pep)
       
-      relative_ints = pep.core_ints
+      predicted_int = (pep.p_int * 10**-1) * 14183000.0
+      relative_ints = pep.core_ints#.map{|i| i = i*predicted_int}
       avg = pep.p_rt
       
       index = 0
       
       #--------------Intensity----------------------------
-      ints_factor = RThelper.gaussian(pep.charge + RThelper.RandomFloat(-0.3,0.3),2,0.65,1)
+      ints_factor = 1
       #------------------------------------------------
       
       shuff = RThelper.RandomFloat(0.05,1.0)
@@ -147,11 +147,7 @@ module MS
 	  fin_ints[i] = fin_ints[i] + diff
 	  #---------------------------------------------
   
-	  
-	  #Keep max_intensity for normalization
-	  if fin_ints[i] > @max_int
-	    @max_int = fin_ints[i]
-	  end
+	  fin_ints[i] = fin_ints[i]*predicted_int
 
 
 	end

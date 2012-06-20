@@ -17,6 +17,7 @@ module MS
       
       # Gets retention times from the weka model
       peptides = MS::Weka.predict_rts(peptides)
+      MS::Weka.predict_ints(peptides)
       
       
       #-----------------------------------------------------------------
