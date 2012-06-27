@@ -44,7 +44,7 @@ version "ms-simulate 0.0.1a (c) 2012 Brigham Young University"
                                             \n \t\ttrypsin,\n \t\tv8_e_trypsin,
                                             \n\t\tv8_de_trypsin",
                                              :default => "trypsin" 
-  opt :sampling_rate, "How many scans per second", :default => 1.0 
+  opt :sampling_rate, "How many scans per second", :default => 0.5 
   opt :run_time, "Run time in seconds", :default => 1000.0 
   opt :noise, "Noise on or off", :default => "true"
   opt :contaminate, "Contamination on or off", :default => "true"

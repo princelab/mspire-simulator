@@ -53,6 +53,7 @@ module MS
       d_file.close
       num_digested = digested.size
       digested.clear
+      puts "Number of peptides: #{num_digested}"
       return num_digested
     end
     

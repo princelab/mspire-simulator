@@ -83,7 +83,7 @@ module MS
     #
     def getInts(pep)
       
-      predicted_int = (pep.p_int * 10**-1) * 14183000.0
+      predicted_int = pep.p_int
       relative_ints = pep.core_ints#.map{|i| i = i*predicted_int}
       avg = pep.p_rt
       
