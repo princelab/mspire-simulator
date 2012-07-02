@@ -47,29 +47,7 @@ module MS
       count = 0
       while line = file.gets
         if line =~ /(\d*\.\d{0,3}){1}/
-          p_int = line.match(/(\d*\.\d{0,3}){1}/)[0].to_f
-      case true
-        when (0..1).member?(p_int)
-          peptides[count].p_int = RThelper.RandomFloat(0,69046)
-        when (1..2).member?(p_int)
-          peptides[count].p_int = RThelper.RandomFloat(69046,126235)
-        when (2..3).member?(p_int)
-          peptides[count].p_int = RThelper.RandomFloat(126235,397580)
-        when (3..4).member?(p_int)
-          peptides[count].p_int = RThelper.RandomFloat(397580,760745)
-        when (4..5).member?(p_int)
-          peptides[count].p_int = RThelper.RandomFloat(760745,1523150)
-        when (5..6).member?(p_int)
-          peptides[count].p_int = RThelper.RandomFloat(1523150,3446050)
-        when (6..7).member?(p_int)
-          peptides[count].p_int = RThelper.RandomFloat(3446050,5773600)
-        when (7..8).member?(p_int)
-          peptides[count].p_int = RThelper.RandomFloat(5773600,7943750)
-        when (8..9).member?(p_int)
-          peptides[count].p_int = RThelper.RandomFloat(7943750,13183000)
-        else
-          peptides[count].p_int = RThelper.RandomFloat(13183000,15000000)
-      end
+	  peptides[count].p_int = line.match(/(\d*\.\d{0,3}){1}/)[0].to_f
           count += 1
         end
       end

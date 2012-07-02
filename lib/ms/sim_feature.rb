@@ -83,7 +83,11 @@ module MS
     #
     def getInts(pep)
       
-      predicted_int = pep.p_int
+      p_int = pep.p_int + RThelper.RandomFloat(-5,2)
+      if p_int > 10
+	p_int -= 10
+      end
+      predicted_int = (p_int * 10**-1) * 14183000.0
       relative_ints = pep.core_ints#.map{|i| i = i*predicted_int}
       avg = pep.p_rt
       
