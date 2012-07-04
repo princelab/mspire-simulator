@@ -28,8 +28,10 @@ class Mzml_Wrapper
 	count = 0.0
 	scan_number = 1
 	spectra.each do |rt,data|
-	  Progress.progress("Converting to mzml:",(((count/spectra.size)*100).to_i))
-	
+	  Progress.progress("Converting to mzml & merging overlaps:",(((count/spectra.size)*100).to_i))
+	  
+	  data = merge(data)
+  
 	  spc = Mspire::Mzml::Spectrum.new("scan=#{scan_number}", params: ['MS:1000127', ['MS:1000511', 1]]) do |spec|
 	    spec.data_arrays = data
 	    spec.scan_list = Mspire::Mzml::ScanList.new do |sl|
@@ -43,7 +45,7 @@ class Mzml_Wrapper
 	  count += 1
 	  scan_number += 1
 	end
-	Progress.progress("Converting to mzml:",100,Time.now-@start)
+	Progress.progress("Converting to mzml & merging overlaps:",100,Time.now-@start)
 	puts ''
 	
 	run.spectrum_list = spectrum_list
@@ -51,6 +53,59 @@ class Mzml_Wrapper
     end
     
     return @mzml
+  end
+  
+  def w_avg(values,weights)
+    a = []
+    values.each_with_index{|v,i| a<<v*weights[i]}
+    a = a.inject(:+)
+    b = weights.inject(:+)
+    return a/b
+  end
+  
+  def merge(data)
+    overlaps = []
+    big_groups = []
+    mzs = data[0].clone
+    ints = data[1].clone
+    mzs.clone.each do |mz|
+      group = mzs.group_by{|m| ((mz-0.01)..(mz+0.01)).member?(m)}[true]
+      if group.size > 1
+	group_i = group.map{|m| mzs.index(m)}
+	if group_i.size > 2
+	  big_groups<<group_i
+	else
+	  overlaps<<group_i
+	end
+      end
+    end
+    overlaps.uniq!
+    #bigger groups than two
+    if !big_groups.empty?
+      big_groups.sort_by{|b| b.size}.each do |b|
+	overlaps.clone.each do |a|
+	  c = a.size + b.size
+	  if c != (a+b).uniq.size
+	    overlaps.delete(a)
+	  end
+	end
+	overlaps<<b
+      end
+    end
+    #end
+    if !overlaps.empty?
+      overlaps.each do |ol|
+	new_int = 0
+	new_mz = 0
+	n_mzs = []
+	n_ints = []
+	ol.each{|i| new_int += ints[i]; n_mzs<<mzs[i]; n_ints<<ints[i]; ints[i] = nil; mzs[i] = nil}
+	new_mz = w_avg(n_mzs,n_ints)
+	ints<<new_int
+	mzs<<new_mz
+      end
+    end
+    return [mzs.compact,ints.compact]
   end
   
   def to_xml(file)
