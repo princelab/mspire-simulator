@@ -116,6 +116,7 @@ module MS
 	    shape = (MSsimulate.opts[:tail] * length_factor)*i + (MSsimulate.opts[:front] * length_factor_tail)
 	    fin_ints << (RThelper.gaussian(rt,avg,shape,relative_abundances_int)) * ints_factor
 	    #---------------------------------------------
+	    
 	  else
 	    #-----------Random 1d data--------------------
 	    fin_ints<<(relative_abundances_int * ints_factor) * shuff
@@ -136,7 +137,7 @@ module MS
 
 	  fin_mzs<<wobble_mz
 	  #---------------------------------------------
-
+=begin
 	  if !@one_d
 	    #-------------M/Z Peak shape------------------
 	    fraction = RThelper.gaussian(fin_mzs[i],mzmu,0.05,1)
@@ -144,12 +145,13 @@ module MS
 	    fin_ints[i] = fin_ints[i] * factor
 	    #---------------------------------------------
 	  end
-	  
+=end	  
 	  #-------------Jagged-ness---------------------
-	  sd = 10.34 * (1-Math.exp(-0.00712 * fin_ints[i])) + 0.12
+	  sd = (MSsimulate.opts[:jagA] * (1-Math.exp(-(MSsimulate.opts[:jagC]) * fin_ints[i])) + MSsimulate.opts[:jagB])/2
 	  diff = (Distribution::Normal.rng(0,sd).call)
 	  fin_ints[i] = fin_ints[i] + diff
 	  #---------------------------------------------
+	  
   
 	  fin_ints[i] = fin_ints[i]*predicted_int
 

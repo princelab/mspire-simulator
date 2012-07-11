@@ -44,6 +44,10 @@ module MS
         opt :wobA, "m/z wobble parameter", :default => 0.001071
         opt :wobB, "m/z wobble parameter", :default => -0.5430
         opt :wobMax, "maximum m/z wobble parameter", :default => 0.003
+        opt :jagA, "intensity variance parameter", :default => 10.34
+        opt :jagC, "intensity variance parameter", :default => 0.00712
+        opt :jagB, "intensity variance parameter", :default => 0.12
+        
       end
 
       Trollop::die :sampling_rate, "must be greater than 0" if @opts[:sampling_rate] <= 0
