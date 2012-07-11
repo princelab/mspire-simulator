@@ -113,7 +113,7 @@ module MS
 	
 	  if !@one_d
 	    #-------------Tailing-------------------------
-	    shape = (0.30 * length_factor)*i + (6.65 * length_factor_tail)
+	    shape = (MSsimulate.opts[:tail] * length_factor)*i + (MSsimulate.opts[:front] * length_factor_tail)
 	    fin_ints << (RThelper.gaussian(rt,avg,shape,relative_abundances_int)) * ints_factor
 	    #---------------------------------------------
 	  else
@@ -125,9 +125,9 @@ module MS
 	  #-------------mz wobble-----------------------
 	  y = fin_ints[i]
 	  if y > 0.5
-	    wobble_int = 0.001071*y**(-0.5430)
+	    wobble_int = MSsimulate.opts[:wobA]*y**(MSsimulate.opts[:wobB])
 	  else
-	    wobble_int = 0.003
+	    wobble_int = MSsimulate.opts[:wobMax]
 	  end
 	  wobble_mz = Distribution::Normal.rng(mzmu,(wobble_int)).call
 	  if wobble_mz < 0
