@@ -71,11 +71,11 @@ class Mzml_Wrapper
     mzs.clone.each do |mz|
       group = mzs.group_by{|m| ((mz-0.01)..(mz+0.01)).member?(m)}[true]
       if group.size > 1
-	group_i = group.map{|m| mzs.index(m)}
-	if group_i.size > 2
-	  big_groups<<group_i
+	group.map!{|m| mzs.index(m)}
+	if group.size > 2
+	  big_groups<<group
 	else
-	  overlaps<<group_i
+	  overlaps<<group
 	end
       end
     end

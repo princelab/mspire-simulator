@@ -6,11 +6,12 @@ module MS
       @data
       @max_mz
       #RTS
+      var = 0.1/(sampling_rate*2)
       @@r_times = []
       num_of_spec = sampling_rate*run_time
       spec_time = 1/sampling_rate
       num_of_spec.to_i.times do
-        @@r_times<<spec_time+RThelper.RandomFloat(-0.5,0.5)
+        @@r_times<<spec_time+RThelper.RandomFloat(-var,var)
         spec_time = spec_time + (1/sampling_rate)
       end
       @@r_times = MS::Noise.spec_drops(drop_percentage)

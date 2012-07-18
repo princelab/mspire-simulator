@@ -41,9 +41,9 @@ module MS
         opt :truth, "Determines truth file type; false gives no truth file; one of: xml or csv", :default => "false"
         opt :front, "Fronting chromatography parameter", :default => 6.65
         opt :tail, "Tailing chromatography parameter", :default => 0.30
+	opt :mu, "Expected value of the chromatography curve", :default => 25.0
         opt :wobA, "m/z wobble parameter", :default => 0.001071
         opt :wobB, "m/z wobble parameter", :default => -0.5430
-        opt :wobMax, "maximum m/z wobble parameter", :default => 0.003
         opt :jagA, "intensity variance parameter", :default => 10.34
         opt :jagC, "intensity variance parameter", :default => 0.00712
         opt :jagB, "intensity variance parameter", :default => 0.12

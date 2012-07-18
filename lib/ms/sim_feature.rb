@@ -88,33 +88,37 @@ module MS
 	p_int -= 10
       end
       predicted_int = (p_int * 10**-1) * 14183000.0
-      relative_ints = pep.core_ints#.map{|i| i = i*predicted_int}
+      relative_ints = pep.core_ints
       avg = pep.p_rt
       
-      index = 0
+      sampling_rate = MSsimulate.opts[:sampling_rate].to_f
+      tail = MSsimulate.opts[:tail].to_f
+      front = MSsimulate.opts[:front].to_f
+      mu = MSsimulate.opts[:mu].to_f
       
-      #--------------Intensity----------------------------
-      ints_factor = 1
-      #------------------------------------------------
+      index = 0
       
       shuff = RThelper.RandomFloat(0.05,1.0)
       pep.core_mzs.each do |mzmu|
 
 	fin_mzs = []
 	fin_ints = []
+	t_index = 1
 	
 	relative_abundances_int = relative_ints[index]
 
-	pep.rts.each_with_index do |rt,i|
+	pep.rts.each_with_index do |rt,i| 
 	  percent_time = rt/@max_time
-	  length_factor = -3.96 * percent_time**2 + 3.96 * percent_time + 0.01
-	  length_factor_tail = -7.96 * percent_time**2 + 7.96 * percent_time + 0.01
+	  length_factor = 1#-3.96 * percent_time**2 + 3.96 * percent_time + 0.01
+	  length_factor_tail = 1#-7.96 * percent_time**2 + 7.96 * percent_time + 0.01
 	  
 	
 	  if !@one_d
 	    #-------------Tailing-------------------------
-	    shape = (MSsimulate.opts[:tail] * length_factor)*i + (MSsimulate.opts[:front] * length_factor_tail)
-	    fin_ints << (RThelper.gaussian(rt,avg,shape,relative_abundances_int)) * ints_factor
+	    shape = (tail * length_factor)* t_index + (front * length_factor_tail)
+	    mu = mu
+	    fin_ints << (RThelper.gaussian(t_index,mu,shape,100.0)) 
+	    t_index += 1
 	    #---------------------------------------------
 	    
 	  else
@@ -122,15 +126,15 @@ module MS
 	    fin_ints<<(relative_abundances_int * ints_factor) * shuff
 	    #---------------------------------------------
 	  end
+	  
+	  if fin_ints[i] < 0.01
+	    fin_ints[i] = RThelper.RandomFloat(0.001,0.4)
+	  end
 
 	  #-------------mz wobble-----------------------
 	  y = fin_ints[i]
-	  if y > 0.5
-	    wobble_int = MSsimulate.opts[:wobA]*y**(MSsimulate.opts[:wobB])
-	  else
-	    wobble_int = MSsimulate.opts[:wobMax]
-	  end
-	  wobble_mz = Distribution::Normal.rng(mzmu,(wobble_int)).call
+	  wobble_int = MSsimulate.opts[:wobA]*y**(MSsimulate.opts[:wobB])
+	  wobble_mz = Distribution::Normal.rng(mzmu,wobble_int).call
 	  if wobble_mz < 0
 	    wobble_mz = 0.01
 	  end
@@ -153,8 +157,7 @@ module MS
 	  #---------------------------------------------
 	  
   
-	  fin_ints[i] = fin_ints[i]*predicted_int
-
+	  fin_ints[i] = fin_ints[i]*(predicted_int*(relative_abundances_int*10**-2))
 	end
 	
 	pep.insert_ints(fin_ints)

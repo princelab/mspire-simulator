@@ -30,8 +30,10 @@ module MS
 	p_rt = pep.p_rt
 	if p_rt > 1
 	  pep.p_rt = @r_times.max
+	  pep.p_rt_i = @r_times.index(pep.p_rt)
 	else
 	  pep.p_rt = @r_times.find {|i| i >= (p_rt * max_rt)}
+	  pep.p_rt_i = @r_times.index(pep.p_rt)
 	end
 	
         if pep.p_rt == nil
@@ -45,8 +47,8 @@ module MS
 	    head_length = 300.0
 	    tail_length = 701
 	  else
-	    head_length = 100.0
-	    tail_length = 150
+	    head_length = 75.0
+	    tail_length = 100
 	  end
 
 	  a = @r_times.find {|i| i >= (pep.p_rt-head_length)}

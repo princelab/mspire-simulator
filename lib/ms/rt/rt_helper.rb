@@ -15,7 +15,7 @@ module RThelper
     mu = mu.to_f
     sd = sd.to_f
     h = h.to_f
-    return h*(Math.exp(-(((x-mu)**2)/(sd**2))))
+    return h*Math.exp(-(x-mu)**2/(sd**2))
   end
   
   module_function
