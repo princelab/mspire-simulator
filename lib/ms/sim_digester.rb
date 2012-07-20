@@ -39,8 +39,8 @@ module MS
       digested.uniq!
       
       trun_digested = []
-      if digested.length > 100000
-        100000.times do 
+      if digested.length > 50000
+        50000.times do 
           trun_digested<<digested[rand(digested.length)]
         end
         digested.clear

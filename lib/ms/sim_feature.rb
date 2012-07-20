@@ -116,9 +116,8 @@ module MS
 	  if !@one_d
 	    #-------------Tailing-------------------------
 	    shape = (tail * length_factor)* t_index + (front * length_factor_tail)
-	    mu = mu
 	    fin_ints << (RThelper.gaussian(t_index,mu,shape,100.0)) 
-	    t_index += 1
+	    t_index += sampling_rate**-1
 	    #---------------------------------------------
 	    
 	  else

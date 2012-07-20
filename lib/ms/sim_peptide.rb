@@ -14,8 +14,8 @@ module MS
       
       @core_ints = spec.intensities.clone
       @core_mzs = spec.mzs.clone
-      @mzs_file = ".m_#{sequence[0...15]}_#{charge}"
-      @ints_file = ".i_#{sequence[0...15]}_#{charge}"
+      @mzs_file = ".m/#{sequence[0]}/#{sequence[0...15]}_#{charge}"
+      @ints_file = ".i/#{sequence[0]}/#{sequence[0...15]}_#{charge}"
       file = File.open(@mzs_file, "w")
       file.puts(sequence)
       file.close
@@ -177,11 +177,11 @@ module MS
 	#"B" is "N" or "D"
 	elsif aa == "B"
 	  aas = ["N","D"]
-	  aa = aas[rand(3)]
+	  aa = aas[rand(2)]
 	#"Z" is "Q" or "E"
 	elsif aa == "Z"
 	  aas = ["Q","E"]
-	  aa = aas[rand(3)]
+	  aa = aas[rand(2)]
 	end
 	
 	if aa !~ /A|R|N|D|C|E|Q|G|H|I|L|K|M|F|P|S|T|W|Y|V|U|O/

@@ -63,14 +63,30 @@ class Mzml_Wrapper
     return a/b
   end
   
+  def member(m,mz,range)
+    if m == mz
+      return false
+    elsif range.member?(m)
+      return true
+    else
+      return false
+    end
+  end
+  
   def merge(data)
     overlaps = []
     big_groups = []
     mzs = data[0].clone
     ints = data[1].clone
+    
     mzs.clone.each do |mz|
-      group = mzs.group_by{|m| ((mz-0.01)..(mz+0.01)).member?(m)}[true]
-      if group.size > 1
+      a = (mz-0.0001)
+      b = (mz+0.0001)
+      range = (a..b)
+      group = mzs.find_all{|m| member(m,mz,range)}
+      
+      if !group.empty?
+	group<<mz
 	group.map!{|m| mzs.index(m)}
 	if group.size > 2
 	  big_groups<<group
@@ -79,13 +95,13 @@ class Mzml_Wrapper
 	end
       end
     end
-    overlaps.uniq!
+    
+    overlaps.map!{|a| a.sort}.uniq!
     #bigger groups than two
     if !big_groups.empty?
       big_groups.sort_by{|b| b.size}.each do |b|
 	overlaps.clone.each do |a|
-	  c = a.size + b.size
-	  if c != (a+b).uniq.size
+	  if a & b != []
 	    overlaps.delete(a)
 	  end
 	end
@@ -93,16 +109,19 @@ class Mzml_Wrapper
       end
     end
     #end
+    
     if !overlaps.empty?
       overlaps.each do |ol|
 	new_int = 0
 	new_mz = 0
 	n_mzs = []
 	n_ints = []
-	ol.each{|i| new_int += ints[i]; n_mzs<<mzs[i]; n_ints<<ints[i]; ints[i] = nil; mzs[i] = nil}
+	nils = []
+	ol.each{|i| new_int += ints[i]; n_mzs<<mzs[i]; n_ints<<ints[i]; nils<<i}
 	new_mz = w_avg(n_mzs,n_ints)
 	ints<<new_int
 	mzs<<new_mz
+	nils.each{|i| ints[i] = nil; mzs[i] = nil}
       end
     end
     return [mzs.compact,ints.compact]
