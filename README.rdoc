@@ -2,6 +2,8 @@
 
 Description:
 	Simulates MS runs given amino acid .fasta files. Outputs a .mzML file.
+Curve fitting application can be found here:
+	https://www.dropbox.com/s/t3y5mfarmava1lg/curve_fitting.tar.gz
 
 == Examples
  
