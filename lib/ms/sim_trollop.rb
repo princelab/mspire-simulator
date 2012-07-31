@@ -47,6 +47,7 @@ module MS
         opt :jagA, "intensity variance parameter", :default => 10.34
         opt :jagC, "intensity variance parameter", :default => 0.00712
         opt :jagB, "intensity variance parameter", :default => 0.12
+	opt :overlapRange, "range in which to determine overlapping peaks", :default => 1.0724699230489427
         
       end
 
@@ -54,6 +55,7 @@ module MS
       Trollop::die :run_time, "must be non-negative" if @opts[:run_time] < 0
       Trollop::die "must supply a .fasta protien sequence file" if ARGV.empty?
       Trollop::die :dropout_percentage, "must be between greater than or equal to 0.0 or less than 1.0" if @opts[:dropout_percentage] < 0.0 or @opts[:dropout_percentage] >= 1.0
+      @opts[:overlapRange] = (@opts[:overlapRange]*10.0**-6)/2.0
     end
     
     def get; @opts; end

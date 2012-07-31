@@ -4,6 +4,7 @@ require 'time'
 require 'progress'
 require 'nokogiri'
 require 'mspire/digester'
+require 'mspire/tagged_peak'
 require 'mspire'
 require 'ms/sim_peptide'
 require 'ms/rt/rtgenerator'
@@ -15,6 +16,7 @@ require 'ms/tr_file_writer'
 require 'ms/isoelectric_calc'
 require 'ms/sim_digester'
 require 'ms/sim_trollop'
+require 'ms/merger'
 
 module MSsimulate
   begin
@@ -63,16 +65,26 @@ module MSsimulate
     
     
     
+    #------------------------Merge Overlaps---------------------------------------
+    spectra.spectra = Merger.merge(spectra.spectra,MSsimulate.opts[:overlapRange].to_f)
+    #-----------------------------------------------------------------------------
+    
+    
+    
     #------------------------Truth Files------------------------------------------
     if truth != "false"
       if truth == "xml"
-        MS::Txml_file_writer.new(spectra.features,spectra.spectra,out_file)
+        MS::Txml_file_writer.write(spectra.features,spectra.spectra,out_file)
       elsif truth == "csv"
-        MS::Tcsv_file_writer.new(data,noise,spectra.features,out_file)
+	MS::Tcsv_file_writer.write(data,noise,spectra.features,out_file)
       end
     end
     #-----------------------------------------------------------------------------
     
+    
+    #-----------------------Merge Finish------------------------------------------
+    spectra.spectra = Merger.compact(spectra.spectra)
+    #-----------------------------------------------------------------------------
     
     
     #-----------------------Clean UP----------------------------------------------
@@ -107,8 +119,8 @@ module MSsimulate
       peptides.each{|pep| pep.delete}
     end
     puts "Exception - Simulation Failed"
-    system "ruby /home/anoyce/Dropbox/AlertYou.r 18017938728@tmomail.net Exception - Simulation Failed"
+    #system "ruby /home/anoyce/Dropbox/AlertYou.r 18017938728@tmomail.net Exception - Simulation Failed"
   else
-    system "ruby /home/anoyce/Dropbox/AlertYou.r 18017938728@tmomail.net Success!"
+    #system "ruby /home/anoyce/Dropbox/AlertYou.r 18017938728@tmomail.net Success!"
   end
 end

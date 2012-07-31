@@ -2,7 +2,8 @@ require 'progress'
 
 module MS
   class Txml_file_writer
-    def initialize(features,spectra,file_name)
+    def self.write(features,spectra,file_name)
+      @spectra = spectra
       @start = Time.now
       file = File.open("#{file_name}_truth.xml","w")
       
@@ -25,7 +26,8 @@ module MS
 	      tags<<"\t\t<lc_centroids isotopic_index=\"#{i}\">"
 		mzs.each_with_index do |mz,ind|
 		  if ints[i][ind] > 0.9
-		    centroids<<"#{r_times.index(rts[ind])},#{(spectra[rts[ind]][0]).sort.index(mz)};"
+		    index = get_ind(mz,rts[ind])
+		    centroids<<"#{r_times.index(rts[ind])},#{index.inspect};"
 		  end
 		end
 	      if centroids != ""
@@ -42,10 +44,26 @@ module MS
       Progress.progress("Writing xml:",100,Time.now-@start)
       puts ''
     end
+    
+    def self.get_ind(mz,rt)
+      index = nil
+      mzs = @spectra[rt][0]
+      ints = @spectra[rt][1]
+      mzs.each_with_index do |m, i|
+	if m == mz
+	  index = i
+	elsif m.class == Hash
+	  if ind = m.values[0].index(mz)
+	    index = [i,m.keys[0][ind+1]]
+	  end
+	end
+      end
+      return index
+    end
   end
   
   class Tcsv_file_writer
-    def initialize(spectra,noise,features,file_name)
+    def self.write(spectra,noise,features,file_name)
       @start = Time.now
     
       ind_hash = {}

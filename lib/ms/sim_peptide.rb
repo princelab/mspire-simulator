@@ -148,7 +148,7 @@ module MS
       var<<"Se"
       var<<atoms[6].to_s
       
-      mf = Mspire::MolecularFormula.new(var, charge)
+      mf = Mspire::MolecularFormula.from_string(var, charge)
       spec = Mspire::Isotope::Distribution.spectrum(mf, :max, 0.001)
 
       spec.intensities.map!{|i| i = i*100.0}
