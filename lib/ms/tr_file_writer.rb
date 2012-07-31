@@ -63,9 +63,11 @@ module MS
   end
   
   class Tcsv_file_writer
-    def self.write(spectra,noise,features,file_name)
+    def self.write(full_spectra,spectra,noise,features,file_name)
       @start = Time.now
+      @spectra = full_spectra
     
+      #create indices for real peaks
       ind_hash = {}
       features.each_with_index do |pep,i|
 	pep.mzs.each_with_index do |m_ar,j|
@@ -75,6 +77,7 @@ module MS
 	end
       end
     
+      #create data structure with indices
       file = File.open("#{file_name}_truth.csv","w")
       file.puts "rt,mz,int,index"
       count = 1
@@ -83,8 +86,11 @@ module MS
       total = spectra.length
       spectra.each do |k,v|
 	Progress.progress("Writing csv(process 1 of 2):",(((time_i/total)*100).to_i))
-	#puts "#{count}/#{total}"
-	#count += 1
+	
+	merged_d = full_spectra[k]
+	merged_mzs = merged_d[0]
+	merged_ints = merged_d[1]
+	
 	if noise != "false"
 	  n_data = noise[k]
 	end
@@ -93,8 +99,8 @@ module MS
 	  v.each_slice(2) do |m,i|
 	    m.each_with_index do |mz,index|
 	      peak_index = ind_hash[mz]
-	      #puts " #{peak_index}, #{mz}"
-	      data<<[k,mz,i[index],peak_index]
+	      mz,int = get_merged_mz(mz,k)
+	      data<<[k,mz.inspect,int,peak_index]
 	    end
 	  end
 	end
@@ -102,7 +108,8 @@ module MS
 	if noise != "false"
 	  n_data.each_slice(2) do |m,i|
 	    m.each_with_index do |mz,index|
-	      data<<[k,mz,i[index],0]
+	      mz,int = get_merged_mz(mz,k)
+	      data<<[k,mz.inspect,int,0]
 	    end
 	  end
 	end
@@ -111,11 +118,10 @@ module MS
       
       data = data.group_by{|d| d[0]}
       
-      total = data.values.size.to_f
+      total = data.size.to_f
       count = 0
       data.each_value do |val|
 	Progress.progress("Writing csv(process 2 of 2):",(((count/total)*100).to_i))
-	val = val.sort_by{|a| a[1]}
 	val.each do |a|
 	  if a[3] >= 1
 	    file.puts "#{a[0]},#{a[1]},#{a[2]},#{a[3]}"
@@ -129,6 +135,25 @@ module MS
       
       Progress.progress("Writing csv:",100,Time.now-@start)
       puts ''
+    end
+    
+    def self.get_merged_mz(mz,rt)
+      m_mz = nil
+      int = nil
+      mzs = @spectra[rt][0]
+      ints = @spectra[rt][1]
+      mzs.each_with_index do |m, i|
+	if m == mz
+	  m_mz = mz
+	  int = ints[i]
+	elsif m.class == Hash
+	  if ind = m.values[0].index(mz)
+	    m_mz = [m.keys[0][0],m.keys[0][ind+1]]
+	    int = ints[i].flatten.inject(:+)
+	  end
+	end
+      end
+      return m_mz,int
     end
   end
 end

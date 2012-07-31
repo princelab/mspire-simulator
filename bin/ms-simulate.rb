@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+$LOAD_PATH << './lib'
 
 require 'time'
 require 'progress'
@@ -76,7 +77,7 @@ module MSsimulate
       if truth == "xml"
         MS::Txml_file_writer.write(spectra.features,spectra.spectra,out_file)
       elsif truth == "csv"
-	MS::Tcsv_file_writer.write(data,noise,spectra.features,out_file)
+	MS::Tcsv_file_writer.write(spectra.spectra,data,noise,spectra.features,out_file)
       end
     end
     #-----------------------------------------------------------------------------
