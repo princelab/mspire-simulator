@@ -48,6 +48,7 @@ module MS
         opt :jagC, "intensity variance parameter", :default => 0.00712
         opt :jagB, "intensity variance parameter", :default => 0.12
 	opt :overlapRange, "range in which to determine overlapping peaks", :default => 1.0724699230489427
+	opt :email, "Email address to send completion messages to", :default => "nil"
         
       end
 

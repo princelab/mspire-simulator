@@ -91,10 +91,10 @@ module MS
       relative_ints = pep.core_ints
       avg = pep.p_rt
       
-      sampling_rate = MSsimulate.opts[:sampling_rate].to_f
-      tail = MSsimulate.opts[:tail].to_f
-      front = MSsimulate.opts[:front].to_f
-      mu = MSsimulate.opts[:mu].to_f
+      sampling_rate = MspireSimulator.opts[:sampling_rate].to_f
+      tail = MspireSimulator.opts[:tail].to_f
+      front = MspireSimulator.opts[:front].to_f
+      mu = MspireSimulator.opts[:mu].to_f
       
       index = 0
       
@@ -132,7 +132,7 @@ module MS
 
 	  #-------------mz wobble-----------------------
 	  y = fin_ints[i]
-	  wobble_int = MSsimulate.opts[:wobA]*y**(MSsimulate.opts[:wobB])
+	  wobble_int = MspireSimulator.opts[:wobA]*y**(MspireSimulator.opts[:wobB])
 	  wobble_mz = Distribution::Normal.rng(mzmu,wobble_int).call
 	  if wobble_mz < 0
 	    wobble_mz = 0.01
@@ -142,7 +142,7 @@ module MS
 	  #---------------------------------------------
 =begin
 	  if !@one_d
-	    #-------------M/Z Peak shape------------------
+	    #-------------M/Z Peak shape (Profile?)-------
 	    fraction = RThelper.gaussian(fin_mzs[i],mzmu,0.05,1)
 	    factor = fraction/1.0
 	    fin_ints[i] = fin_ints[i] * factor
@@ -150,7 +150,7 @@ module MS
 	  end
 =end	  
 	  #-------------Jagged-ness---------------------
-	  sd = (MSsimulate.opts[:jagA] * (1-Math.exp(-(MSsimulate.opts[:jagC]) * fin_ints[i])) + MSsimulate.opts[:jagB])/2
+	  sd = (MspireSimulator.opts[:jagA] * (1-Math.exp(-(MspireSimulator.opts[:jagC]) * fin_ints[i])) + MspireSimulator.opts[:jagB])/2
 	  diff = (Distribution::Normal.rng(0,sd).call)
 	  fin_ints[i] = fin_ints[i] + diff
 	  #---------------------------------------------

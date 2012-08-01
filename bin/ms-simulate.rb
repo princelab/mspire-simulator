@@ -19,7 +19,7 @@ require 'ms/sim_digester'
 require 'ms/sim_trollop'
 require 'ms/merger'
 
-module MSsimulate
+module MspireSimulator
   begin
 
   @start = Time.now
@@ -29,6 +29,7 @@ module MSsimulate
     noise = @opts[:noise]
     truth = @opts[:truth]
     out_file = @opts[:out_file]
+    email = @opts[:email]
     
     if one_d == "true"
       one_d = true
@@ -67,7 +68,7 @@ module MSsimulate
     
     
     #------------------------Merge Overlaps---------------------------------------
-    spectra.spectra = Merger.merge(spectra.spectra,MSsimulate.opts[:overlapRange].to_f)
+    spectra.spectra = Merger.merge(spectra.spectra,@opts[:overlapRange].to_f)
     #-----------------------------------------------------------------------------
     
     
@@ -75,7 +76,7 @@ module MSsimulate
     #------------------------Truth Files------------------------------------------
     if truth != "false"
       if truth == "xml"
-        MS::Txml_file_writer.write(spectra.features,spectra.spectra,out_file)
+	MS::Txml_file_writer.write(spectra.features,spectra.spectra,out_file)
       elsif truth == "csv"
 	MS::Tcsv_file_writer.write(spectra.spectra,data,noise,spectra.features,out_file)
       end
@@ -110,7 +111,7 @@ module MSsimulate
     puts e.backtrace 
     if digester != nil
       if File.exists?(digester.digested_file)
-        File.delete(digester.digested_file)
+	File.delete(digester.digested_file)
       end
     end
     if spectra != nil
@@ -120,8 +121,9 @@ module MSsimulate
       peptides.each{|pep| pep.delete}
     end
     puts "Exception - Simulation Failed"
-    #system "ruby /home/anoyce/Dropbox/AlertYou.r 18017938728@tmomail.net Exception - Simulation Failed"
+    
+    system "ruby bin/sim_mail.rb #{email} Exception - Simulation Failed" if email != "nil"
   else
-    #system "ruby /home/anoyce/Dropbox/AlertYou.r 18017938728@tmomail.net Success!"
+    system "ruby bin/sim_mail.rb #{email} Success! - Simulation Complete" if email != "nil"
   end
 end

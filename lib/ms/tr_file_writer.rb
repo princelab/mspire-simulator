@@ -1,5 +1,7 @@
 require 'progress'
 
+#if m/z value is in "[m/z, percentage contributed to peak]" it's a
+#merged peak. 
 module MS
   class Txml_file_writer
     def self.write(features,spectra,file_name)
@@ -68,56 +70,17 @@ module MS
       @spectra = full_spectra
     
       #create indices for real peaks
-      ind_hash = {}
-      features.each_with_index do |pep,i|
-	pep.mzs.each_with_index do |m_ar,j|
-	  m_ar.each do |mz|
-	    ind_hash[mz] = "#{i + 1}.#{j + 1}".to_f
-	  end
-	end
-      end
+      ind_hash = create_indicies(features)
     
       #create data structure with indices
-      file = File.open("#{file_name}_truth.csv","w")
-      file.puts "rt,mz,int,index"
-      count = 1
-      time_i = 0.0
-      data = []
-      total = spectra.length
-      spectra.each do |k,v|
-	Progress.progress("Writing csv(process 1 of 2):",(((time_i/total)*100).to_i))
-	
-	merged_d = full_spectra[k]
-	merged_mzs = merged_d[0]
-	merged_ints = merged_d[1]
-	
-	if noise != "false"
-	  n_data = noise[k]
-	end
-	
-	if v != nil
-	  v.each_slice(2) do |m,i|
-	    m.each_with_index do |mz,index|
-	      peak_index = ind_hash[mz]
-	      mz,int = get_merged_mz(mz,k)
-	      data<<[k,mz.inspect,int,peak_index]
-	    end
-	  end
-	end
-	
-	if noise != "false"
-	  n_data.each_slice(2) do |m,i|
-	    m.each_with_index do |mz,index|
-	      mz,int = get_merged_mz(mz,k)
-	      data<<[k,mz.inspect,int,0]
-	    end
-	  end
-	end
-	time_i += 1
-      end
+      data = data_with_indicies(full_spectra,spectra,noise,ind_hash)
       
+      #group by retention time
       data = data.group_by{|d| d[0]}
       
+      #write
+      file = File.open("#{file_name}_truth.csv","w")
+      file.puts "rt,mz,int,index"
       total = data.size.to_f
       count = 0
       data.each_value do |val|
@@ -154,6 +117,57 @@ module MS
 	end
       end
       return m_mz,int
+    end
+    
+    def self.create_indicies(features)
+      ind_hash = {}
+      features.each_with_index do |pep,i|
+	pep.mzs.each_with_index do |m_ar,j|
+	  m_ar.each do |mz|
+	    ind_hash[mz] = "#{i + 1}.#{j + 1}".to_f
+	  end
+	end
+      end
+      return ind_hash
+    end
+    
+    def self.data_with_indicies(full_spectra,spectra,noise,ind_hash)
+      count = 1
+      time_i = 0.0
+      data = []
+      total = spectra.length
+      spectra.each do |k,v|
+	Progress.progress("Writing csv(process 1 of 2):",(((time_i/total)*100).to_i))
+	
+	merged_d = full_spectra[k]
+	merged_mzs = merged_d[0]
+	merged_ints = merged_d[1]
+	
+	if noise != "false"
+	  n_data = noise[k]
+	end
+	
+	if v != nil
+	  v.each_slice(2) do |m,i|
+	    m.each_with_index do |mz,index|
+	      peak_index = ind_hash[mz]
+	      mz,int = get_merged_mz(mz,k)
+	      data<<[k,mz.inspect,int,peak_index]
+	    end
+	  end
+	end
+	
+	if noise != "false"
+	  n_data.each_slice(2) do |m,i|
+	    m.each_with_index do |mz,index|
+	      mz,int = get_merged_mz(mz,k)
+	      data<<[k,mz.inspect,int,0]
+	    end
+	  end
+	end
+	time_i += 1
+      end
+      return data
     end
   end
 end
