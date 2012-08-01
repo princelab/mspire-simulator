@@ -8,9 +8,9 @@ describe MS::Peptide do
     pep = MS::Peptide.new("HSVVVPYEPPEVGSDCTTIHYNYMCNSSCMGGMNR",2)
     pep.should be_a(MS::Peptide)
     pep.sequence.should == "HSVVVPYEPPEVGSDCTTIHYNYMCNSSCMGGMNR"
-    pep.mono_mz.should == 2245.494355203195
+    pep.mono_mz.should == 1939.3147555802952
     #Contains the core theoretical spectrum
-    pep.core_mzs[0].round.should == 2244
-    pep.core_ints[0].round.should == 8
+    pep.core_mzs[0].round.should == 1938
+    pep.core_ints[0].round.should == 42
   end
 end

@@ -20,10 +20,10 @@ require 'ms/sim_trollop'
 require 'ms/merger'
 
 module MspireSimulator
+@opts = MS::Troll.new.get
   begin
 
   @start = Time.now
-  @opts = MS::Troll.new.get
 
     one_d = @opts[:one_d]
     noise = @opts[:noise]
@@ -36,10 +36,6 @@ module MspireSimulator
       run_time = 300.0
     else
       one_d = false
-    end
-
-    if @opts[:contaminate] == 'true'
-      ARGV<<contaminants
     end
     
     module_function

@@ -4,7 +4,6 @@ require 'mspire/isotope/distribution'
 module MS
   class Peptide
     def initialize(sequence, charge)
-      sequence
       @p_rt = 0
       @p_int = 0
       @rts = []
@@ -21,32 +20,13 @@ module MS
       file.close
       @mono_mz = spec.mzs[spec.intensities.index(spec.intensities.max)]
       @mass = @mono_mz * @charge
-      
-      @aa_counts = [
-        sequence.count("A"),
-        sequence.count("R"),
-        sequence.count("N"),
-        sequence.count("D"),
-        sequence.count("B"),
-        sequence.count("C"),
-        sequence.count("E"),
-        sequence.count("Q"),
-        sequence.count("Z"),
-        sequence.count("G"),
-        sequence.count("H"),
-        sequence.count("I"),
-        sequence.count("L"),
-        sequence.count("K"),
-        sequence.count("M"),
-        sequence.count("F"),
-        sequence.count("P"),
-        sequence.count("S"),
-        sequence.count("T"),
-        sequence.count("W"),
-        sequence.count("Y"),
-        sequence.count("V"),
-        sequence.count("J"),
-        0.0]
+      #U,O,X ???
+      amino_acids = ['A','R','N','D','B','C','E','Q','Z','G','H','I',
+		     'L','K','M','F','P','S','T','W','Y','V','J']
+      @aa_counts = amino_acids.map do |aa|
+	sequence.count(aa)
+      end
+      @aa_counts<<0.0
     end
     
     attr_reader :mass, :charge, :mono_mz, :core_mzs, :p_rt, :p_int, :core_ints, :hydro, :pi, :aa_counts, :p_rt_i

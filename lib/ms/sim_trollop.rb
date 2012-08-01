@@ -18,19 +18,18 @@ module MS
         where [options] are:
         EOS
         opt :digestor, "Digestion Enzyme; one of: \n\t\targ_c,\n \t\tasp_n,
-                                                  \n \t\tasp_n_ambic,
-                                                  \n \t\tchymotrypsin,\n \t\tcnbr,
-                                                  \n \t\tlys_c,\n \t\tlys_c_p,
-                                                  \n \t\tpepsin_a,\n\t\ttryp_cnbr,
-                                                  \n \t\ttryp_chymo,\n \t\ttrypsin_p,
-                                                  \n \t\tv8_de,\n \t\tv8_e,
-                                                  \n \t\ttrypsin,\n \t\tv8_e_trypsin,
-                                                  \n\t\tv8_de_trypsin",
-                                                   :default => "trypsin" 
+		asp_n_ambic,
+                chymotrypsin,\n \t\tcnbr,
+                lys_c,\n \t\tlys_c_p,
+                pepsin_a,\n\t\ttryp_cnbr,
+                tryp_chymo,\n \t\ttrypsin_p,
+                v8_de,\n \t\tv8_e,
+                trypsin,\n \t\tv8_e_trypsin,
+                v8_de_trypsin",
+                :default => "trypsin" 
         opt :sampling_rate, "How many scans per second", :default => 0.5 
         opt :run_time, "Run time in seconds", :default => 1000.0 
         opt :noise, "Noise on or off", :default => "true"
-        opt :contaminate, "Contamination on or off", :default => "true"
         opt :noise_density, "Determines the density of white noise", :default => 10
         opt :pH, "The pH that the sample is in - for determining charge", :default => 2.6
         opt :out_file, "Name of the output file", :default => "test.mzml"
