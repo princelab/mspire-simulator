@@ -109,15 +109,15 @@ module MS
 
 	pep.rts.each_with_index do |rt,i| 
 	  percent_time = rt/@max_time
-	  length_factor = 1#-3.96 * percent_time**2 + 3.96 * percent_time + 0.01
-	  length_factor_tail = 1#-7.96 * percent_time**2 + 7.96 * percent_time + 0.01
+	  length_factor = 1.0#-3.96 * percent_time**2 + 3.96 * percent_time + 0.01
+	  length_factor_tail = 1.0#-7.96 * percent_time**2 + 7.96 * percent_time + 0.01
 	  
 	
 	  if !@one_d
 	    #-------------Tailing-------------------------
 	    shape = (tail * length_factor)* t_index + (front * length_factor_tail)
 	    fin_ints << (RThelper.gaussian(t_index,mu,shape,100.0)) 
-	    t_index += sampling_rate**-1
+	    t_index += 1
 	    #---------------------------------------------
 	    
 	  else
@@ -130,16 +130,6 @@ module MS
 	    fin_ints[i] = RThelper.RandomFloat(0.001,0.4)
 	  end
 
-	  #-------------mz wobble-----------------------
-	  y = fin_ints[i]
-	  wobble_int = MspireSimulator.opts[:wobA]*y**(MspireSimulator.opts[:wobB])
-	  wobble_mz = Distribution::Normal.rng(mzmu,wobble_int).call
-	  if wobble_mz < 0
-	    wobble_mz = 0.01
-	  end
-
-	  fin_mzs<<wobble_mz
-	  #---------------------------------------------
 =begin
 	  if !@one_d
 	    #-------------M/Z Peak shape (Profile?)-------
@@ -153,6 +143,20 @@ module MS
 	  sd = (MspireSimulator.opts[:jagA] * (1-Math.exp(-(MspireSimulator.opts[:jagC]) * fin_ints[i])) + MspireSimulator.opts[:jagB])/2
 	  diff = (Distribution::Normal.rng(0,sd).call)
 	  fin_ints[i] = fin_ints[i] + diff
+	  #---------------------------------------------
+	  
+	  
+	  #-------------mz wobble-----------------------
+	  y = fin_ints[i]
+	  if y > 0
+	    wobble_int = MspireSimulator.opts[:wobA]*y**(MspireSimulator.opts[:wobB])
+	    wobble_mz = Distribution::Normal.rng(mzmu,wobble_int).call
+	    if wobble_mz < 0
+	      wobble_mz = 0.01
+	    end
+
+	    fin_mzs<<wobble_mz
+	  end
 	  #---------------------------------------------
 	  
   

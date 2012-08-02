@@ -1,3 +1,8 @@
+$LOAD_PATH << './lib'
+require 'ms/rt/rt_helper'
+require 'ms/noise'
+require 'ms/rt/rtgenerator'
+require 'ms/sim_feature'
 
 module MS
   class Sim_Spectra
