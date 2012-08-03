@@ -6,10 +6,13 @@ require 'ms/sim_feature'
 
 module MS
   class Sim_Spectra
-    def initialize(peptides,sampling_rate, run_time, drop_percentage = 0.12,density = 10.0,one_d = false)
-      @density = density
+    def initialize(peptides,opts,one_d = false)
+      @density = opts[:noise_density]
       @data
       @max_mz
+			sampling_rate = opts[:sampling_rate]
+			run_time = opts[:run_time]
+			drop_percentage = opts[:dropout_percentage]
       #RTS
       var = 0.1/(sampling_rate*2)
       @@r_times = []
@@ -24,7 +27,7 @@ module MS
       pre_features = MS::Rtgenerator.generateRT(peptides,one_d)
       
       #Features
-      features_o = MS::Sim_Feature.new(pre_features,one_d)
+      features_o = MS::Sim_Feature.new(pre_features,opts,one_d)
       @features = features_o.features
       @data = features_o.data
       @max_mz = @data.max_by{|key,val| if val != nil;val[0].max;else;0;end}[1][0].max

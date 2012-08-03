@@ -7,7 +7,7 @@ require 'ms/tr_file_writer'
 
 module MS
   class Sim_Feature 
-    def initialize(peptides,one_d)
+    def initialize(peptides,opts,one_d)
       
       @start = Time.now
       @features = []
@@ -15,6 +15,7 @@ module MS
       @max_int = 0.0
       @one_d = one_d
       @max_time = Sim_Spectra.r_times.max
+      @opts = opts
       
       
       #------------------Each_Peptide_=>_Feature----------------------
@@ -91,10 +92,10 @@ module MS
       relative_ints = pep.core_ints
       avg = pep.p_rt
       
-      sampling_rate = MspireSimulator.opts[:sampling_rate].to_f
-      tail = MspireSimulator.opts[:tail].to_f
-      front = MspireSimulator.opts[:front].to_f
-      mu = MspireSimulator.opts[:mu].to_f
+      sampling_rate = @opts[:sampling_rate].to_f
+      tail = @opts[:tail].to_f
+      front = @opts[:front].to_f
+      mu = @opts[:mu].to_f
       
       index = 0
       
@@ -140,7 +141,7 @@ module MS
 	  end
 =end	  
 	  #-------------Jagged-ness---------------------
-	  sd = (MspireSimulator.opts[:jagA] * (1-Math.exp(-(MspireSimulator.opts[:jagC]) * fin_ints[i])) + MspireSimulator.opts[:jagB])/2
+	  sd = (@opts[:jagA] * (1-Math.exp(-(@opts[:jagC]) * fin_ints[i])) + @opts[:jagB])/2
 	  diff = (Distribution::Normal.rng(0,sd).call)
 	  fin_ints[i] = fin_ints[i] + diff
 	  #---------------------------------------------
@@ -149,7 +150,7 @@ module MS
 	  #-------------mz wobble-----------------------
 	  y = fin_ints[i]
 	  if y > 0
-	    wobble_int = MspireSimulator.opts[:wobA]*y**(MspireSimulator.opts[:wobB])
+	    wobble_int = @opts[:wobA]*y**(@opts[:wobB])
 	    wobble_mz = Distribution::Normal.rng(mzmu,wobble_int).call
 	    if wobble_mz < 0
 	      wobble_mz = 0.01

@@ -53,7 +53,7 @@ module MspireSimulator
 
 
     #------------------------Create Spectrum--------------------------------------
-    spectra = MS::Sim_Spectra.new(peptides, @opts[:sampling_rate], @opts[:run_time], @opts[:dropout_percentage], @opts[:noise_density], one_d)
+    spectra = MS::Sim_Spectra.new(peptides, @opts, one_d)
     data = spectra.data
     
     if noise == 'true'
