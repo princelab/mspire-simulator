@@ -49,16 +49,18 @@ module MS
     
     def self.get_ind(mz,rt)
       index = nil
-      mzs = @spectra[rt][0]
-      ints = @spectra[rt][1]
-      mzs.each_with_index do |m, i|
-	if m == mz
-	  index = i
-	elsif m.class == Hash
-	  if ind = m.values[0].index(mz)
-	    index = [i,m.keys[0][ind+1]]
-	  end
-	end
+      if @spectra[rt] != nil
+        mzs = @spectra[rt][0]
+        ints = @spectra[rt][1]
+        mzs.each_with_index do |m, i|
+          if m == mz
+            index = i
+          elsif m.class == Hash
+            if ind = m.values[0].index(mz)
+              index = [i,m.keys[0][ind+1]]
+            end
+          end
+        end
       end
       return index
     end

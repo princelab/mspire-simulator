@@ -34,12 +34,12 @@ class Merger
     return a/b
   end
   
-  def self.merge(data,half_range)
+  def self.merge(spectra,half_range)
     @start = Time.now
     new_data = {}
-    total = data.size
+    total = spectra.size
     k = 0
-    data.each do |rt,val|
+    spectra.each do |rt,val|
       Progress.progress("Merging Overlaps:",(((k/total)*100).to_i))
       peaks = val.transpose
       peaks.sort_by!{|a| a[0]}

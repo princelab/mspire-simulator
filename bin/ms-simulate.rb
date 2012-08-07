@@ -72,9 +72,9 @@ module MspireSimulator
     #------------------------Truth Files------------------------------------------
     if truth != "false"
       if truth == "xml"
-	MS::Txml_file_writer.write(spectra.features,spectra.spectra,out_file)
+        MS::Txml_file_writer.write(spectra.features,spectra.spectra,out_file)
       elsif truth == "csv"
-	MS::Tcsv_file_writer.write(spectra.spectra,data,noise,spectra.features,out_file)
+        MS::Tcsv_file_writer.write(spectra.spectra,data,noise,spectra.features,out_file)
       end
     end
     #-----------------------------------------------------------------------------
@@ -107,11 +107,11 @@ module MspireSimulator
     puts e.backtrace 
     if digester != nil
       if File.exists?(digester.digested_file)
-	File.delete(digester.digested_file)
+        File.delete(digester.digested_file)
       end
     end
     if spectra != nil
-    spectra.features.each{|fe| fe.delete}
+      spectra.features.each{|fe| fe.delete}
     end
     if !peptides.empty?
       peptides.each{|pep| pep.delete}

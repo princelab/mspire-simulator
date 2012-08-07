@@ -31,6 +31,11 @@ describe MS::Sim_Spectra do
     (485..487).should cover(@spectra.max_mz)
   end
   
+  it "#noiseify Creates and returns the hash that represents the noise of the spectra" do
+    noise = @spectra.noiseify
+    noise.should be_a(Hash)
+  end
+  
   it "#spectra Returns a hash with all data including noise if turned on" do 
     @spectra.spectra.should be_a(Hash)
   end
