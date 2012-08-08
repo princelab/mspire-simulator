@@ -1,4 +1,4 @@
-
+require 'ms/curvefit'
 
 module MS
   class Troll
@@ -48,9 +48,14 @@ module MS
         opt :jagB, "intensity variance parameter", :default => 0.12
         opt :overlapRange, "range in which to determine overlapping peaks", :default => 1.0724699230489427
         opt :email, "Email address to send completion messages to", :default => "nil"
+        opt :mzml, "Mzml file to extract simulation parameters from", :default => "nil"
+        opt :generations, "If an mzml file is provided this specifies the number of generations for the curve fitting algorithm", :default => 30000
         
       end
-
+    
+      if @opts[:mzml] != "nil"
+        @opts = CurveFit.get_parameters(@opts)
+      end
       Trollop::die :sampling_rate, "must be greater than 0" if @opts[:sampling_rate] <= 0
       Trollop::die :run_time, "must be non-negative" if @opts[:run_time] < 0
       Trollop::die "must supply a .fasta protien sequence file" if ARGV.empty?
