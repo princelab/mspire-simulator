@@ -34,6 +34,8 @@ Jeweler::Tasks.new do |gem|
   gem.files.exclude "test.mzml_truth.csv"
   gem.files.exclude "test.mzml_truth.xml"
   gem.files.exclude "testFiles/*"
+  gem.files.include "bin/weka/M5P.model"
+  gem.files.include "bin/weka/M5Rules.model"
 end
 Jeweler::RubygemsDotOrgTasks.new
 
