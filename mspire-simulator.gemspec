@@ -45,6 +45,7 @@ Gem::Specification.new do |s|
     "lib/ms/sim_trollop.rb",
     "lib/ms/tr_file_writer.rb",
     "lib/progress.rb",
+    "mspire-simulator.gemspec",
     "spec/file_writer_spec.rb",
     "spec/merger_spec.rb",
     "spec/ms-simulate_spec.rb",
