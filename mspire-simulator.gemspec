@@ -52,8 +52,7 @@ Gem::Specification.new do |s|
     "spec/peptide_spec.rb",
     "spec/progress_spec.rb",
     "spec/spec_helper.rb",
-    "spec/spectra_spec.rb",
-    "testFiles/contam/hum_keratin.fasta"
+    "spec/spectra_spec.rb"
   ]
   s.homepage = "http://dl.dropbox.com/u/42836826/Ms_Sim_Homepage.html"
   s.licenses = ["MIT"]
