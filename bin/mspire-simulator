@@ -120,8 +120,8 @@ module MspireSimulator
     end
     puts "Exception - Simulation Failed"
     
-    system "ruby lib/sim_mail.rb #{email} Exception - Simulation Failed" if email != "nil"
+    system "sim_mail #{email} Exception - Simulation Failed" if email != "nil"
   else
-    system "ruby lib/sim_mail.rb #{email} Success! - Simulation Complete" if email != "nil"
+    system "sim_mail #{email} Success! - Simulation Complete" if email != "nil"
   end
 end
