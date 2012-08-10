@@ -25,6 +25,15 @@ Jeweler::Tasks.new do |gem|
   gem.add_dependency "trollop", "= 1.16.2"
   
   gem.executables = ["mspire-simulator"]
+  gem.files.exclude "elution_curvefit.svg"
+  gem.files.exclude "intensity_var_curvefit.svg"
+  gem.files.exclude "lib/pool.rb"
+  gem.files.exclude "mz_var_curvefit.svg"
+  gem.files.exclude "single.mzML"
+  gem.files.exclude "test.mzml"
+  gem.files.exclude "test.mzml_truth.csv"
+  gem.files.exclude "test.mzml_truth.xml"
+  gem.files.exclude "testFiles/*"
 end
 Jeweler::RubygemsDotOrgTasks.new
 
