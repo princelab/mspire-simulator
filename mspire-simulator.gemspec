@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = "mspire-simulator"
-  s.version = "0.1.1"
+  s.version = "0.1.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["anoyce"]
@@ -44,6 +44,7 @@ Gem::Specification.new do |s|
     "lib/progress.rb",
     "lib/weka/M5P.model",
     "lib/weka/M5Rules.model",
+    "mspire-simulator.gemspec",
     "spec/file_writer_spec.rb",
     "spec/merger_spec.rb",
     "spec/ms-simulate_spec.rb",
