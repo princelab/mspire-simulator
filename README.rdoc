@@ -3,6 +3,12 @@
 Description:
 	Simulates MS runs given amino acid .fasta files. Outputs a .mzML file.
 
+== Install
+  gem install mspire-simulator
+Dependencies:
+  ruby 1.9*
+  weka 3.6.0
+  fftw 3.2.2 - Tested in Linux Mint 12 and Ubuntu Oneiric Ocelot
 == Examples
  
 == Copyright

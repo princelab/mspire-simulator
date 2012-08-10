@@ -4,7 +4,7 @@ module MS
   class Troll
     def initialize
       @opts = Trollop::options do
-        version "ms-simulate 0.0.1a (c) 2012 Brigham Young University"
+        version "mspire-simulator 0.0.1a (c) 2012 Brigham Young University"
         banner <<-EOS
         
         *********************************************************************
@@ -13,7 +13,7 @@ module MS
          
          
         Usage:
-             ms-simulate [options] <filenames>+
+             mspire-simulator [options] <filenames>+
              
         where [options] are:
         EOS

@@ -27,7 +27,7 @@ module MS
 	
 	#Fit retention times into scan times
 	max_rt = @r_times.max 
-	p_rt = pep.p_rt
+	p_rt = pep.p_rt * 10**-2
 	if p_rt > 1
 	  pep.p_rt = @r_times.max
 	  pep.p_rt_i = @r_times.index(pep.p_rt)
@@ -47,8 +47,8 @@ module MS
 	    head_length = 300.0
 	    tail_length = 701
 	  else
-	    head_length = 75.0
-	    tail_length = 100
+	    head_length = 100.0
+	    tail_length = 300
 	  end
 
 	  a = @r_times.find {|i| i >= (pep.p_rt-head_length)}

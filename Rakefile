@@ -1,27 +1,30 @@
 # encoding: utf-8
 
-require 'rubygems'
-require 'bundler'
-begin
-  Bundler.setup(:default, :development)
-rescue Bundler::BundlerError => e
-  $stderr.puts e.message
-  $stderr.puts "Run `bundle install` to install missing gems"
-  exit e.status_code
-end
-require 'rake'
 
 require 'jeweler'
 Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
-  gem.name = "ms-simulate"
-  gem.homepage = "http://github.com/anoyce/ms-simulate"
+  gem.name = "mspire-simulator"
+  gem.homepage = "http://dl.dropbox.com/u/42836826/Ms_Sim_Homepage.html"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.summary = %Q{Simulates MS1 runs given amino acid FASTA files. Outputs an MZML file.}
+  gem.description = %Q{Simulates MS1 runs given amino acid FASTA files. Outputs an MZML file.
+			Can simulate specific data if given an MZML file containing a single isolated peptide peak.}
   gem.email = "andrewbnoyce@gmail.com"
   gem.authors = ["anoyce"]
-  # dependencies defined in Gemfile
+  
+  gem.add_dependency "mspire", "0.8.2"
+  gem.add_dependency "rubyvis", "= 0.5.2"
+  gem.add_dependency "nokogiri", "= 1.5.2"
+  gem.add_dependency "ffi", "= 1.0.11"
+  gem.add_dependency "ffi-inliner", "= 0.2.4"
+  gem.add_dependency "fftw3", "= 0.3"
+  gem.add_dependency "distribution", "= 0.7.0"
+  gem.add_dependency "pony", "= 1.4"
+  gem.add_dependency "obo", "= 0.1.0"
+  gem.add_dependency "trollop", "= 1.16.2"
+  
+  gem.executables = ["mspire-simulator"]
 end
 Jeweler::RubygemsDotOrgTasks.new
 
@@ -37,13 +40,3 @@ RSpec::Core::RakeTask.new(:rcov) do |spec|
 end
 
 task :default => :spec
-
-require 'rake/rdoctask'
-Rake::RDocTask.new do |rdoc|
-  version = File.exist?('VERSION') ? File.read('VERSION') : ""
-
-  rdoc.rdoc_dir = 'rdoc'
-  rdoc.title = "ms-simulate #{version}"
-  rdoc.rdoc_files.include('README*')
-  rdoc.rdoc_files.include('lib/**/*.rb')
-end
