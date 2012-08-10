@@ -20,6 +20,8 @@ require 'ms/sim_trollop'
 require 'ms/merger'
 
 module MspireSimulator
+p Dir.pwd
+abort
 @opts = MS::Troll.new.get
   begin
 
