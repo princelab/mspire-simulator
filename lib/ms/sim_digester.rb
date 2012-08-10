@@ -9,6 +9,13 @@ module MS
       @digestor = digestor
       @pH = pH
       @digested_file = ".#{Time.now.nsec.to_s}"
+      system("mkdir .m .i")
+      system("mkdir .m/A .m/R .m/N .m/D .m/C .m/E .m/Q .m/G .m/H .m/I .m/L .m/K .m/M .m/F .m/P .m/S .m/T .m/W .m/Y .m/V .m/U .m/O")
+      system("mkdir .i/A .i/R .i/N .i/D .i/C .i/E .i/Q .i/G .i/H .i/I .i/L .i/K .i/M .i/F .i/P .i/S .i/T .i/W .i/Y .i/V .i/U .i/O")
+    end
+    
+    def clean
+      system("rm -r -f .m .i")
     end
     
     def create_digested_file(file)

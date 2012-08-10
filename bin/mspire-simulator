@@ -88,6 +88,7 @@ module MspireSimulator
     #-----------------------Clean UP----------------------------------------------
     spectra.features.each{|fe| fe.delete}
     peptides.clear
+    digester.clean
     #-----------------------------------------------------------------------------
     
     
@@ -109,6 +110,7 @@ module MspireSimulator
       if File.exists?(digester.digested_file)
         File.delete(digester.digested_file)
       end
+      digester.clean
     end
     if spectra != nil
       spectra.features.each{|fe| fe.delete}
