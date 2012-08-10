@@ -24,8 +24,7 @@ Jeweler::Tasks.new do |gem|
   gem.add_dependency "obo", "= 0.1.0"
   gem.add_dependency "trollop", "= 1.16.2"
   
-  gem.executables = ["mspire-simulator"]
-  gem.executables = ["sim_mail"]
+  gem.executables = ["mspire-simulator","sim_mail"]
   gem.files.exclude "elution_curvefit.svg"
   gem.files.exclude "intensity_var_curvefit.svg"
   gem.files.exclude "lib/pool.rb"
