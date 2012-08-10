@@ -13,7 +13,7 @@ module MS
         data<<pep.aa_counts
       end
       arff = make_rt_arff(Time.now.nsec.to_s,data)
-      system("java weka.classifiers.functions.MultilayerPerceptron -T #{arff} -l bin/weka/M5Rules.model -p 24 > #{arff}.out")
+      system("java weka.classifiers.functions.MultilayerPerceptron -T #{arff} -l lib/weka/M5Rules.model -p 24 > #{arff}.out")
       system("rm #{arff}")
       
       #extract what was predicted by weka model
@@ -39,7 +39,7 @@ module MS
         data << array.concat(pep.aa_counts)
       end
       arff = make_int_arff(Time.now.nsec.to_s,data)
-      system("java weka.classifiers.trees.M5P -T #{arff} -l bin/weka/M5P.model -p 27 > #{arff}.out")
+      system("java weka.classifiers.trees.M5P -T #{arff} -l lib/weka/M5P.model -p 27 > #{arff}.out")
       system("rm #{arff}")
       
       #extract what was predicted by weka model
