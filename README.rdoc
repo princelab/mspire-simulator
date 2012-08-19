@@ -1,7 +1,7 @@
-= ms-simulate
+= mspire-simulate
 
 Description:
-	Simulates MS runs given amino acid .fasta files. Outputs a .mzML file.
+	Simulates MS runs given amino acid FASTA files. Outputs a .mzML file.
 
 == Install
   gem install mspire-simulator
