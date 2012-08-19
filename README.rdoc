@@ -1,4 +1,4 @@
-= mspire-simulate
+= mspire-simulator
 
 Description:
 	Simulates MS runs given amino acid FASTA files. Outputs a .mzML file.
