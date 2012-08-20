@@ -5,7 +5,7 @@ require 'jeweler'
 Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
   gem.name = "mspire-simulator"
-  gem.homepage = "http://dl.dropbox.com/u/42836826/Ms_Sim_Homepage.html"
+  gem.homepage = "https://github.com/princelab/mspire-simulator"
   gem.license = "MIT"
   gem.summary = %Q{Simulates MS1 runs given amino acid FASTA files. Outputs an MZML file.}
   gem.description = %Q{Simulates MS1 runs given amino acid FASTA files. Outputs an MZML file.
