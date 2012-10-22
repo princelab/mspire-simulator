@@ -1,6 +1,7 @@
 
 module Progress
   module_function
+  # TODO Ryan: update this to handle a single message instantiation and then updates in the progress... Then it won't have to rewrite the message as often, nor process things as often
   def progress(message, num, time = '')
     # move cursor to beginning of line
     cr = "\r"           

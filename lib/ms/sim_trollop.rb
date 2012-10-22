@@ -50,7 +50,8 @@ module MS
         opt :email, "Email address to send completion messages to", :default => "nil"
         opt :mzml, "Mzml file to extract simulation parameters from", :default => "nil"
         opt :generations, "If an mzml file is provided this specifies the number of generations for the curve fitting algorithm", :default => 30000
-        
+        opt :mass_label, "Specify a mass tag pattern", :default => 0
+
       end
     
       if @opts[:mzml] != "nil"

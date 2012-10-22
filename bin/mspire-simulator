@@ -19,6 +19,8 @@ require 'ms/sim_digester'
 require 'ms/sim_trollop'
 require 'ms/merger'
 
+
+
 module MspireSimulator
 @opts = MS::Troll.new.get
   begin
@@ -40,6 +42,10 @@ module MspireSimulator
     
     module_function
     def opts; @opts end
+
+
+    SampleLoad = 1.0 # Instrument dependent scaling, for an Orbitrap, assumed to be 1 ug 
+    # TODO define an option for sample loading, and a scaling function to define the peak intensities
     
     #------------------------Digest-----------------------------------------------
     peptides = []

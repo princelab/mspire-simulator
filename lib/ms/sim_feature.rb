@@ -85,9 +85,9 @@ module MS
     def getInts(pep)
       p_int = pep.p_int + RThelper.RandomFloat(-5,2)
       if p_int > 10
-	p_int -= 10
+        p_int -= 10
       end
-      predicted_int = (p_int * 10**-1) * 14183000.0
+      predicted_int = (p_int * 10**-1) * 14183000.0 * SampleLoad
       relative_ints = pep.core_ints
       avg = pep.p_rt
       
