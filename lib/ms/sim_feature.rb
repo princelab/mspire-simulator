@@ -83,7 +83,6 @@ module MS
     # by a simple gaussian curve (see 'factor' below). 
     #
     def getInts(pep)
-      
       p_int = pep.p_int + RThelper.RandomFloat(-5,2)
       if p_int > 10
 	p_int -= 10

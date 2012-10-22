@@ -3,7 +3,8 @@ require 'mspire/isotope/distribution'
 
 module MS
   class Peptide
-    def initialize(sequence, charge)
+    def initialize(sequence, charge, abu = 0)
+      @abu = abu
       @p_rt = 0
       @p_int = 0
       @rts = []
@@ -29,8 +30,8 @@ module MS
       @aa_counts<<0.0
     end
     
-    attr_reader :mass, :charge, :mono_mz, :core_mzs, :p_rt, :p_int, :core_ints, :hydro, :pi, :aa_counts, :p_rt_i
-    attr_writer :mass, :charge, :mono_mz, :core_mzs, :p_rt, :p_int, :core_ints, :hydro, :pi, :aa_counts, :p_rt_i
+    attr_reader :mass, :charge, :mono_mz, :core_mzs, :p_rt, :p_int, :core_ints, :hydro, :pi, :aa_counts, :p_rt_i, :abu
+    attr_writer :mass, :charge, :mono_mz, :core_mzs, :p_rt, :p_int, :core_ints, :hydro, :pi, :aa_counts, :p_rt_i, :abu
     
     def to_s
       file = File.open(@mzs_file,"r")
