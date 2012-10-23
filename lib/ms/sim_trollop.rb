@@ -51,6 +51,7 @@ module MS
         opt :mzml, "Mzml file to extract simulation parameters from", :default => "nil"
         opt :generations, "If an mzml file is provided this specifies the number of generations for the curve fitting algorithm", :default => 30000
         opt :mass_label, "Specify a mass tag pattern", :default => 0
+        opt :modifications, "Use a specific modifications file, or read them from a header of the fasta file, perhaps... TBD..."
 
       end
     

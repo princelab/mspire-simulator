@@ -6,3 +6,4 @@ lib/pool.rb
 *.csv
 *.xml
 *.fasta
+*.swp
