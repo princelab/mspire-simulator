@@ -60,7 +60,7 @@ module MS
       end
       Trollop::die :sampling_rate, "must be greater than 0" if @opts[:sampling_rate] <= 0
       Trollop::die :run_time, "must be non-negative" if @opts[:run_time] < 0
-      Trollop::die "must supply a .fasta protien sequence file" if ARGV.empty?
+      Trollop::die "must supply a .fasta protein sequence file" if ARGV.empty?
       Trollop::die :dropout_percentage, "must be between greater than or equal to 0.0 or less than 1.0" if @opts[:dropout_percentage] < 0.0 or @opts[:dropout_percentage] >= 1.0
       @opts[:overlapRange] = (@opts[:overlapRange]*10.0**-6)/2.0
     end
