@@ -6,7 +6,7 @@ class CurveFit
   def self.get_parameters(opts)
     data = Mzml_reader.get_data(opts[:mzml])
     generations = opts[:generations]
-    
+
     @pts_int_var = []
     @pts_mz_var = []
     @pts_elut = []
@@ -22,8 +22,8 @@ class CurveFit
     mean = mzs_in.inject(:+)/mzs_in.size
     opts[:overlapRange] = (mzs_in.sample_variance(mean)*10**6)/4
     #-------------------------------------------------------------------------------
-    
-    
+
+
     #----------------------create points/curve to fit elution-----------------------
     ints_in.each_with_index do |s,i|
       @pts_elut<<[rts_in[i],s]
@@ -46,8 +46,8 @@ class CurveFit
     labels = ["retention time","normalized intensity"]
     a_fit.plot("elution_curvefit.svg",labels)
     #-------------------------------------------------------------------------------
-    
-    
+
+
     #-----------------create points/curve to fit m/z variance-----------------------
     wobs = []
     mean = mzs_in.inject(:+)/mzs_in.size
@@ -77,7 +77,7 @@ class CurveFit
     labels = ["normalized intensity","m/z variance"]
     b_fit.plot("mz_var_curvefit.svg",labels)
     #-------------------------------------------------------------------------------
-    
+
     #--------------------create points/curve to fit intensity variance--------------
     smooth_ave = GenCurvefit.smoothave(ints_in)
 
@@ -114,7 +114,7 @@ class CurveFit
     labels = ["normalized intensity","intensity variance"]
     c_fit.plot("intensity_var_curvefit.svg",labels)
     #-------------------------------------------------------------------------------
-    
+
     return opts
   end
 end

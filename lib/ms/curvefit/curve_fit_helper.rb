@@ -35,10 +35,10 @@ class GenCurvefit
       init_population
     end
   end
-  
+
   attr_reader :function, :paramsize, :mutation_limits, :population, :generations, :popsize
   attr_writer :paramsize, :mutation_limits, :population, :generations, :popsize
-  
+
   def init_population
     @popsize.times do
       set = []
@@ -50,24 +50,24 @@ class GenCurvefit
       @population<<set
     end
   end
-  
+
   def set_fit_function(func)
     @function = func
   end
-  
+
   def mutate(set)
     index = rand(set.size-1)
     limits = @mutation_limits[index]
     set[index] += random_float(limits[0],limits[1])
   end
-  
+
   def self.smoothave(arr)
     smooth_ave = [nil,nil,nil]
     queue = []
     arr.each do |i|
       queue.push(i)
       if queue.size > 7
-	queue.shift
+        queue.shift
       end
       smooth_ave<<queue.inject(:+)/queue.size if queue.size == 7
     end
@@ -76,16 +76,16 @@ class GenCurvefit
     end
     return smooth_ave
   end
-  
+
   def self.normalize(arr)
     max = arr.max
     arr.map!{|i| (i.to_f/max) * 100}
   end
-  
+
   def sort_by_fitness
     @population.sort_by!{|set| set.last}     
   end  
-  
+
   def random_float(a,b)
     a = a.to_f
     b = b.to_f
@@ -94,15 +94,15 @@ class GenCurvefit
     r = random * diff
     return a + r
   end
-  
+
   def rmsd(v,w)
     n = v.size
     sum = 0.0
     n.times{|i| sum += ((v[i][0]-w[i][0])**2.0 + (v[i][1]-w[i][1])**2.0) }
     return Math.sqrt( (1/n.to_f) * sum )
   end
-  
-  
+
+
   def fitness(set,pts_in,plot = false)
     pts = []
     xs = pts_in.transpose[0]
@@ -110,14 +110,14 @@ class GenCurvefit
       fit_pt = function.call(set,x)
       pts<<[x,fit_pt]
     end
-    
+
     if plot
       return pts
     end
-    
+
     return rmsd(pts_in,pts)
   end
-  
+
   def fit
     @start = Time.now
     @generations.times do |i|
@@ -142,11 +142,11 @@ class GenCurvefit
     Progress.progress("Generations Done, printing graph:",100,Time.now-@start)
     return @best
   end
-  
+
   def plot(file,labels = nil)
     pts = fitness(@best,@pts_in,true)
     Fit_plot.plot(@pts_in,pts,file,labels)
     puts "  Output File: #{file}"
   end
-  
+
 end

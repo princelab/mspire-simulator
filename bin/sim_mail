@@ -18,9 +18,9 @@ begin
     :password             => 'chromatography',
     :authentication       => :plain, 
     :domain               => "localhost.localdomain" 
-    }, 
+  }, 
     :subject => 'Mspire-Simulator', :body => msgbody
-  )
+           )
 rescue
   puts "Email function failed. Check email address and internet connection."
 end

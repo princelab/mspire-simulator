@@ -1,6 +1,6 @@
 
 module RThelper
-  
+
   module_function
   def normalized_gaussian(x,mu,sd)
     x = x.to_f
@@ -8,7 +8,7 @@ module RThelper
     sd = sd.to_f
     return ((1/(Math.sqrt(2*(Math::PI)*(sd**2))))*(Math.exp(-(((x-mu)**2)/((2*sd)**2)))))
   end
-  
+
   module_function
   def gaussian(x,mu,sd,h)
     x = x.to_f
@@ -17,7 +17,7 @@ module RThelper
     h = h.to_f
     return h*Math.exp(-(x-mu)**2/(sd**2))
   end
-  
+
   module_function
   def RandomFloat(a,b)
     a = a.to_f

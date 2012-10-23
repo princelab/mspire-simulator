@@ -6,10 +6,10 @@ require 'mspire/mzml'
 class Mzml_Wrapper
 
   def initialize(spectra)
-  #spectra is a Hash rt=>[[mzs],[ints]]
+    #spectra is a Hash rt=>[[mzs],[ints]]
     @start = Time.now
-  
-    
+
+
     count = 0.0
     scan_number = 1
     specs = []
@@ -17,31 +17,31 @@ class Mzml_Wrapper
       Progress.progress("Converting to mzml:",(((count/spectra.size)*100).to_i))
 
       spc = Mspire::Mzml::Spectrum.new("scan=#{scan_number}") do |spec|
-	spec.describe_many!(['MS:1000127', ['MS:1000511', 1]])
-	spec.data_arrays = [
-	  Mspire::Mzml::DataArray.new(data[0]).describe!('MS:1000514'),  
-	  Mspire::Mzml::DataArray.new(data[1]).describe!('MS:1000515')   
-	]
-	spec.scan_list = Mspire::Mzml::ScanList.new do |sl|
-	  scan = Mspire::Mzml::Scan.new do |scan|
-	    scan.describe! 'MS:1000016', rt, 'UO:0000010'
-	  end
-	  sl << scan
-	end
+        spec.describe_many!(['MS:1000127', ['MS:1000511', 1]])
+        spec.data_arrays = [
+          Mspire::Mzml::DataArray.new(data[0]).describe!('MS:1000514'),  
+          Mspire::Mzml::DataArray.new(data[1]).describe!('MS:1000515')   
+        ]
+        spec.scan_list = Mspire::Mzml::ScanList.new do |sl|
+          scan = Mspire::Mzml::Scan.new do |scan|
+            scan.describe! 'MS:1000016', rt, 'UO:0000010'
+          end
+          sl << scan
+        end
       end
       count += 1
       scan_number += 1
       specs<<spc
     end
-  
-    
-  
+
+
+
     @mzml = Mspire::Mzml.new do |mzml|
       mzml.id = 'ms1'
       mzml.cvs = Mspire::Mzml::CV::DEFAULT_CVS
       mzml.file_description = Mspire::Mzml::FileDescription.new  do |fd|
-	fd.file_content = Mspire::Mzml::FileContent.new
-	fd.source_files << Mspire::Mzml::SourceFile.new
+        fd.file_content = Mspire::Mzml::FileContent.new
+        fd.source_files << Mspire::Mzml::SourceFile.new
       end
       default_instrument_config = Mspire::Mzml::InstrumentConfiguration.new("IC").describe!('MS:1000031')
       mzml.instrument_configurations << default_instrument_config
@@ -50,15 +50,15 @@ class Mzml_Wrapper
       default_data_processing = Mspire::Mzml::DataProcessing.new("did_nothing")
       mzml.data_processing_list << default_data_processing
       mzml.run = Mspire::Mzml::Run.new("simulated_run", default_instrument_config) do |run|
-	spectrum_list = Mspire::Mzml::SpectrumList.new(default_data_processing, specs)
-	run.spectrum_list = spectrum_list
+        spectrum_list = Mspire::Mzml::SpectrumList.new(default_data_processing, specs)
+        run.spectrum_list = spectrum_list
       end
     end
     Progress.progress("Converting to mzml:",100,Time.now-@start)
     puts ''
     return @mzml
   end
-  
+
   def to_xml(file)
     return @mzml.to_xml(file)
   end

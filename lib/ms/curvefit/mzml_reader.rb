@@ -14,7 +14,7 @@ class Mzml_reader
       ints = spec.intensities
       mzs = spec.mzs
       rt = spec.retention_time
-        
+
       if ints.empty?;else
         ints.each_with_index do |i,j|
           mzs_out<<mzs[j]

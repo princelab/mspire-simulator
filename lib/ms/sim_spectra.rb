@@ -10,9 +10,9 @@ module MS
       @density = opts[:noise_density]
       @data
       @max_mz
-			sampling_rate = opts[:sampling_rate]
-			run_time = opts[:run_time]
-			drop_percentage = opts[:dropout_percentage]
+      sampling_rate = opts[:sampling_rate]
+      run_time = opts[:run_time]
+      drop_percentage = opts[:dropout_percentage]
       #RTS
       var = 0.1/(sampling_rate*2)
       @@r_times = []
@@ -23,43 +23,43 @@ module MS
         spec_time = spec_time + (1/sampling_rate)
       end
       @@r_times = MS::Noise.spec_drops(drop_percentage)
-      
+
       pre_features = MS::Rtgenerator.generateRT(peptides,one_d)
-      
+
       #Features
       features_o = MS::Sim_Feature.new(pre_features,opts,one_d)
       @features = features_o.features
       @data = features_o.data
       @max_mz = @data.max_by{|key,val| if val != nil;val[0].max;else;0;end}[1][0].max
       @spectra = @data.clone
-      
+
       @noise = nil
-      
+
     end
-    
+
     def noiseify
       @noise = MS::Noise.noiseify(@density,@max_mz)
-      
+
       @@r_times.each do |k|
-	s_v = @data[k]
-	n_v = @noise[k]
-	if s_v != nil
-	  @spectra[k] = [s_v[0]+n_v[0],s_v[1]+n_v[1]]
-	else
-	  @spectra[k] = [n_v[0],n_v[1]]
-	end
+        s_v = @data[k]
+        n_v = @noise[k]
+        if s_v != nil
+          @spectra[k] = [s_v[0]+n_v[0],s_v[1]+n_v[1]]
+        else
+          @spectra[k] = [n_v[0],n_v[1]]
+        end
       end
-      
+
       return @noise
     end
-    
+
     def self.r_times
       @@r_times
     end
-    
+
     attr_reader :data, :max_mz, :spectra, :noise, :features
     attr_writer :data, :max_mz, :spectra, :noise, :features
-    
+
   end
 end
 

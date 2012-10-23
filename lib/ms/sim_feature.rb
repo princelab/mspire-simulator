@@ -16,64 +16,64 @@ module MS
       @one_d = one_d
       @max_time = Sim_Spectra.r_times.max
       @opts = opts
-      
-      
+
+
       #------------------Each_Peptide_=>_Feature----------------------
       peptides.each_with_index do |pep,ind|
-	Progress.progress("Generating features:",(((ind+1)/peptides.size.to_f)*100).to_i)	
-	
-	feature = getInts(pep)
+        Progress.progress("Generating features:",(((ind+1)/peptides.size.to_f)*100).to_i)	
 
-	@features<<feature
+        feature = getInts(pep)
+
+        @features<<feature
       end
       Progress.progress("Generating features:",100,Time.now-@start)
       puts ""
       @start = Time.now
       #---------------------------------------------------------------
-      
-      
-      
+
+
+
       #-----------------Transform_to_spectra_data_for_mzml------------
       # rt => [[mzs],[ints]]
       @features.each_with_index do |fe,k|
-	Progress.progress("Populating structure for mzml:",((k/@features.size.to_f)*100).to_i)
-	
-	fe_ints = fe.ints
-	fe_mzs = fe.mzs
-	
-	fe.rts.each_with_index do |rt,i|
-	  rt_mzs = []
-	  rt_ints = []
-	  
-	  fe.core_mzs.size.times do |j| 
-	    mz,int = [ fe_mzs[j][i], fe_ints[j][i] ]
-	    if int == nil
-	      int = 0.0
-	    end
-	    if int > 0.9
-	      rt_mzs<<mz
-	      rt_ints<<int
-	    end
-	  end
-	  
-	  if rt_mzs.include?(nil) or rt_mzs.empty?; else
-	    if @data.key?(rt)
-	      mzs,ints = @data[rt]
-	      @data[rt][0] = mzs + rt_mzs
-	      @data[rt][1] = ints + rt_ints
-	    else
-	      @data[rt] = [rt_mzs, rt_ints]
-	    end
-	  end
-	end
+        Progress.progress("Populating structure for mzml:",((k/@features.size.to_f)*100).to_i)
+
+        fe_ints = fe.ints
+        fe_mzs = fe.mzs
+
+        fe.rts.each_with_index do |rt,i|
+          rt_mzs = []
+          rt_ints = []
+
+          fe.core_mzs.size.times do |j| 
+            mz,int = [ fe_mzs[j][i], fe_ints[j][i] ]
+            if int == nil
+              int = 0.0
+            end
+            if int > 0.9
+              rt_mzs<<mz
+              rt_ints<<int
+            end
+          end
+
+          if rt_mzs.include?(nil) or rt_mzs.empty?; else
+            if @data.key?(rt)
+              mzs,ints = @data[rt]
+              @data[rt][0] = mzs + rt_mzs
+              @data[rt][1] = ints + rt_ints
+            else
+              @data[rt] = [rt_mzs, rt_ints]
+            end
+          end
+        end
       end
       Progress.progress("Populating structure for mzml:",100,Time.now-@start)
       puts ""
-      
+
       #---------------------------------------------------------------
-      
+
     end
-    
+
     attr_reader :data, :features
     attr_writer :data, :features
     
@@ -97,76 +97,77 @@ module MS
       mu = @opts[:mu].to_f
       
       index = 0
-      
+
       shuff = RThelper.RandomFloat(0.05,1.0)
       pep.core_mzs.each do |mzmu|
 
-	fin_mzs = []
-	fin_ints = []
-	t_index = 1
-	
-	relative_abundances_int = relative_ints[index]
+        fin_mzs = []
+        fin_ints = []
+        t_index = 1
 
-	pep.rts.each_with_index do |rt,i| 
-	  percent_time = rt/@max_time
-	  length_factor = 1.0#-3.96 * percent_time**2 + 3.96 * percent_time + 0.01
-	  length_factor_tail = 1.0#-7.96 * percent_time**2 + 7.96 * percent_time + 0.01
-	  
-	
-	  if !@one_d
-	    #-------------Tailing-------------------------
-	    shape = (tail * length_factor)* t_index + (front * length_factor_tail)
-	    fin_ints << (RThelper.gaussian(t_index,mu,shape,100.0)) 
-	    t_index += 1
-	    #---------------------------------------------
-	    
-	  else
-	    #-----------Random 1d data--------------------
-	    fin_ints<<(relative_abundances_int * ints_factor) * shuff
-	    #---------------------------------------------
-	  end
-	  
-	  if fin_ints[i] < 0.01
-	    fin_ints[i] = RThelper.RandomFloat(0.001,0.4)
-	  end
+        relative_abundances_int = relative_ints[index]
+
+        pep.rts.each_with_index do |rt,i| 
+          percent_time = rt/@max_time
+          length_factor = 1.0#-3.96 * percent_time**2 + 3.96 * percent_time + 0.01
+          length_factor_tail = 1.0#-7.96 * percent_time**2 + 7.96 * percent_time + 0.01
+
+
+          if !@one_d
+            #-------------Tailing-------------------------
+            shape = (tail * length_factor)* t_index + (front * length_factor_tail)
+            fin_ints << (RThelper.gaussian(t_index,mu,shape,100.0)) 
+            t_index += 1
+            #---------------------------------------------
+
+          else
+            #-----------Random 1d data--------------------
+            fin_ints<<(relative_abundances_int * ints_factor) * shuff
+            #---------------------------------------------
+          end
+
+          if fin_ints[i] < 0.01
+            fin_ints[i] = RThelper.RandomFloat(0.001,0.4)
+          end
 
 =begin
-	  if !@one_d
-	    #-------------M/Z Peak shape (Profile?)-------
-	    fraction = RThelper.gaussian(fin_mzs[i],mzmu,0.05,1)
-	    factor = fraction/1.0
-	    fin_ints[i] = fin_ints[i] * factor
-	    #---------------------------------------------
-	  end
+    if !@one_d
+      #-------------M/Z Peak shape (Profile?)-------
+      fraction = RThelper.gaussian(fin_mzs[i],mzmu,0.05,1)
+      factor = fraction/1.0
+      fin_ints[i] = fin_ints[i] * factor
+      #---------------------------------------------
+    end
 =end	  
-	  #-------------Jagged-ness---------------------
-	  sd = (@opts[:jagA] * (1-Math.exp(-(@opts[:jagC]) * fin_ints[i])) + @opts[:jagB])/2
-	  diff = (Distribution::Normal.rng(0,sd).call)
-	  fin_ints[i] = fin_ints[i] + diff
-	  #---------------------------------------------
-	  
-	  
-	  #-------------mz wobble-----------------------
-	  y = fin_ints[i]
-	  if y > 0
-	    wobble_int = @opts[:wobA]*y**(@opts[:wobB])
-	    wobble_mz = Distribution::Normal.rng(mzmu,wobble_int).call
-	    if wobble_mz < 0
-	      wobble_mz = 0.01
-	    end
 
-	    fin_mzs<<wobble_mz
-	  end
-	  #---------------------------------------------
-	  
-  
-	  fin_ints[i] = fin_ints[i]*(predicted_int*(relative_abundances_int*10**-2))
-	end
-	
-	pep.insert_ints(fin_ints)
-	pep.insert_mzs(fin_mzs)
-	
-	index += 1
+          #-------------Jagged-ness---------------------
+          sd = (@opts[:jagA] * (1-Math.exp(-(@opts[:jagC]) * fin_ints[i])) + @opts[:jagB])/2
+          diff = (Distribution::Normal.rng(0,sd).call)
+          fin_ints[i] = fin_ints[i] + diff
+          #---------------------------------------------
+
+
+          #-------------mz wobble-----------------------
+          y = fin_ints[i]
+          if y > 0
+            wobble_int = @opts[:wobA]*y**(@opts[:wobB])
+            wobble_mz = Distribution::Normal.rng(mzmu,wobble_int).call
+            if wobble_mz < 0
+              wobble_mz = 0.01
+            end
+
+            fin_mzs<<wobble_mz
+          end
+          #---------------------------------------------
+
+
+          fin_ints[i] = fin_ints[i]*(predicted_int*(relative_abundances_int*10**-2))
+        end
+
+        pep.insert_ints(fin_ints)
+        pep.insert_mzs(fin_mzs)
+
+        index += 1
       end
       return pep
     end

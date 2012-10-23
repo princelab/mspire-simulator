@@ -8,74 +8,74 @@ require 'ms/rt/rt_helper'
 
 module MS
   module Rtgenerator
-    
+
     module_function
     def generateRT(peptides, one_d)
-      
+
       @start = Time.now
       @r_times = Sim_Spectra.r_times
-      
+
       # Gets retention times from the weka model
       peptides = MS::Weka.predict_rts(peptides)
       MS::Weka.predict_ints(peptides)
-      
-      
+
+
       #-----------------------------------------------------------------
       peptides.each_with_index do |pep,ind|
         Progress.progress("Generating retention times:",(((ind+1)/peptides.size.to_f)*100).to_i)
-	
-	
-	#Fit retention times into scan times
-	max_rt = @r_times.max 
-	p_rt = pep.p_rt * 10**-2
-	if p_rt > 1
-	  pep.p_rt = @r_times.max
-	  pep.p_rt_i = @r_times.index(pep.p_rt)
-	else
-	  pep.p_rt = @r_times.find {|i| i >= (p_rt * max_rt)}
-	  pep.p_rt_i = @r_times.index(pep.p_rt)
-	end
-	
+
+
+        #Fit retention times into scan times
+        max_rt = @r_times.max 
+        p_rt = pep.p_rt * 10**-2
+        if p_rt > 1
+          pep.p_rt = @r_times.max
+          pep.p_rt_i = @r_times.index(pep.p_rt)
+        else
+          pep.p_rt = @r_times.find {|i| i >= (p_rt * max_rt)}
+          pep.p_rt_i = @r_times.index(pep.p_rt)
+        end
+
         if pep.p_rt == nil
           puts "\n\n\t#{pep} TIME-> #{p_rt*max_rt} :: Peptide not predicted in time range: try increasing run time\n\n."
-	else
-	
-	#Give peptide retention times
-	  head_length = nil
-	  tail_length = nil
-	  if one_d
-	    head_length = 300.0
-	    tail_length = 701
-	  else
-	    head_length = 100.0
-	    tail_length = 300
-	  end
+        else
 
-	  a = @r_times.find {|i| i >= (pep.p_rt-head_length)}
-	  b = @r_times.find {|i| i >= (pep.p_rt+tail_length)}
-	  a = @r_times.index(a)
-	  b = @r_times.index(b)
-	  
-	  if a == nil
-	    a = @r_times[0]
-	  end
-	  
-	  if b == nil
-	    b = @r_times[@r_times.length-1]
-	  end
-	  
-	  pep.set_rts(a,b)
+          #Give peptide retention times
+          head_length = nil
+          tail_length = nil
+          if one_d
+            head_length = 300.0
+            tail_length = 701
+          else
+            head_length = 100.0
+            tail_length = 300
+          end
 
-	end
+          a = @r_times.find {|i| i >= (pep.p_rt-head_length)}
+          b = @r_times.find {|i| i >= (pep.p_rt+tail_length)}
+          a = @r_times.index(a)
+          b = @r_times.index(b)
+
+          if a == nil
+            a = @r_times[0]
+          end
+
+          if b == nil
+            b = @r_times[@r_times.length-1]
+          end
+
+          pep.set_rts(a,b)
+
+        end
       end
       #-----------------------------------------------------------------
-      
-  
+
+
       Progress.progress("Generating retention times:",100,Time.now-@start)
       puts ""
-      
+
       return peptides
-      
+
     end    
   end
 end
