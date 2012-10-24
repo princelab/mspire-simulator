@@ -87,7 +87,7 @@ module MS
       if p_int > 10
         p_int -= 10
       end
-      predicted_int = (p_int * 10**-1) * 14183000.0 * SampleLoad
+      predicted_int = (p_int * 10**-1) * 14183000.0 #TODO * SampleLoad
       relative_ints = pep.core_ints
       avg = pep.p_rt
       
