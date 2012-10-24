@@ -1,5 +1,6 @@
 #peptide_spec.rb
-
+$LOAD_PATH << './lib'
+require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 require 'mspire'
 require 'ms/sim_peptide'
 

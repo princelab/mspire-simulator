@@ -1,5 +1,6 @@
 #spectra_spec.rb
-
+$LOAD_PATH << './lib'
+require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 require 'mspire'
 require 'ms/sim_spectra'
 require 'ms/sim_peptide'
@@ -91,8 +92,8 @@ describe MS::Sim_Spectra do
   end
   
   it "Each feature should have a predicted retention time and intensity" do 
-      p_rts = [(2079..2082),(1774..1777),(1400..1402)]
-      p_ints = [2.325,2.927,3.559]
+      p_rts = [(823..826),(769..772),(1485..1490)]
+      p_ints = [2.058,2.095,2.219]
     @spectra.features.each_with_index do |fe,i|
       p_rts[i].should cover(fe.p_rt)
       fe.p_int.should == p_ints[i]
