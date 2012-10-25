@@ -81,12 +81,16 @@ module MS
       i = 0
 
       peptides = []
-
+      
+      prog = Progress.new("Creating peptides '#{file}':",Time.now)
       d_file.each_line do |peptide_seq|
         peptide_seq.chomp!
         peptide_seq.abu = peptide_seq.match(/#.+/).to_s.chomp.gsub('#','').to_f
-          peptide_seq.gsub!(/#.+/,'')
-          Progress.progress("Creating peptides '#{file}':",((i/num_digested.to_f)*100.0).to_i)
+	peptide_seq.gsub!(/#.+/,'')
+	num = ((i/num_digested.to_f)*100.0).to_i
+	if i.even?
+	  prog.update(num)
+	end
 
         charge_ratio = charge_at_pH(identify_potential_charges(peptide_seq), @pH)
         charge_f = charge_ratio.floor
@@ -98,9 +102,10 @@ module MS
         peptides<<peptide_c if charge_c != 0
         i += 1
       end
+      prog.finish!
+      abort
       d_file.close
       File.delete(@digested_file)
-      Progress.progress("Creating peptides '#{file}':",100,Time.now-start)
       puts ''
       return peptides
     end
