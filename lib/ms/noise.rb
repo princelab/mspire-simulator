@@ -7,35 +7,32 @@ module MS
     module_function
     def noiseify(density,max_mz)
       # spectra is {rt => [[mzs],[ints]]}
-      @start = Time.now
       @noise = {}
       r_times = Sim_Spectra.r_times
-
-      count = 0.0
+      count = 0
+      prog = Progress.new("Adding noise:")
+      num = 0
+      total = r_times.size
+      step = total/100.0
       r_times.each do |rt|
-
-        Progress.progress("Adding noise:",(((count/r_times.size)*100).to_i))
-
+	if count > step * (num + 1)
+	  num = (((count/total)*100.0).to_i)
+	  prog.update(num)
+	end
         nmzs = []
         nints = []
-
         density.times do
           rmz = RThelper.RandomFloat(0.0,max_mz)
           rint = RThelper.RandomFloat(50,1000)
-
           nmzs<<rmz
           nints<<rint
         end
         @noise[rt] = [nmzs,nints]
         count += 1
       end
-
-      Progress.progress("Adding noise:",100,Time.now-@start)
-      puts ''
-
+      prog.finish!
       return @noise
     end
-
 
     def spec_drops(drop_percentage)
       r_times = Sim_Spectra.r_times

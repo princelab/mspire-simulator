@@ -15,10 +15,10 @@ class Progress
     $stdout.flush
   end
   def finish!(message_addition = "")
-    time = (Time.now - @time)/1000.0
+    time = Time.now - @time
     message = @message + message_addition
     str = "#{@reset} #{message}" + "100%".rjust(60-message.length)
-    print  str + "Took: #{"%.2f" % time} sec.".rjust(100-str.length)
+    print  str + "Took: #{"%.2f" % time} sec.\n".rjust(100-str.length)
     $stdout.flush
   end
   alias :update :progress

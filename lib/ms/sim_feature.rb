@@ -9,7 +9,6 @@ module MS
   class Sim_Feature 
     def initialize(peptides,opts,one_d)
       
-      @start = Time.now
       @features = []
       @data = {}
       @max_int = 0.0
@@ -19,24 +18,36 @@ module MS
 
 
       #------------------Each_Peptide_=>_Feature----------------------
+      prog = Progress.new("Generating features:")
+      num = 0
+      total = peptides.size
+      step = total/100.0
       peptides.each_with_index do |pep,ind|
-        Progress.progress("Generating features:",(((ind+1)/peptides.size.to_f)*100).to_i)	
+	if ind > step * (num + 1)
+	  num = (((ind+1)/total.to_f)*100).to_i
+	  prog.update(num)
+	end
 
         feature = getInts(pep)
 
         @features<<feature
       end
-      Progress.progress("Generating features:",100,Time.now-@start)
-      puts ""
-      @start = Time.now
+      prog.finish!
       #---------------------------------------------------------------
 
 
 
       #-----------------Transform_to_spectra_data_for_mzml------------
       # rt => [[mzs],[ints]]
+      prog = Progress.new("Populating structure for mzml:")
+      num = 0
+      total = @features.size
+      step = total/100.0
       @features.each_with_index do |fe,k|
-        Progress.progress("Populating structure for mzml:",((k/@features.size.to_f)*100).to_i)
+	if k > step * (num + 1)
+	  num = ((k/total.to_f)*100).to_i
+	  prog.update(num)
+	end
 
         fe_ints = fe.ints
         fe_mzs = fe.mzs
@@ -67,8 +78,7 @@ module MS
           end
         end
       end
-      Progress.progress("Populating structure for mzml:",100,Time.now-@start)
-      puts ""
+      prog.finish!
 
       #---------------------------------------------------------------
 

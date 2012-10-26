@@ -73,8 +73,6 @@ module MS
     end
 
     def digest(file)
-      start = Time.now
-
       num_digested = create_digested_file(file)
 
       d_file = File.open(@digested_file, "r")
@@ -82,13 +80,16 @@ module MS
 
       peptides = []
       
-      prog = Progress.new("Creating peptides '#{file}':",Time.now)
+      prog = Progress.new("Creating peptides '#{file}':")
+      num = 0
+      total = num_digested
+      step = total/100.0
       d_file.each_line do |peptide_seq|
         peptide_seq.chomp!
         peptide_seq.abu = peptide_seq.match(/#.+/).to_s.chomp.gsub('#','').to_f
 	peptide_seq.gsub!(/#.+/,'')
-	num = ((i/num_digested.to_f)*100.0).to_i
-	if i.even?
+	if i > step * (num + 1)
+	  num = ((i/total.to_f)*100.0).to_i
 	  prog.update(num)
 	end
 
@@ -103,10 +104,8 @@ module MS
         i += 1
       end
       prog.finish!
-      abort
       d_file.close
       File.delete(@digested_file)
-      puts ''
       return peptides
     end
   end

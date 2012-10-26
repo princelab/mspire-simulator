@@ -35,12 +35,15 @@ class Merger
   end
 
   def self.merge(spectra,half_range)
-    @start = Time.now
     new_data = {}
     total = spectra.size
     k = 0
+    prog = Progress.new("Merging Overlaps:")
     spectra.each do |rt,val|
-      Progress.progress("Merging Overlaps:",(((k/total)*100).to_i))
+      if k.even?
+	num = (((k/total)*100).to_i)
+	prog.update(num)
+      end
       peaks = val.transpose
       peaks.sort_by!{|a| a[0]}
       peaks = peaks.transpose
@@ -68,8 +71,7 @@ class Merger
       new_data[rt] = [mzs.compact,ints.compact]
       k += 1
     end
-    Progress.progress("Merging Overlaps:",100,Time.now-@start)
-    puts ''
+    prog.finish!
     return new_data
   end
 
@@ -77,8 +79,14 @@ class Merger
     @start = Time.now
     total = spectra.size
     k = 0
+    num = 0
+    prog = Progress.new("Merge Finishing:")
+    step = total/100.0
     spectra.each do |rt,val|
-      Progress.progress("Merge Finishing:",(((k/total)*100).to_i))
+      if k > step * (num + 1)
+	num = (((k/total)*100).to_i)
+	prog.update(num)
+      end
       mzs = val[0]
       ints = val[1]
       mzs.each_with_index do |m,i|
@@ -90,8 +98,7 @@ class Merger
       spectra[rt] = [mzs,ints]
       k += 1
     end
-    Progress.progress("Merge Finishing:",100,Time.now-@start)
-    puts ''
+    prog.finish!
     return spectra
   end
 end

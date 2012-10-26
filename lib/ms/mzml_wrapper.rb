@@ -7,14 +7,19 @@ class Mzml_Wrapper
 
   def initialize(spectra)
     #spectra is a Hash rt=>[[mzs],[ints]]
-    @start = Time.now
-
 
     count = 0.0
     scan_number = 1
     specs = []
+    prog = Progress.new("Converting to mzml:")
+    num = 0
+    total = spectra.size
+    step = total/100
     spectra.each do |rt,data|
-      Progress.progress("Converting to mzml:",(((count/spectra.size)*100).to_i))
+      if count > step * (num + 1)
+	num = (((count/total)*100).to_i)
+	prog.update(num)
+      end
 
       spc = Mspire::Mzml::Spectrum.new("scan=#{scan_number}") do |spec|
         spec.describe_many!(['MS:1000127', ['MS:1000511', 1]])
@@ -54,8 +59,7 @@ class Mzml_Wrapper
         run.spectrum_list = spectrum_list
       end
     end
-    Progress.progress("Converting to mzml:",100,Time.now-@start)
-    puts ''
+    prog.finish!
     return @mzml
   end
 

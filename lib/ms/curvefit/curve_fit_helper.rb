@@ -119,9 +119,15 @@ class GenCurvefit
   end
 
   def fit
-    @start = Time.now
+    prog = Progress.new("Generation")
+    num = 0
+    total = @generations
+    step = total/100
     @generations.times do |i|
-      Progress.progress("Generation #{i+1}:",((i/@generations.to_f)*100).to_i)
+      if i > step * (num + 1)
+	num = ((i/total.to_f)*100).to_i
+	prog.update(num," #{i+1}:")
+      end
       #Generate mutations
       index = rand(@popsize)
       clone = @population[index].clone
@@ -139,7 +145,7 @@ class GenCurvefit
         @best = @population.first
       end
     end 
-    Progress.progress("Generations Done, printing graph:",100,Time.now-@start)
+    prog.finish!
     return @best
   end
 
