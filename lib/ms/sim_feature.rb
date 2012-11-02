@@ -49,7 +49,7 @@ module MS
 	  prog.update(num)
 	end
 
-        fe_ints = fe.ints
+        fe_ints = fe.ints 
         fe_mzs = fe.mzs
 
         fe.rts.each_with_index do |rt,i|
@@ -107,26 +107,25 @@ module MS
       mu = @opts[:mu].to_f
       
       index = 0
+      sx = pep.sx
+      sy = sx**-1
 
       shuff = RThelper.RandomFloat(0.05,1.0)
       pep.core_mzs.each do |mzmu|
 
         fin_mzs = []
         fin_ints = []
-        t_index = 1
-
+        
         relative_abundances_int = relative_ints[index]
+	
+	t_index = 1
 
         pep.rts.each_with_index do |rt,i| 
-          percent_time = rt/@max_time
-          length_factor = 1.0#-3.96 * percent_time**2 + 3.96 * percent_time + 0.01
-          length_factor_tail = 1.0#-7.96 * percent_time**2 + 7.96 * percent_time + 0.01
-
 
           if !@one_d
             #-------------Tailing-------------------------
-            shape = (tail * length_factor)* t_index + (front * length_factor_tail)
-            fin_ints << (RThelper.gaussian(t_index,mu,shape,100.0)) 
+            shape = (tail * (t_index / sx)) + front
+            fin_ints << (RThelper.gaussian((t_index / sx) ,mu ,shape,100.0)) * sy
             t_index += 1
             #---------------------------------------------
 
@@ -137,7 +136,7 @@ module MS
           end
 
           if fin_ints[i] < 0.01
-            fin_ints[i] = RThelper.RandomFloat(0.001,0.4)
+            fin_ints[i] = RThelper.RandomFloat(0.001,0.4) * sy
           end
 
 =begin
@@ -155,7 +154,6 @@ module MS
           diff = (Distribution::Normal.rng(0,sd).call)
           fin_ints[i] = fin_ints[i] + diff
           #---------------------------------------------
-
 
           #-------------mz wobble-----------------------
           y = fin_ints[i]
