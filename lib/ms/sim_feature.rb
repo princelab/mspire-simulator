@@ -108,7 +108,7 @@ module MS
       
       index = 0
       sx = pep.sx
-      sy = sx**-1
+      sy = (sx**-1) * Math.sqrt(pep.abu)
 
       shuff = RThelper.RandomFloat(0.05,1.0)
       pep.core_mzs.each do |mzmu|

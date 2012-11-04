@@ -3,7 +3,7 @@ require 'mspire/isotope/distribution'
 
 module MS
   class Peptide
-    def initialize(sequence, charge, abu = 0)
+    def initialize(sequence, charge, abu = 1.0)
       @abu = abu
       @p_rt = 0
       @p_int = 0

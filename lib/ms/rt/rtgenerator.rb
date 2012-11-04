@@ -35,8 +35,8 @@ module MS
         max_rt = @r_times.max 
         p_rt = pep.p_rt * 10**-2
 	percent_time = p_rt
-	sx = RThelper.gaussian(percent_time,0.5,0.5,1.0) #TODO SAMPLE LOAD
-	pep.sx = sx
+	sx = RThelper.gaussian(percent_time,0.5,0.5,1.0) * Math.sqrt(pep.abu) 
+	pep.sx = sx 
 	
 
         if p_rt > 1

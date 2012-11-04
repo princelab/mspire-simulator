@@ -28,10 +28,16 @@ module MS
       inFile = File.open(file,"r")
       seq = ""
       inFile.each_line do |sequence| 
-        if sequence =~ />/ or sequence == "\n"
-          abundances<<sequence.match(/\#.+/).to_s.chomp.gsub('#','').to_f
-            seq = seq<<";"
-        else
+        if sequence =~ />/
+          num = sequence.match(/\#.+/).to_s.chomp.gsub('#','')
+          if num != ""
+            abundances<<(num.to_f)*10.0**-2
+          else
+            abundances<<1.0
+          end
+          sequence
+          seq = seq<<";"
+        elsif sequence == "/n"; else
           seq = seq<<sequence.chomp
         end
       end
@@ -87,11 +93,11 @@ module MS
       d_file.each_line do |peptide_seq|
         peptide_seq.chomp!
         peptide_seq.abu = peptide_seq.match(/#.+/).to_s.chomp.gsub('#','').to_f
-	peptide_seq.gsub!(/#.+/,'')
-	if i > step * (num + 1)
-	  num = ((i/total.to_f)*100.0).to_i
-	  prog.update(num)
-	end
+        peptide_seq.gsub!(/#.+/,'')
+        if i > step * (num + 1)
+          num = ((i/total.to_f)*100.0).to_i
+          prog.update(num)
+        end
 
         charge_ratio = charge_at_pH(identify_potential_charges(peptide_seq), @pH)
         charge_f = charge_ratio.floor
