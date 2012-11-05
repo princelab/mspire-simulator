@@ -97,7 +97,7 @@ module MS
       if p_int > 10
         p_int -= 10
       end
-      predicted_int = (p_int * 10**-1) * 14183000.0 #TODO * SampleLoad
+      predicted_int = (p_int * 10**-1) * 14183000.0 
       relative_ints = pep.core_ints
       avg = pep.p_rt
       
@@ -125,7 +125,7 @@ module MS
           if !@one_d
             #-------------Tailing-------------------------
             shape = (tail * (t_index / sx)) + front
-            fin_ints << (RThelper.gaussian((t_index / sx) ,mu ,shape,100.0)) * sy
+            fin_ints << (RThelper.gaussian((t_index / sx) ,mu ,shape,100.0))
             t_index += 1
             #---------------------------------------------
 
@@ -136,7 +136,7 @@ module MS
           end
 
           if fin_ints[i] < 0.01
-            fin_ints[i] = RThelper.RandomFloat(0.001,0.4) * sy
+            fin_ints[i] = RThelper.RandomFloat(0.001,0.4)
           end
 
 =begin
@@ -149,14 +149,17 @@ module MS
     end
 =end	  
 
-          #-------------Jagged-ness---------------------
-          sd = (@opts[:jagA] * (1-Math.exp(-(@opts[:jagC]) * fin_ints[i])) + @opts[:jagB])/2
-          diff = (Distribution::Normal.rng(0,sd).call)
-          fin_ints[i] = fin_ints[i] + diff
-          #---------------------------------------------
+	  if fin_ints[i] > 0.4
+	    #-------------Jagged-ness---------------------
+	    sd = (@opts[:jagA] * (1-Math.exp(-(@opts[:jagC]) * fin_ints[i])) + @opts[:jagB])/2
+	    diff = (Distribution::Normal.rng(0,sd).call)
+	    fin_ints[i] = fin_ints[i] + diff
+	    #---------------------------------------------
+	  end
 
           #-------------mz wobble-----------------------
           y = fin_ints[i]
+	  wobble_mz = nil
           if y > 0
             wobble_int = @opts[:wobA]*y**(@opts[:wobB])
             wobble_mz = Distribution::Normal.rng(mzmu,wobble_int).call
@@ -169,7 +172,7 @@ module MS
           #---------------------------------------------
 
 
-          fin_ints[i] = fin_ints[i]*(predicted_int*(relative_abundances_int*10**-2))
+          fin_ints[i] = fin_ints[i]*(predicted_int*(relative_abundances_int*10**-2)) * sy
         end
 
         pep.insert_ints(fin_ints)

@@ -24,6 +24,11 @@ module MS
       num = 0
       total = peptides.size
       step = total/100.0
+      
+      max_rt = 4*(@r_times.max/5)
+      r_end = max_rt + (@r_times.max/5)/2
+      r_start = @r_times.max/5
+      
       peptides.each_with_index do |pep,ind|
 	if ind > step * (num + 1)
 	  num = (((ind+1)/total.to_f)*100).to_i
@@ -32,7 +37,6 @@ module MS
 
 
         #Fit retention times into scan times
-        max_rt = @r_times.max 
         p_rt = pep.p_rt * 10**-2
 	percent_time = p_rt
 	sx = RThelper.gaussian(percent_time,0.5,0.5,1.0) * Math.sqrt(pep.abu) 
@@ -40,7 +44,7 @@ module MS
 	
 
         if p_rt > 1
-          pep.p_rt = @r_times.max
+          pep.p_rt = @r_times.find {|i| i >= r_end}
           pep.p_rt_i = @r_times.index(pep.p_rt)
         else
           pep.p_rt = @r_times.find {|i| i >= (p_rt * max_rt)}
