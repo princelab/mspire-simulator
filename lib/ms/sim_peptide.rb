@@ -12,7 +12,7 @@ module MS
 
       spec = calcSpectrum(sequence, @charge)
 
-      # TODO Ryan: alter this to handle variable and static mass modifications
+      # TODO Ryan: alter this to handle variable and static mass modifications... Add it from the Katamari code
 
       @core_ints = spec.intensities.clone
       @core_mzs = spec.mzs.clone
