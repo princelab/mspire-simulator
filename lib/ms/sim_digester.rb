@@ -28,10 +28,16 @@ module MS
       inFile = File.open(file,"r")
       seq = ""
       inFile.each_line do |sequence| 
-        if sequence =~ />/ or sequence == "\n"
-          abundances<<sequence.match(/\#.+/).to_s.chomp.gsub('#','').to_f
-            seq = seq<<";"
-        else
+        if sequence =~ />/
+          num = sequence.match(/\#.+/).to_s.chomp.gsub('#','')
+          if num != ""
+            abundances<<(num.to_f)*10.0**-2
+          else
+            abundances<<1.0
+          end
+          sequence
+          seq = seq<<";"
+        elsif sequence == "/n"; else
           seq = seq<<sequence.chomp
         end
       end
@@ -73,20 +79,25 @@ module MS
     end
 
     def digest(file)
-      start = Time.now
-
       num_digested = create_digested_file(file)
 
       d_file = File.open(@digested_file, "r")
       i = 0
 
       peptides = []
-
+      
+      prog = Progress.new("Creating peptides '#{file}':")
+      num = 0
+      total = num_digested
+      step = total/100.0
       d_file.each_line do |peptide_seq|
         peptide_seq.chomp!
         peptide_seq.abu = peptide_seq.match(/#.+/).to_s.chomp.gsub('#','').to_f
-          peptide_seq.gsub!(/#.+/,'')
-          Progress.progress("Creating peptides '#{file}':",((i/num_digested.to_f)*100.0).to_i)
+        peptide_seq.gsub!(/#.+/,'')
+        if i > step * (num + 1)
+          num = ((i/total.to_f)*100.0).to_i
+          prog.update(num)
+        end
 
         charge_ratio = charge_at_pH(identify_potential_charges(peptide_seq), @pH)
         charge_f = charge_ratio.floor
@@ -98,10 +109,9 @@ module MS
         peptides<<peptide_c if charge_c != 0
         i += 1
       end
+      prog.finish!
       d_file.close
       File.delete(@digested_file)
-      Progress.progress("Creating peptides '#{file}':",100,Time.now-start)
-      puts ''
       return peptides
     end
   end

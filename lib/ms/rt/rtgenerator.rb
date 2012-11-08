@@ -12,7 +12,6 @@ module MS
     module_function
     def generateRT(peptides, one_d)
 
-      @start = Time.now
       @r_times = Sim_Spectra.r_times
 
       # Gets retention times from the weka model
@@ -21,15 +20,31 @@ module MS
 
 
       #-----------------------------------------------------------------
+      prog = Progress.new("Generating retention times:")
+      num = 0
+      total = peptides.size
+      step = total/100.0
+      
+      max_rt = 4*(@r_times.max/5)
+      r_end = max_rt + (@r_times.max/5)/2
+      r_start = @r_times.max/5
+      
       peptides.each_with_index do |pep,ind|
-        Progress.progress("Generating retention times:",(((ind+1)/peptides.size.to_f)*100).to_i)
+	if ind > step * (num + 1)
+	  num = (((ind+1)/total.to_f)*100).to_i
+	  prog.update(num)
+	end
 
 
         #Fit retention times into scan times
-        max_rt = @r_times.max 
         p_rt = pep.p_rt * 10**-2
+	percent_time = p_rt
+	sx = RThelper.gaussian(percent_time,0.5,0.5,1.0) * Math.sqrt(pep.abu) 
+	pep.sx = sx 
+	
+
         if p_rt > 1
-          pep.p_rt = @r_times.max
+          pep.p_rt = @r_times.find {|i| i >= r_end}
           pep.p_rt_i = @r_times.index(pep.p_rt)
         else
           pep.p_rt = @r_times.find {|i| i >= (p_rt * max_rt)}
@@ -47,8 +62,8 @@ module MS
             head_length = 300.0
             tail_length = 701
           else
-            head_length = 100.0
-            tail_length = 300
+            head_length = 100.0 * sx
+            tail_length = 300 * sx
           end
 
           a = @r_times.find {|i| i >= (pep.p_rt-head_length)}
@@ -69,10 +84,7 @@ module MS
         end
       end
       #-----------------------------------------------------------------
-
-
-      Progress.progress("Generating retention times:",100,Time.now-@start)
-      puts ""
+      prog.finish!
 
       return peptides
 

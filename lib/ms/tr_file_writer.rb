@@ -6,7 +6,6 @@ module MS
   class Txml_file_writer
     def self.write(features,spectra,file_name)
       @spectra = spectra
-      @start = Time.now
       file = File.open("#{file_name}_truth.xml","w")
 
       r_times = spectra.keys.sort
@@ -14,13 +13,19 @@ module MS
       file.puts "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
       file.puts "<simulated_peptides>"
       total = features.size.to_f
+      prog = Progress.new("Writing xml:")
+      num = 0
+      step = total/100.0
       features.each_with_index do |fe,k|
         sequence = fe.sequence
         charge = fe.charge
         mzs = fe.mzs
         ints = fe.ints
         rts = fe.rts
-        Progress.progress("Writing xml:",(((k/total)*100).to_i))
+	if k > step * (num + 1)
+	  num = (((k/total)*100).to_i)
+	  prog.update(num)
+	end
         file.puts "\t<simulated_peptide sequence=\"#{sequence}\" charge=\"#{charge.round}\">"
         mzs.each_with_index do |mzs,i|
           tags = ""
@@ -43,8 +48,7 @@ module MS
       file.puts "</simulated_peptides>"
       file.close
 
-      Progress.progress("Writing xml:",100,Time.now-@start)
-      puts ''
+      prog.finish!
     end
 
     def self.get_ind(mz,rt)
@@ -68,7 +72,6 @@ module MS
 
   class Tcsv_file_writer
     def self.write(full_spectra,spectra,noise,features,file_name)
-      @start = Time.now
       @spectra = full_spectra
 
       #create indices for real peaks
@@ -85,8 +88,14 @@ module MS
       file.puts "rt,mz,int,index"
       total = data.size.to_f
       count = 0
+      prog = Progress.new("Writing csv(process 2 of 2):")
+      num = 0
+      step = total/100
       data.each_value do |val|
-        Progress.progress("Writing csv(process 2 of 2):",(((count/total)*100).to_i))
+	if count > step * (num + 1)
+	  num = (((count/total)*100).to_i)
+	  prog.update(num)
+	end
         val.each do |a|
           if a[3] >= 1
             file.puts "#{a[0]},#{a[1]},#{a[2]},#{a[3]}"
@@ -97,9 +106,7 @@ module MS
         count += 1
       end
       file.close
-
-      Progress.progress("Writing csv:",100,Time.now-@start)
-      puts ''
+      prog.finish!
     end
 
     def self.get_merged_mz(mz,rt)
@@ -138,8 +145,14 @@ module MS
       time_i = 0.0
       data = []
       total = spectra.length
+      prog = Progress.new("Writing csv(process 1 of 2):")
+      num = 0
+      step = total/100
       spectra.each do |k,v|
-        Progress.progress("Writing csv(process 1 of 2):",(((time_i/total)*100).to_i))
+	if time_i > step * (num + 1)
+	  num = (((time_i/total)*100).to_i)
+	  prog.update(num)
+	end
 
         merged_d = full_spectra[k]
         merged_mzs = merged_d[0]

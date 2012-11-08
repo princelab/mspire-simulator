@@ -9,7 +9,6 @@ module MS
   class Sim_Feature 
     def initialize(peptides,opts,one_d)
       
-      @start = Time.now
       @features = []
       @data = {}
       @max_int = 0.0
@@ -19,26 +18,38 @@ module MS
 
 
       #------------------Each_Peptide_=>_Feature----------------------
+      prog = Progress.new("Generating features:")
+      num = 0
+      total = peptides.size
+      step = total/100.0
       peptides.each_with_index do |pep,ind|
-        Progress.progress("Generating features:",(((ind+1)/peptides.size.to_f)*100).to_i)	
+	if ind > step * (num + 1)
+	  num = (((ind+1)/total.to_f)*100).to_i
+	  prog.update(num)
+	end
 
         feature = getInts(pep)
 
         @features<<feature
       end
-      Progress.progress("Generating features:",100,Time.now-@start)
-      puts ""
-      @start = Time.now
+      prog.finish!
       #---------------------------------------------------------------
 
 
 
       #-----------------Transform_to_spectra_data_for_mzml------------
       # rt => [[mzs],[ints]]
+      prog = Progress.new("Populating structure for mzml:")
+      num = 0
+      total = @features.size
+      step = total/100.0
       @features.each_with_index do |fe,k|
-        Progress.progress("Populating structure for mzml:",((k/@features.size.to_f)*100).to_i)
+	if k > step * (num + 1)
+	  num = ((k/total.to_f)*100).to_i
+	  prog.update(num)
+	end
 
-        fe_ints = fe.ints
+        fe_ints = fe.ints 
         fe_mzs = fe.mzs
 
         fe.rts.each_with_index do |rt,i|
@@ -67,8 +78,7 @@ module MS
           end
         end
       end
-      Progress.progress("Populating structure for mzml:",100,Time.now-@start)
-      puts ""
+      prog.finish!
 
       #---------------------------------------------------------------
 
@@ -87,7 +97,7 @@ module MS
       if p_int > 10
         p_int -= 10
       end
-      predicted_int = (p_int * 10**-1) * 14183000.0 #TODO * SampleLoad
+      predicted_int = (p_int * 10**-1) * 14183000.0 
       relative_ints = pep.core_ints
       avg = pep.p_rt
       
@@ -97,26 +107,25 @@ module MS
       mu = @opts[:mu].to_f
       
       index = 0
+      sx = pep.sx
+      sy = (sx**-1) * Math.sqrt(pep.abu)
 
       shuff = RThelper.RandomFloat(0.05,1.0)
       pep.core_mzs.each do |mzmu|
 
         fin_mzs = []
         fin_ints = []
-        t_index = 1
-
+        
         relative_abundances_int = relative_ints[index]
+	
+	t_index = 1
 
         pep.rts.each_with_index do |rt,i| 
-          percent_time = rt/@max_time
-          length_factor = 1.0#-3.96 * percent_time**2 + 3.96 * percent_time + 0.01
-          length_factor_tail = 1.0#-7.96 * percent_time**2 + 7.96 * percent_time + 0.01
-
 
           if !@one_d
             #-------------Tailing-------------------------
-            shape = (tail * length_factor)* t_index + (front * length_factor_tail)
-            fin_ints << (RThelper.gaussian(t_index,mu,shape,100.0)) 
+            shape = (tail * (t_index / sx)) + front
+            fin_ints << (RThelper.gaussian((t_index / sx) ,mu ,shape,100.0))
             t_index += 1
             #---------------------------------------------
 
@@ -140,15 +149,17 @@ module MS
     end
 =end	  
 
-          #-------------Jagged-ness---------------------
-          sd = (@opts[:jagA] * (1-Math.exp(-(@opts[:jagC]) * fin_ints[i])) + @opts[:jagB])/2
-          diff = (Distribution::Normal.rng(0,sd).call)
-          fin_ints[i] = fin_ints[i] + diff
-          #---------------------------------------------
-
+	  if fin_ints[i] > 0.4
+	    #-------------Jagged-ness---------------------
+	    sd = (@opts[:jagA] * (1-Math.exp(-(@opts[:jagC]) * fin_ints[i])) + @opts[:jagB])/2
+	    diff = (Distribution::Normal.rng(0,sd).call)
+	    fin_ints[i] = fin_ints[i] + diff
+	    #---------------------------------------------
+	  end
 
           #-------------mz wobble-----------------------
           y = fin_ints[i]
+	  wobble_mz = nil
           if y > 0
             wobble_int = @opts[:wobA]*y**(@opts[:wobB])
             wobble_mz = Distribution::Normal.rng(mzmu,wobble_int).call
@@ -161,7 +172,7 @@ module MS
           #---------------------------------------------
 
 
-          fin_ints[i] = fin_ints[i]*(predicted_int*(relative_abundances_int*10**-2))
+          fin_ints[i] = fin_ints[i]*(predicted_int*(relative_abundances_int*10**-2)) * sy
         end
 
         pep.insert_ints(fin_ints)
