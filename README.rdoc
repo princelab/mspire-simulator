@@ -28,7 +28,14 @@ Alternatively all parameters can be specified on the command line:
 To see all the available options:
   
     $ mspire-simulator --help
+    
+== TODO
+Because of the many options and parameters to specify we will be moving
+to a .init file format with a .init file editor.
+
+Other improvments to mspire simulator are also pending.
 == Copyright
 
 See LICENSE.txt for further details.
+
 
