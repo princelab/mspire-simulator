@@ -102,16 +102,16 @@ module MS
 	      #add ms2 spec
 	      ms2_mzs = MS::Fragmenter.new.fragment(fe.sequence)
 	      p ms2_mzs if ms2_mzs == nil
-	      ms2_ints = Array.new(ms2_mzs.size,1000.0)
+	      ms2_ints = Array.new(ms2_mzs.size,RThelper.RandomFloat(100,1000))
 	      spec = [ms2_mzs, ms2_ints]
 	      spec.ms_level = 2
 	      spec.pre_mz = pre_mz
 	      spec.pre_int = ms2_int
 	      spec.pre_charge = pre_charge
 	      @data[rt + RThelper.RandomFloat(0.1,@opts[:sampling_rate])] = spec
-	      ms2 = false
 	    end
           end
+	  ms2 = false
         end
       end
       prog.finish!

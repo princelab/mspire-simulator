@@ -39,6 +39,7 @@ class Mzml_Wrapper
 	  end
 	end
       else
+      puts "#{data[0].size}\t#{data[1].size}" if data[0].size != data[1].size
 	spc = Mspire::Mzml::Spectrum.new("scan=#{scan_number}") do |spec|
 	  spec.describe_many!(['MS:1000127', ['MS:1000511', 2]]) 
 	  spec.data_arrays = [
@@ -72,7 +73,7 @@ class Mzml_Wrapper
 
 
     @mzml = Mspire::Mzml.new do |mzml|
-      mzml.id = 'ms1'
+      mzml.id = 'ms1_and_ms2'
       mzml.cvs = Mspire::Mzml::CV::DEFAULT_CVS
       mzml.file_description = Mspire::Mzml::FileDescription.new  do |fd|
         fd.file_content = Mspire::Mzml::FileContent.new
