@@ -30,7 +30,7 @@ module MS
       features_o = MS::Sim_Feature.new(pre_features,opts,one_d)
       @features = features_o.features
       @data = features_o.data
-      @max_mz = @data.max_by{|key,val| if val != nil;val[0].max;else;0;end}[1][0].max
+      @max_mz = features_o.max_mz
       @spectra = @data.clone
 
       @noise = nil

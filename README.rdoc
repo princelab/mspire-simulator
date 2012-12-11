@@ -10,8 +10,32 @@ Dependencies:
   weka 3.6.0 - May need to add to CLASSPATH see: http://weka.wikispaces.com/CLASSPATH+problems
   fftw 3.2.2 - Tested in Linux Mint 12 and Ubuntu Oneiric Ocelot
 == Examples
- 
+The simplest way to run mspire-simulator is to give it a MZML file 
+with a single centroided elution profile from which, the simulator 
+can extract needed parameters including:
+- Elution parameters: front, tail, and mu
+- Overlap range (for merging signals)
+- Sampling rate
+- m/z wobble parameters: wobA, wobB
+- Intensity variance parameters: jagA, jagB, jagC
+  
+    $ mspire-simulator input.mzml [options]
+    
+Alternatively all parameters can be specified on the command line:
+  
+    $ mspire-simulator -r 3000 -s 1.0 -n false ...
+    
+To see all the available options:
+  
+    $ mspire-simulator --help
+    
+== TODO
+Because of the many options and parameters to specify we will be moving
+to a .init file format with a .init file editor.
+
+Other improvments to mspire simulator are also pending.
 == Copyright
 
 See LICENSE.txt for further details.
+
 

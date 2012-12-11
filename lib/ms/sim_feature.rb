@@ -1,9 +1,14 @@
-
 require 'time'
 require 'distribution'
+require 'fragmenter'
 require 'ms/sim_peptide'
 require 'ms/rt/rt_helper'
 require 'ms/tr_file_writer'
+
+class Array
+  attr_reader :ms2, :ms_level, :pre_mz, :pre_int, :pre_charge
+  attr_writer :ms2, :ms_level, :pre_mz, :pre_int, :pre_charge
+end
 
 module MS
   class Sim_Feature 
@@ -15,6 +20,7 @@ module MS
       @one_d = one_d
       @max_time = Sim_Spectra.r_times.max
       @opts = opts
+      @max_mz = -1
 
 
       #------------------Each_Peptide_=>_Feature----------------------
@@ -39,10 +45,11 @@ module MS
 
       #-----------------Transform_to_spectra_data_for_mzml------------
       # rt => [[mzs],[ints]]
-      prog = Progress.new("Populating structure for mzml:")
+      prog = Progress.new("Generating MS2 & Populating structure for mzml:")
       num = 0
       total = @features.size
       step = total/100.0
+      ms2_count = 0
       @features.each_with_index do |fe,k|
 	if k > step * (num + 1)
 	  num = ((k/total.to_f)*100).to_i
@@ -51,6 +58,11 @@ module MS
 
         fe_ints = fe.ints 
         fe_mzs = fe.mzs
+	
+	ms2_int = fe.ints.flatten.max
+	ms2 = false
+	pre_mz = nil
+	pre_charge = nil
 
         fe.rts.each_with_index do |rt,i|
           rt_mzs = []
@@ -58,34 +70,68 @@ module MS
 
           fe.core_mzs.size.times do |j| 
             mz,int = [ fe_mzs[j][i], fe_ints[j][i] ]
+	    if @max_mz < mz
+	      @max_mz = mz
+	    end
             if int == nil
               int = 0.0
             end
             if int > 0.9
               rt_mzs<<mz
               rt_ints<<int
+	      if int == ms2_int
+		ms2 = true
+		pre_mz = mz
+		pre_charge = fe.charge
+	      end
             end
           end
-
+	  
+	  spec = nil
           if rt_mzs.include?(nil) or rt_mzs.empty?; else
             if @data.key?(rt)
-              mzs,ints = @data[rt]
-              @data[rt][0] = mzs + rt_mzs
-              @data[rt][1] = ints + rt_ints
+	      ms1 = @data[rt]
+              mzs = ms1[0]
+	      ints = ms1[1]
+	      spec = [mzs + rt_mzs, ints + rt_ints]
+	      spec.ms_level = ms1.ms_level
+	      spec.ms2 = ms1.ms2
             else
-              @data[rt] = [rt_mzs, rt_ints]
+	      spec = [rt_mzs, rt_ints]
             end
+	    if false #ms2
+	      #add ms2 spec
+	      spec.ms_level = 2
+	      ms2_mzs = MS::Fragmenter.new.fragment(fe.sequence)
+	      ms2_ints = Array.new(ms2_mzs.size,500.to_f)
+	      spec2 = [(rt + RThelper.RandomFloat(0.1,@opts[:sampling_rate])), ms2_mzs, ms2_ints]
+	      spec2.ms_level = 2
+	      spec2.pre_mz = pre_mz
+	      spec2.pre_int = ms2_int
+	      spec2.pre_charge = pre_charge
+	      if spec.ms2 != nil
+		ms2_arr = spec.ms2
+		ms2_arr<<spec2
+		spec.ms2 = ms2_arr
+	      else
+		spec.ms2 = [spec2]
+	      end
+	      ms2_count += 1
+	    end
+	    @data[rt] = spec
           end
+	  ms2 = false
         end
       end
       prog.finish!
+      puts "MS2s = #{ms2_count}"
 
       #---------------------------------------------------------------
 
     end
 
-    attr_reader :data, :features
-    attr_writer :data, :features
+    attr_reader :data, :features, :max_mz
+    attr_writer :data, :features, :max_mz
     
     # Intensities are shaped in the rt direction by a gaussian with 
     # a dynamic standard deviation.

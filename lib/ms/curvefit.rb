@@ -1,6 +1,9 @@
-
+require 'progress'
 require 'ms/curvefit/mzml_reader'
 require 'ms/curvefit/curve_fit_helper'
+
+@@avg_mz = 0
+@@avg_rt = 0
 
 class CurveFit
   def self.get_parameters(opts)
@@ -16,6 +19,9 @@ class CurveFit
     mzs_in = data[0]
     rts_in = data[1]
     ints_in = data[2]
+    
+    @@avg_mz = mzs_in.inject(:+)/mzs_in.size.to_f
+    @@avg_rt = rts_in.inject(:+)/rts_in.size.to_f
 
     ints_in = GenCurvefit.normalize(ints_in)
     #-----------------------overlapRange--------------------------------------------
@@ -118,3 +124,14 @@ class CurveFit
     return opts
   end
 end
+=begin
+out_file = File.open("mzvar_params.txt","w")
+out_file.puts "wobA\twobB\tavg_mz\tavg_rt"
+ARGV.each do |file|
+p file
+  opts = {:mzml => file, :generations => 30000}
+  opts = CurveFit.get_parameters(opts)
+  out_file.puts "#{opts[:wobA]}\t#{opts[:wobB]}\t#{@@avg_mz}\t#{@@avg_rt}"
+end
+out_file.close
+=end

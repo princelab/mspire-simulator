@@ -45,7 +45,7 @@ class Merger
 	prog.update(num)
       end
       peaks = val.transpose
-      peaks.sort_by!{|a| a[0]}
+      peaks.sort_by!{|a| a[0]} #mz
       peaks = peaks.transpose
       mzs = peaks[0]
       ints = peaks[1]
@@ -68,7 +68,10 @@ class Merger
           ints[i] = nil; ints[i+1] = meta_int
         end
       end
-      new_data[rt] = [mzs.compact,ints.compact]
+      spec = [mzs.compact,ints.compact]
+      spec.ms_level = val.ms_level
+      spec.ms2 = val.ms2
+      new_data[rt] = spec
       k += 1
     end
     prog.finish!
@@ -95,7 +98,10 @@ class Merger
           ints[i] = ints[i].flatten.inject(:+)
         end
       end
-      spectra[rt] = [mzs,ints]
+      spec = [mzs,ints]
+      spec.ms_level = val.ms_level
+      spec.ms2 = val.ms2
+      spectra[rt] = spec
       k += 1
     end
     prog.finish!

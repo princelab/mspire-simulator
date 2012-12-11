@@ -7,7 +7,7 @@ class Mzml_Wrapper
 
   def initialize(spectra)
     #spectra is a Hash rt=>[[mzs],[ints]]
-
+    ms2_count = 0
     count = 0.0
     scan_number = 1
     specs = []
@@ -15,34 +15,69 @@ class Mzml_Wrapper
     num = 0
     total = spectra.size
     step = total/100
+    spec_id = nil
     spectra.each do |rt,data|
       if count > step * (num + 1)
 	num = (((count/total)*100).to_i)
 	prog.update(num)
       end
-
+      
+      ms_level = data.ms_level # method added to array class
+      
       spc = Mspire::Mzml::Spectrum.new("scan=#{scan_number}") do |spec|
-        spec.describe_many!(['MS:1000127', ['MS:1000511', 1]])
-        spec.data_arrays = [
-          Mspire::Mzml::DataArray.new(data[0]).describe!('MS:1000514'),  
-          Mspire::Mzml::DataArray.new(data[1]).describe!('MS:1000515')   
-        ]
-        spec.scan_list = Mspire::Mzml::ScanList.new do |sl|
-          scan = Mspire::Mzml::Scan.new do |scan|
-            scan.describe! 'MS:1000016', rt, 'UO:0000010'
-          end
-          sl << scan
-        end
+	spec.describe_many!(['MS:1000127', ['MS:1000511', 1]]) 
+	spec.data_arrays = [
+	  Mspire::Mzml::DataArray.new(data[0]).describe!('MS:1000514'),  
+	  Mspire::Mzml::DataArray.new(data[1]).describe!('MS:1000515')   
+	]
+	spec.scan_list = Mspire::Mzml::ScanList.new do |sl|
+	  scan = Mspire::Mzml::Scan.new do |scan|
+	    scan.describe! 'MS:1000016', rt, 'UO:0000010'
+	  end
+	  sl << scan
+	end
+      end
+      specs<<spc
+      if ms_level == 2
+	#[rt,[mzs],[ints]]
+	ms2 = data.ms2
+	ms2.each do |data|
+	  ms2_count += 1
+	  scan_number += 1
+	  spc2 = Mspire::Mzml::Spectrum.new("scan=#{scan_number}") do |spec|
+	    spec.describe_many!(['MS:1000127', ['MS:1000511', 2]]) 
+	    spec.data_arrays = [
+	      Mspire::Mzml::DataArray.new(data[1]).describe!('MS:1000514'),  
+	      Mspire::Mzml::DataArray.new(data[2]).describe!('MS:1000515')   
+	    ]
+	    spec.scan_list = Mspire::Mzml::ScanList.new do |sl|
+	      scan = Mspire::Mzml::Scan.new do |scan|
+		scan.describe! 'MS:1000016', data[0], 'UO:0000010'
+	      end
+	      sl << scan
+	    end
+	    precursor = Mspire::Mzml::Precursor.new( spc.id )
+	    si = Mspire::Mzml::SelectedIon.new
+	    # the selected ion m/z:
+	    si.describe! "MS:1000744", data.pre_mz
+	    # the selected ion charge state
+	    si.describe! "MS:1000041", data.pre_charge
+	    # the selected ion intensity
+	    si.describe! "MS:1000042", data.pre_int
+	    precursor.selected_ions = [si]
+	    spec.precursors = [precursor]
+	  end
+	  specs<<spc2
+	end
       end
       count += 1
       scan_number += 1
-      specs<<spc
     end
 
 
 
     @mzml = Mspire::Mzml.new do |mzml|
-      mzml.id = 'ms1'
+      mzml.id = 'ms1_and_ms2'
       mzml.cvs = Mspire::Mzml::CV::DEFAULT_CVS
       mzml.file_description = Mspire::Mzml::FileDescription.new  do |fd|
         fd.file_content = Mspire::Mzml::FileContent.new
@@ -60,6 +95,7 @@ class Mzml_Wrapper
       end
     end
     prog.finish!
+    puts "ms2 written = #{ms2_count}"
     return @mzml
   end
 
