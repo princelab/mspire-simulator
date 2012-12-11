@@ -108,7 +108,7 @@ module MS
 	      spec.pre_mz = pre_mz
 	      spec.pre_int = ms2_int
 	      spec.pre_charge = pre_charge
-	      @data[rt + RThelper.RandomFloat(0.0001,@opts[:sampling_rate])] = spec
+	      @data[rt + RThelper.RandomFloat(0.1,@opts[:sampling_rate])] = spec
 	      ms2 = false
 	    end
           end

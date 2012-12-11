@@ -38,7 +38,7 @@ class Mzml_Wrapper
 	    sl << scan
 	  end
 	end
-      elsif ms_level == 2
+      else
 	spc = Mspire::Mzml::Spectrum.new("scan=#{scan_number}") do |spec|
 	  spec.describe_many!(['MS:1000127', ['MS:1000511', 2]]) 
 	  spec.data_arrays = [
