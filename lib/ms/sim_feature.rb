@@ -7,8 +7,8 @@ require 'ms/rt/rt_helper'
 require 'ms/tr_file_writer'
 
 class Array
-  attr_reader :ms_level, :pre_mz, :pre_int, :pre_charge
-  attr_writer :ms_level, :pre_mz, :pre_int, :pre_charge
+  attr_reader :ms2, :ms_level, :pre_mz, :pre_int, :pre_charge
+  attr_writer :ms2, :ms_level, :pre_mz, :pre_int, :pre_charge
 end
 
 module MS
@@ -50,6 +50,7 @@ module MS
       num = 0
       total = @features.size
       step = total/100.0
+      ms2_count = 0
       @features.each_with_index do |fe,k|
 	if k > step * (num + 1)
 	  num = ((k/total.to_f)*100).to_i
@@ -86,35 +87,45 @@ module MS
 	      end
             end
           end
-
+	  
+	  spec = nil
           if rt_mzs.include?(nil) or rt_mzs.empty?; else
             if @data.key?(rt)
-              mzs,ints = @data[rt]
+	      ms1 = @data[rt]
+              mzs = ms1[0]
+	      ints = ms1[1]
 	      spec = [mzs + rt_mzs, ints + rt_ints]
-	      spec.ms_level = 1
-              @data[rt] = spec
+	      spec.ms_level = ms1.ms_level
+	      spec.ms2 = ms1.ms2
             else
 	      spec = [rt_mzs, rt_ints]
-	      spec.ms_level = 1
-              @data[rt] = spec
             end
 	    if ms2
 	      #add ms2 spec
-	      ms2_mzs = MS::Fragmenter.new.fragment(fe.sequence)
-	      p ms2_mzs if ms2_mzs == nil
-	      ms2_ints = Array.new(ms2_mzs.size,RThelper.RandomFloat(100,1000))
-	      spec = [ms2_mzs, ms2_ints]
 	      spec.ms_level = 2
-	      spec.pre_mz = pre_mz
-	      spec.pre_int = ms2_int
-	      spec.pre_charge = pre_charge
-	      @data[rt + RThelper.RandomFloat(0.1,@opts[:sampling_rate])] = spec
+	      ms2_mzs = MS::Fragmenter.new.fragment(fe.sequence)
+	      ms2_ints = Array.new(ms2_mzs.size,500.to_f)
+	      spec2 = [(rt + RThelper.RandomFloat(0.1,@opts[:sampling_rate])), ms2_mzs, ms2_ints]
+	      spec2.ms_level = 2
+	      spec2.pre_mz = pre_mz
+	      spec2.pre_int = ms2_int
+	      spec2.pre_charge = pre_charge
+	      if spec.ms2 != nil
+		ms2_arr = spec.ms2
+		ms2_arr<<spec2
+		spec.ms2 = ms2_arr
+	      else
+		spec.ms2 = [spec2]
+	      end
+	      ms2_count += 1
 	    end
+	    @data[rt] = spec
           end
 	  ms2 = false
         end
       end
       prog.finish!
+      puts "MS2s = #{ms2_count}"
 
       #---------------------------------------------------------------
 
