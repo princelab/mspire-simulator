@@ -1,4 +1,3 @@
-
 require 'time'
 require 'distribution'
 require 'fragmenter'
@@ -100,7 +99,7 @@ module MS
             else
 	      spec = [rt_mzs, rt_ints]
             end
-	    if ms2
+	    if false #ms2
 	      #add ms2 spec
 	      spec.ms_level = 2
 	      ms2_mzs = MS::Fragmenter.new.fragment(fe.sequence)
