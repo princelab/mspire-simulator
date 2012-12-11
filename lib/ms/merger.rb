@@ -40,12 +40,16 @@ class Merger
     k = 0
     prog = Progress.new("Merging Overlaps:")
     spectra.each do |rt,val|
+      if val.ms_level == 2
+	new_data[rt] = val
+	next
+      end 
       if k.even?
 	num = (((k/total)*100).to_i)
 	prog.update(num)
       end
       peaks = val.transpose
-      peaks.sort_by!{|a| a[0]}
+      peaks.sort_by!{|a| a[0]} #mz
       peaks = peaks.transpose
       mzs = peaks[0]
       ints = peaks[1]
@@ -68,7 +72,12 @@ class Merger
           ints[i] = nil; ints[i+1] = meta_int
         end
       end
-      new_data[rt] = [mzs.compact,ints.compact]
+      spec = [mzs.compact,ints.compact]
+      spec.ms_level = val.ms_level
+      spec.pre_mz = val.pre_mz
+      spec.pre_int = val.pre_int
+      spec.pre_charge = val.pre_charge
+      new_data[rt] = spec
       k += 1
     end
     prog.finish!
@@ -83,6 +92,10 @@ class Merger
     prog = Progress.new("Merge Finishing:")
     step = total/100.0
     spectra.each do |rt,val|
+      if val.ms_level == 2
+	spectra[rt] = val
+	next
+      end 
       if k > step * (num + 1)
 	num = (((k/total)*100).to_i)
 	prog.update(num)
@@ -95,7 +108,12 @@ class Merger
           ints[i] = ints[i].flatten.inject(:+)
         end
       end
-      spectra[rt] = [mzs,ints]
+      spec = [mzs,ints]
+      spec.ms_level = val.ms_level
+      spec.pre_mz = val.pre_mz
+      spec.pre_int = val.pre_int
+      spec.pre_charge = val.pre_charge
+      spectra[rt] = spec
       k += 1
     end
     prog.finish!
