@@ -102,21 +102,62 @@ def calc_PI(pep_charges)
   pH
 end
 #pepcharges =[]
-=begin
-#  RUN the ENTRY FILE HERE
-pi = []
-io = File.open(ARGV.shift, 'r')
-io.each_line do |line|
-  pi << calc_PI(identify_potential_charges(line[/^([A-Z]+):.*/]))
-end
-=end
-=begin
-pIes = []
-pepcharges.each do |a|
-  pIes << [a, calc_PI(a)]
-end
-=end
-#out_pi = pepcharges.map {|a| calc_PI(a)}
+if $0 == __FILE__
+  VERBOSE = false
+  def putsv(object)
+    puts object if VERBOSE
+  end
+  def out(line, object)
+    line + ":\t" + object.to_s
+  end
+  require 'optparse'
 
-#require 'yaml'
-#File.open('pi_list.yml', 'w') {|f| YAML.dump( pi, f) }
+  options = {pi: true, distribution: false, ph: 7.0}
+  parser = OptionParser.new do |opts|
+    opts.banner = "Takes strings and outputs the PI, or charge distribution"
+
+    opts.on('-h','--help', "Displays this help message") do |h|
+      puts opts
+      exit
+    end
+    opts.on('-v','--verbose') {|v| VERBOSE = v}
+    opts.on("--[no]-pi", "Turns on (default) or off the pI output") do |p|
+      options[:pi] = p
+    end
+    opts.on("-d", "--distribution", "Output a string representation of the charge state distribution array") do |d|
+      options[:distribution] = true
+      options[:pi] = false
+    end
+    opts.on('--pH N', Float, "Takes a float value representing a pH at which to make the distribution. DEFAULT: 7.0") do |ph|
+      options[:ph] = ph
+    end
+    opts.on('-f', "--file FILENAME", String, "Takes an input file for parsing") do |f|
+      options[:in_file] = f
+    end
+  end
+  parser.parse!
+  
+  #  RUN
+  pi = []
+  lines = []
+  if options[:in_file]
+    file_lines = File.readlines(options[:in_file]).map(&:chomp) 
+    lines = file_lines.map {|line| line[/^([A-Z]+).*/] }.compact
+    outfile = File.join(File.dirname(options[:in_file]), 'pi_output_file.txt')
+    outputter = File.open(outfile,'w')
+  else 
+    lines = ARGV
+    outputter = STDOUT
+  end
+  if options[:pi]
+    lines.each {|line| outputter.puts out(line, calc_PI(identify_potential_charges(line)) ) }
+  elsif options[:distribution]
+    lines.each do |line| 
+      outputter.puts out(line + " @ pH #{options[:ph]}", charge_at_pH(identify_potential_charges(line), options[:ph])) 
+    end
+  end
+  if outfile
+    outputter.close 
+    puts "OUTPUT in #{outfile}"
+  end
+end

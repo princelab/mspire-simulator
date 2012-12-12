@@ -29,6 +29,20 @@ To see all the available options:
   
     $ mspire-simulator --help
     
+    
+=== Charge State Calculator
+  $ ruby lib/ms/isoelectric_calc.rb --ph 2 --distribution DRVYIHPFHL DRVYIHPF RVYIHPF VYIHPF 
+  will return: 
+DRVYIHPFHL @ pH 2.0:	3.409261595802742
+DRVYIHPF @ pH 2.0:	2.409361536791587
+RVYIHPF @ pH 2.0:	2.596529100629262
+VYIHPF @ pH 2.0:	1.676201596849338
+
+To see all the available options: 
+    $ ruby lib/ms/isoelectric_calc.rb --help
+
+
+    
 == TODO
 Because of the many options and parameters to specify we will be moving
 to a .init file format with a .init file editor.
