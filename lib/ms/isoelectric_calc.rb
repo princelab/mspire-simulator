@@ -101,6 +101,22 @@ def calc_PI(pep_charges)
   end
   pH
 end
+def distribution_from_charge(charge, normalization=100)
+  threshold = normalization.to_f
+  f = charge.floor
+  c = charge.ceil
+  charge_ratio = charge - f
+  num = charge_ratio*normalization
+  denom = normalization
+  while num + denom > threshold
+    factor = threshold/(num+denom)
+    num = num * factor
+    denom = denom * factor 
+  end
+  [["+#{f}" + ", " + "%5f" % num],["+#{c}" + ", " + "%5f" % denom]]
+end
+
+
 #pepcharges =[]
 if $0 == __FILE__
   VERBOSE = false
@@ -136,7 +152,7 @@ if $0 == __FILE__
     end
   end
   parser.parse!
-  
+
   #  RUN
   pi = []
   lines = []
@@ -153,7 +169,9 @@ if $0 == __FILE__
     lines.each {|line| outputter.puts out(line, calc_PI(identify_potential_charges(line)) ) }
   elsif options[:distribution]
     lines.each do |line| 
-      outputter.puts out(line + " @ pH #{options[:ph]}", charge_at_pH(identify_potential_charges(line), options[:ph])) 
+      charge = charge_at_pH(identify_potential_charges(line), options[:ph])
+      charge_dist = distribution_from_charge(charge)
+      outputter.puts out(line + " @ pH #{options[:ph]}", charge_dist.join("; ")) 
     end
   end
   if outfile
