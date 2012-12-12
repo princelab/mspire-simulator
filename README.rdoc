@@ -33,7 +33,7 @@ To see all the available options:
 === Charge State Calculator
   $ ruby lib/ms/isoelectric_calc.rb --ph 2 --distribution DRVYIHPFHL DRVYIHPF RVYIHPF VYIHPF 
 
-  will return: 
+will return: 
 DRVYIHPFHL @ pH 2.0:	+3, 29.040854; +4, 70.959146
 
 DRVYIHPF @ pH 2.0:	+2, 29.045885; +3, 70.954115
