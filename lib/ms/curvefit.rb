@@ -19,7 +19,7 @@ class CurveFit
     mzs_in = data[0]
     rts_in = data[1]
     ints_in = data[2]
-    
+
     @@avg_mz = mzs_in.inject(:+)/mzs_in.size.to_f
     @@avg_rt = rts_in.inject(:+)/rts_in.size.to_f
 

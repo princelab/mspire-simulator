@@ -35,8 +35,8 @@ module MS
           else
             abundances<<1.0
           end
-          sequence
-          seq = seq<<";"
+        sequence
+        seq = seq<<";"
         elsif sequence == "/n"; else
           seq = seq<<sequence.chomp
         end
@@ -85,7 +85,7 @@ module MS
       i = 0
 
       peptides = []
-      
+
       prog = Progress.new("Creating peptides '#{file}':")
       num = 0
       total = num_digested
@@ -93,11 +93,11 @@ module MS
       d_file.each_line do |peptide_seq|
         peptide_seq.chomp!
         peptide_seq.abu = peptide_seq.match(/#.+/).to_s.chomp.gsub('#','').to_f
-        peptide_seq.gsub!(/#.+/,'')
-        if i > step * (num + 1)
-          num = ((i/total.to_f)*100.0).to_i
-          prog.update(num)
-        end
+          peptide_seq.gsub!(/#.+/,'')
+          if i > step * (num + 1)
+            num = ((i/total.to_f)*100.0).to_i
+            prog.update(num)
+          end
 
         charge_ratio = charge_at_pH(identify_potential_charges(peptide_seq), @pH)
         charge_f = charge_ratio.floor

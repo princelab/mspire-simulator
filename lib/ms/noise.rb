@@ -15,10 +15,10 @@ module MS
       total = r_times.size
       step = total/100.0
       r_times.each do |rt|
-	if count > step * (num + 1)
-	  num = (((count/total)*100.0).to_i)
-	  prog.update(num)
-	end
+        if count > step * (num + 1)
+          num = (((count/total)*100.0).to_i)
+          prog.update(num)
+        end
         nmzs = []
         nints = []
         density.times do

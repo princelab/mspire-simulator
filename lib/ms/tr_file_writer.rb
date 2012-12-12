@@ -22,10 +22,10 @@ module MS
         mzs = fe.mzs
         ints = fe.ints
         rts = fe.rts
-	if k > step * (num + 1)
-	  num = (((k/total)*100).to_i)
-	  prog.update(num)
-	end
+        if k > step * (num + 1)
+          num = (((k/total)*100).to_i)
+          prog.update(num)
+        end
         file.puts "\t<simulated_peptide sequence=\"#{sequence}\" charge=\"#{charge.round}\">"
         mzs.each_with_index do |mzs,i|
           tags = ""
@@ -92,10 +92,10 @@ module MS
       num = 0
       step = total/100
       data.each_value do |val|
-	if count > step * (num + 1)
-	  num = (((count/total)*100).to_i)
-	  prog.update(num)
-	end
+        if count > step * (num + 1)
+          num = (((count/total)*100).to_i)
+          prog.update(num)
+        end
         val.each do |a|
           if a[3] >= 1
             file.puts "#{a[0]},#{a[1]},#{a[2]},#{a[3]}"
@@ -149,10 +149,10 @@ module MS
       num = 0
       step = total/100
       spectra.each do |k,v|
-	if time_i > step * (num + 1)
-	  num = (((time_i/total)*100).to_i)
-	  prog.update(num)
-	end
+        if time_i > step * (num + 1)
+          num = (((time_i/total)*100).to_i)
+          prog.update(num)
+        end
 
         merged_d = full_spectra[k]
         merged_mzs = merged_d[0]

@@ -41,8 +41,8 @@ class Merger
     prog = Progress.new("Merging Overlaps:")
     spectra.each do |rt,val|
       if k.even?
-	num = (((k/total)*100).to_i)
-	prog.update(num)
+        num = (((k/total)*100).to_i)
+        prog.update(num)
       end
       peaks = val.transpose
       peaks.sort_by!{|a| a[0]} #mz
@@ -87,8 +87,8 @@ class Merger
     step = total/100.0
     spectra.each do |rt,val|
       if k > step * (num + 1)
-	num = (((k/total)*100).to_i)
-	prog.update(num)
+        num = (((k/total)*100).to_i)
+        prog.update(num)
       end
       mzs = val[0]
       ints = val[1]
