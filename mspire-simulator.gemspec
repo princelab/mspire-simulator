@@ -73,6 +73,7 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<pony>, ["= 1.4"])
       s.add_runtime_dependency(%q<obo>, ["= 0.1.0"])
       s.add_runtime_dependency(%q<trollop>, ["= 1.16.2"])
+      s.add_runtime_dependency(%q<MS-fragmenter>, ["= 0.0.2"])
     else
       s.add_dependency(%q<mspire>, ["= 0.8.2"])
       s.add_dependency(%q<rubyvis>, ["= 0.5.2"])
@@ -84,6 +85,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<pony>, ["= 1.4"])
       s.add_dependency(%q<obo>, ["= 0.1.0"])
       s.add_dependency(%q<trollop>, ["= 1.16.2"])
+      s.add_dependency(%q<MS-fragmenter>, ["= 0.0.2"])
     end
   else
     s.add_dependency(%q<mspire>, ["= 0.8.2"])
@@ -96,6 +98,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<pony>, ["= 1.4"])
     s.add_dependency(%q<obo>, ["= 0.1.0"])
     s.add_dependency(%q<trollop>, ["= 1.16.2"])
+    s.add_dependency(%q<MS-fragmenter>, ["= 0.0.2"])
   end
 end
 
