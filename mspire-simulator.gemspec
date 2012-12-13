@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "mspire-simulator"
-  s.version = "0.1.2"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["anoyce"]
-  s.date = "2012-08-10"
+  s.date = "2012-12-13"
   s.description = "Simulates MS1 runs given amino acid FASTA files. Outputs an MZML file.\n\t\t\tCan simulate specific data if given an MZML file containing a single isolated peptide peak."
   s.email = "andrewbnoyce@gmail.com"
   s.executables = ["mspire-simulator", "sim_mail"]
@@ -24,6 +24,7 @@ Gem::Specification.new do |s|
     "VERSION",
     "bin/mspire-simulator",
     "bin/sim_mail",
+    "lib/cv_parser.rb",
     "lib/ms/curvefit.rb",
     "lib/ms/curvefit/curve_fit_helper.rb",
     "lib/ms/curvefit/fit_graph.rb",
@@ -49,14 +50,13 @@ Gem::Specification.new do |s|
     "spec/merger_spec.rb",
     "spec/ms-simulate_spec.rb",
     "spec/peptide_spec.rb",
-    "spec/progress_spec.rb",
     "spec/spec_helper.rb",
     "spec/spectra_spec.rb"
   ]
-  s.homepage = "http://dl.dropbox.com/u/42836826/Ms_Sim_Homepage.html"
+  s.homepage = "https://github.com/princelab/mspire-simulator"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
-  s.rubygems_version = "1.8.21"
+  s.rubygems_version = "1.8.24"
   s.summary = "Simulates MS1 runs given amino acid FASTA files. Outputs an MZML file."
 
   if s.respond_to? :specification_version then
