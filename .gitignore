@@ -7,3 +7,4 @@ lib/pool.rb
 *.xml
 *.fasta
 *.swp
+.rspec
