@@ -19,7 +19,7 @@ can extract needed parameters including:
 - m/z wobble parameters: wobA, wobB
 - Intensity variance parameters: jagA, jagB, jagC
   
-    $ mspire-simulator input.mzml [options]
+    $ mspire-simulator --mzml input.mzml [options] <.fasta file>
     
 Alternatively all parameters can be specified on the command line:
   
