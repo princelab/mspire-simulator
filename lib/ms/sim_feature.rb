@@ -105,7 +105,7 @@ module MS
               spec.ms_level = 2
               ms2_mzs = MS::Fragmenter.new.fragment(seq)
               ms2_ints = Array.new(ms2_mzs.size,500.to_f)
-              spec2 = [(rt + RThelper.RandomFloat(0.01,@opts[:sampling_rate])), ms2_mzs, ms2_ints]
+              spec2 = [(rt + RThelper.RandomFloat(0.01,@opts[:sampling_rate] - 0.1)), ms2_mzs, ms2_ints]
               spec2.ms_level = 2
               spec2.pre_mz = pre_mz
               spec2.pre_int = ms2_int

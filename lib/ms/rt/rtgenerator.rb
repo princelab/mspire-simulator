@@ -38,8 +38,8 @@ module MS
 
         #Fit retention times into scan times
         p_rt = pep.p_rt * 10**-2
-	percent_time = p_rt
-	sx = RThelper.gaussian(percent_time,0.5,0.5,1.0) * Math.sqrt(pep.abu) 
+	percent_time = p_rt 
+	sx = RThelper.gaussian(percent_time,0.5,0.45,1.0) * Math.sqrt(pep.abu) #need to figure out what these values should be
 	pep.sx = sx 
 	
 
