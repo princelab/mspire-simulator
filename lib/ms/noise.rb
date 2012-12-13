@@ -5,8 +5,11 @@ require 'ms/rt/rt_helper'
 module MS
   module Noise
     module_function
-    def noiseify(density,max_mz)
+    def noiseify(opts,max_mz)
       # spectra is {rt => [[mzs],[ints]]}
+      desity = opts[:noise_density]
+      max_int = opts[:noiseMaxInt]
+      min_int = opts[:noiseMinInt]
       @noise = {}
       r_times = Sim_Spectra.r_times
       count = 0
@@ -23,7 +26,7 @@ module MS
         nints = []
         density.times do
           rmz = RThelper.RandomFloat(0.0,max_mz)
-          rint = RThelper.RandomFloat(50,1000)
+          rint = RThelper.RandomFloat(min_int,max_int)
           nmzs<<rmz
           nints<<rint
         end

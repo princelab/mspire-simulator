@@ -99,7 +99,7 @@ module MS
             else
               spec = [rt_mzs, rt_ints]
             end
-            if ms2 and fe.sequence != seq
+            if false#ms2 and fe.sequence != seq
               #add ms2 spec
 	      seq = fe.sequence
               spec.ms_level = 2

@@ -31,10 +31,12 @@ module MS
                 opt :run_time, "Run time in seconds", :default => 1000.0 
                 opt :noise, "Noise on or off", :default => "true"
                 opt :noise_density, "Determines the density of white noise", :default => 10
+		opt :noiseMaxInt, "The max noise intensity level", :default => 1000
+		opt :noiseMinInt, "The minimum noise intensity level", :default => 50
                 opt :pH, "The pH that the sample is in - for determining charge", :default => 2.6
                 opt :out_file, "Name of the output file", :default => "test.mzml"
                 opt :contaminants, "Fasta file containing contaminant sequences", :default => "testFiles/contam/hum_keratin.fasta"
-                opt :dropout_percentage, "Defines the percentage of random dropouts in the run. 0.0 <= percentage < 1.0", :default => 0.03
+                opt :dropout_percentage, "Defines the percentage of random dropouts in the run. 0.0 <= percentage < 1.0", :default => 0.01
                 opt :shuffle, "Option shuffles the scans to simulate 1d data", :default => "false"
                 opt :one_d, "Turns on one dimension simulation; run_time is automatically set to 300.0", :default => "false"
                 opt :truth, "Determines truth file type; false gives no truth file; one of: xml or csv", :default => "false"
