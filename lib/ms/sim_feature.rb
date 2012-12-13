@@ -50,6 +50,8 @@ module MS
       total = @features.size
       step = total/100.0
       ms2_count = 0
+      seq = nil
+      
       @features.each_with_index do |fe,k|
         if k > step * (num + 1)
           num = ((k/total.to_f)*100).to_i
@@ -79,7 +81,7 @@ module MS
             if int > 0.9
               rt_mzs<<mz
               rt_ints<<int
-              if int == ms2_int
+              if int == ms2_int and fe.sequence.size > 1
                 ms2 = true
                 pre_mz = mz
                 pre_charge = fe.charge
@@ -91,20 +93,19 @@ module MS
           if rt_mzs.include?(nil) or rt_mzs.empty?; else
             if @data.key?(rt)
               ms1 = @data[rt]
-              mzs = ms1[0]
-              ints = ms1[1]
-              spec = [mzs + rt_mzs, ints + rt_ints]
+              spec = [ms1[0] + rt_mzs, ms1[1] + rt_ints]
               spec.ms_level = ms1.ms_level
               spec.ms2 = ms1.ms2
             else
               spec = [rt_mzs, rt_ints]
             end
-            if false #ms2
+            if ms2 and fe.sequence != seq
               #add ms2 spec
+	      seq = fe.sequence
               spec.ms_level = 2
-              ms2_mzs = MS::Fragmenter.new.fragment(fe.sequence)
+              ms2_mzs = MS::Fragmenter.new.fragment(seq)
               ms2_ints = Array.new(ms2_mzs.size,500.to_f)
-              spec2 = [(rt + RThelper.RandomFloat(0.1,@opts[:sampling_rate])), ms2_mzs, ms2_ints]
+              spec2 = [(rt + RThelper.RandomFloat(0.01,@opts[:sampling_rate])), ms2_mzs, ms2_ints]
               spec2.ms_level = 2
               spec2.pre_mz = pre_mz
               spec2.pre_int = ms2_int
