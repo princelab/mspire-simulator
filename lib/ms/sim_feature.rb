@@ -150,8 +150,8 @@ module MS
       avg = pep.p_rt
 
       sampling_rate = @opts[:sampling_rate].to_f
-      tail = @opts[:tail].to_f
-      front = @opts[:front].to_f
+      tail = Distribution::Normal.rng(@opts[:tail].to_f,0.258667495).call #0.258667495 is the standard deviation from Hek_cells_100904050914 file
+      front = Distribution::Normal.rng(@opts[:front].to_f,4.83466692).call #4.83466692 is the standard deviation from Hek_cells_100904050914 file
       mu = @opts[:mu].to_f
 
       index = 0
