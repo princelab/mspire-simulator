@@ -7,7 +7,7 @@ module MS
     module_function
     def noiseify(opts,max_mz)
       # spectra is {rt => [[mzs],[ints]]}
-      desity = opts[:noise_density]
+      density = opts[:noise_density]
       max_int = opts[:noiseMaxInt]
       min_int = opts[:noiseMinInt]
       @noise = {}
