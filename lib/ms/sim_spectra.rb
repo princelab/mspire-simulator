@@ -7,6 +7,7 @@ require 'ms/sim_feature'
 module MS
   class Sim_Spectra
     def initialize(peptides,opts,one_d = false)
+      @opts = opts
       @data
       @max_mz
       sampling_rate = opts[:sampling_rate]
@@ -37,7 +38,7 @@ module MS
     end
 
     def noiseify
-      @noise = MS::Noise.noiseify(opts,@max_mz)
+      @noise = MS::Noise.noiseify(@opts,@max_mz)
 
       @@r_times.each do |k|
         s_v = @data[k]
