@@ -16,8 +16,8 @@ module MS
 
       @core_ints = spec.intensities.clone
       @core_mzs = spec.mzs.clone
-      @mzs_file = ".m/#{sequence[0]}/#{sequence[0...15]}_#{charge}"
-      @ints_file = ".i/#{sequence[0]}/#{sequence[0...15]}_#{charge}"
+      @mzs_file = ".m/#{sequence[0]}/#{sequence}_#{charge}"
+      @ints_file = ".i/#{sequence[0]}/#{sequence}_#{charge}"
       file = File.open(@mzs_file, "w")
       file.puts(sequence)
       file.close

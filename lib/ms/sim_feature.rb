@@ -72,6 +72,7 @@ module MS
 
           fe.core_mzs.size.times do |j| 
             mz,int = [ fe_mzs[j][i], fe_ints[j][i] ]
+	    p fe.sequence if mz == nil
             if @max_mz < mz
               @max_mz = mz
             end
@@ -196,30 +197,30 @@ module MS
     end
 =end	  
 
-if fin_ints[i] > 0.4
-  #-------------Jagged-ness---------------------
-  sd = (@opts[:jagA] * (1-Math.exp(-(@opts[:jagC]) * fin_ints[i])) + @opts[:jagB])/2
-  diff = (Distribution::Normal.rng(0,sd).call)
-  fin_ints[i] = fin_ints[i] + diff
-  #---------------------------------------------
-end
+	  if fin_ints[i] > 0.4
+	    #-------------Jagged-ness---------------------
+	    sd = (@opts[:jagA] * (1-Math.exp(-(@opts[:jagC]) * fin_ints[i])) + @opts[:jagB])/2
+	    diff = (Distribution::Normal.rng(0,sd).call)
+	    fin_ints[i] = fin_ints[i] + diff
+	    #---------------------------------------------
+	  end
 
-#-------------mz wobble-----------------------
-y = fin_ints[i]
-wobble_mz = nil
-if y > 0
-  wobble_int = @opts[:wobA]*y**(@opts[:wobB])
-  wobble_mz = Distribution::Normal.rng(mzmu,wobble_int).call
-  if wobble_mz < 0
-    wobble_mz = 0.01
-  end
+	  #-------------mz wobble-----------------------
+	  y = fin_ints[i]
+	  wobble_mz = nil
+	  if y > 0
+	    wobble_int = @opts[:wobA]*y**(@opts[:wobB])
+	    wobble_mz = Distribution::Normal.rng(mzmu,wobble_int).call
+	    if wobble_mz < 0
+	      wobble_mz = 0.01
+	    end
 
-  fin_mzs<<wobble_mz
-end
-#---------------------------------------------
+	    fin_mzs<<wobble_mz
+	  end
+	  #---------------------------------------------
 
 
-fin_ints[i] = fin_ints[i]*(predicted_int*(relative_abundances_int*10**-2)) * sy
+	  fin_ints[i] = fin_ints[i]*(predicted_int*(relative_abundances_int*10**-2)) * sy
         end
 
         pep.insert_ints(fin_ints)
