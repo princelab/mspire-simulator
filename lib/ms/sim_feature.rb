@@ -100,7 +100,7 @@ module MS
             else
               spec = [rt_mzs, rt_ints]
             end
-            if false#ms2 and fe.sequence != seq
+            if ms2 and fe.sequence != seq
               #add ms2 spec
 	      seq = fe.sequence
               spec.ms_level = 2
@@ -150,8 +150,12 @@ module MS
       avg = pep.p_rt
 
       sampling_rate = @opts[:sampling_rate].to_f
-      tail = Distribution::Normal.rng(@opts[:tail].to_f,0.258667495).call #0.258667495 is the standard deviation from Hek_cells_100904050914 file
-      front = Distribution::Normal.rng(@opts[:front].to_f,4.83466692).call #4.83466692 is the standard deviation from Hek_cells_100904050914 file
+      wobA = Distribution::Normal.rng(@opts[:wobA].to_f,0.0114199604).call #0.0014199604 is the standard deviation from Hek_cells_100904050914 file
+      wobB = Distribution::Normal.rng(@opts[:wobB].to_f,0.01740082).call #1.20280082 is the standard deviation from Hek_cells_100904050914 file
+      tail = Distribution::Normal.rng(@opts[:tail].to_f,0.018667495).call #0.258667495 is the standard deviation from Hek_cells_100904050914 file
+      front = Distribution::Normal.rng(@opts[:front].to_f,0.01466692).call #4.83466692 is the standard deviation from Hek_cells_100904050914 file
+      # These number didn't work. May need to get more samples or figure something else out. For now this will give us some
+      # meta variance in any case
       mu = @opts[:mu].to_f
 
       index = 0
@@ -209,7 +213,7 @@ module MS
 	  y = fin_ints[i]
 	  wobble_mz = nil
 	  if y > 0
-	    wobble_int = @opts[:wobA]*y**(@opts[:wobB])
+	    wobble_int = wobA*y**wobB
 	    wobble_mz = Distribution::Normal.rng(mzmu,wobble_int).call
 	    if wobble_mz < 0
 	      wobble_mz = 0.01
