@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "mspire-simulator"
-  s.version = "0.2.0"
+  s.version = "0.2.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["anoyce"]
-  s.date = "2012-12-13"
+  s.date = "2012-12-14"
   s.description = "Simulates MS1 runs given amino acid FASTA files. Outputs an MZML file.\n\t\t\tCan simulate specific data if given an MZML file containing a single isolated peptide peak."
   s.email = "andrewbnoyce@gmail.com"
   s.executables = ["mspire-simulator", "sim_mail"]
