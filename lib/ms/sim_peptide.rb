@@ -152,6 +152,7 @@ module MS
       seq.each_char do |aa|
 
         #poly amino acids
+	#maybe in the future ignore fringe case amino acids
         #"X" is for any (I exclude uncommon "U" and "O")
         if aa == "X"
           aas = Mspire::Isotope::AA::ATOM_COUNTS.keys[0..19]
@@ -179,7 +180,7 @@ module MS
         end
       end
       @charge.times {h += 1}
-      return (o + 1),n,c,(h + 2) ,s,p,se
+      return (o + 1),n,c,(h + 2),s,p,se
     end
   end
 end

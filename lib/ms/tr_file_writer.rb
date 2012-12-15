@@ -34,7 +34,7 @@ module MS
           mzs.each_with_index do |mz,ind|
             if ints[i][ind] > 0.9
               index = get_ind(mz,rts[ind])
-              centroids<<"#{r_times.index(rts[ind])},#{index.inspect};"
+              centroids<<"#{r_times.index(rts[ind])},#{index.inspect};" #retention time index and mz index
             end
           end
           if centroids != ""

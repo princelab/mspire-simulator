@@ -13,7 +13,7 @@ Jeweler::Tasks.new do |gem|
   gem.email = "andrewbnoyce@gmail.com"
   gem.authors = ["anoyce"]
   
-  gem.add_dependency "mspire", "0.8.2"
+  gem.add_dependency "mspire", "0.8.5"
   gem.add_dependency "rubyvis", "= 0.5.2"
   gem.add_dependency "nokogiri", "= 1.5.2"
   gem.add_dependency "ffi", "= 1.0.11"
