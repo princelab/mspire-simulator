@@ -1,4 +1,3 @@
-
 require 'mspire/isotope/distribution'
 
 module MS
@@ -179,6 +178,7 @@ module MS
           se = se + Mspire::Isotope::AA::ATOM_COUNTS[aa][:se]
         end
       end
+      @charge.times {h += 1}
       return (o + 1),n,c,(h + 2) ,s,p,se
     end
   end
