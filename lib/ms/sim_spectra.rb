@@ -44,9 +44,15 @@ module MS
         s_v = @data[k]
         n_v = @noise[k]
         if s_v != nil
-          @spectra[k] = [s_v[0]+n_v[0],s_v[1]+n_v[1]]
+	  spec = [s_v[0]+n_v[0],s_v[1]+n_v[1]]
+	  spec.ms_level = s_v.ms_level
+	  spec.ms2 = s_v.ms2
+          @spectra[k] = spec
         else
-          @spectra[k] = [n_v[0],n_v[1]]
+          spec = [n_v[0],n_v[1]]
+	  spec.ms_level = 1
+	  spec.ms2 = nil
+          @spectra[k] = spec
         end
       end
 

@@ -27,6 +27,7 @@ module MS
                 trypsin,\n \t\tv8_e_trypsin,
                 v8_de_trypsin",
                 :default => "trypsin" 
+		opt :missed_cleavages, "Number of missed cleavages during digestion", :default => 2
                 opt :sampling_rate, "How many scans per second", :default => 0.5 
                 opt :run_time, "Run time in seconds", :default => 1000.0 
                 opt :noise, "Noise on or off", :default => "true"

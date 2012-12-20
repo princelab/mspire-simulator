@@ -16,16 +16,11 @@ class Mzml_Wrapper
     total = spectra.size
     step = total/100
     spec_id = nil
-    t_rt = 0
     spectra.sort.map do |rt,data|
       if count > step * (num + 1)
         num = (((count/total)*100).to_i)
         prog.update(num)
       end
-      if t_rt > rt
-	puts "OUT of ORDER"
-      end
-      t_rt = rt
 
       ms_level = data.ms_level # method added to array class
 

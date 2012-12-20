@@ -10,9 +10,10 @@ module MS
     attr_reader :digested_file
     attr_writer :digested_file
 
-    def initialize(digestor,pH)
+    def initialize(digestor,pH,missed_cleavages)
       @digestor = digestor
       @pH = pH
+      @missed_cleavages = missed_cleavages
       @digested_file = ".#{Time.now.nsec.to_s}"
       system("mkdir .m .i")
       system("mkdir .m/A .m/R .m/N .m/D .m/C .m/E .m/Q .m/G .m/H .m/I .m/L .m/K .m/M .m/F .m/P .m/S .m/T .m/W .m/Y .m/V .m/U .m/O .m/X")
@@ -50,7 +51,7 @@ module MS
       digested = []
       d_file = File.open(@digested_file, "w")
       proteins.each_with_index do |prot,index|
-        dig = trypsin.digest(prot)
+        dig = trypsin.digest(prot,@missed_cleavages) # two missed cleavages for fig 6
         dig.each do |d|
           d.abu = abundances[index]
           digested<<d

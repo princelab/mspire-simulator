@@ -49,7 +49,7 @@ module MspireSimulator
     
     #------------------------Digest-----------------------------------------------
     peptides = []
-    digester = MS::Sim_Digester.new(@opts[:digestor],@opts[:pH])
+    digester = MS::Sim_Digester.new(@opts[:digestor],@opts[:pH],@opts[:missed_cleavages])
     ARGV.each do |file|
       peptides<<digester.digest(file)
     end
