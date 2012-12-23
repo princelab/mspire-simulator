@@ -34,81 +34,42 @@ class Merger
     return a/b
   end
 
-  def self.merge(spectra,half_range)
-    new_data = {}
-    total = spectra.size
-    k = 0
+  def self.merge(half_range,db)
     prog = Progress.new("Merging Overlaps:")
-    spectra.each do |rt,val|
+    db.execute "CREATE TABLE IF NOT EXISTS merged(merge_id INTEGER PRIMARY KEY, merged_vals TEXT, a_vals TEXT, b_vals TEXT)"
+    spectra = db.execute "SELECT * FROM spectra"
+    spectra = spectra.group_by{|spec| spec[1]}
+    total = spectra.size
+    merge_id = 0
+    k = 0
+    spectra.each do |rt,peaks|
       if k.even?
         num = (((k/total)*100).to_i)
         prog.update(num)
       end
-      peaks = val.transpose
-      peaks.sort_by!{|a| a[0]} #mz
-      peaks = peaks.transpose
-      mzs = peaks[0]
-      ints = peaks[1]
+      peaks.sort_by!{|a| a[2]} #mz
+      peaks_t = peaks.transpose
+      pep_ids = peaks_t[1]
+      cent_ids = peaks_t[0]
+      mzs = peaks_t[3]
+      ints = peaks_t[4]
       mzs.each_with_index do |mz,i|
-        next if mz.class == Hash
         o_mz = mz
-        mz = mz.keys[0][0] if mz.class == Hash
         range = (mz..mz+half_range)
         if range.include?(mzs[i+1])
           metaA_mz = [o_mz, mzs[i+1]]
           meta_int = [ints[i],ints[i+1]]
-          sum = meta_int.flatten.inject(:+).to_f
-          i1 = ints[i]
-          i1 = ints[i].flatten.inject(:+) if ints[i].class == Array
-          frac1 = (i1/sum) * 100
-          frac2 = (ints[i+1]/sum) * 100
-          metaB_mz = {[w_avg(metaA_mz,meta_int),frac1,frac2] => metaA_mz}
-
-          mzs[i] = nil; mzs[i+1] = metaB_mz
-          ints[i] = nil; ints[i+1] = meta_int
+          sum = ints[i] + ints[i+1]
+          new_mz = w_avg(metaA_mz,meta_int)
+          db.execute "DELETE FROM spectra WHERE cent_id=#{cent_ids[i]}"
+          db.execute "DELETE FROM spectra WHERE cent_id=#{cent_ids[i+1]}"
+          db.execute "INSERT INTO spectra VALUES(#{cent_ids[i]},#{pep_ids[i]},#{rt},#{new_mz},#{sum},#{merge_id},0)"
+          db.execute "INSERT INTO merged VALUES(#{merge_id}, '#{pep_ids[i]},#{rt},#{new_mz},#{sum}', '#{peaks[i]}', '#{peaks[i+1]}')"
+          merge_id += 1
         end
       end
-      spec = [mzs.compact,ints.compact]
-      spec.ms_level = val.ms_level
-      spec.ms2 = val.ms2
-      new_data[rt] = spec
       k += 1
     end
     prog.finish!
-    return new_data
-  end
-
-  def self.compact(spectra)
-    @start = Time.now
-    total = spectra.size
-    k = 0
-    num = 0
-    prog = Progress.new("Merge Finishing:")
-    step = total/100.0
-    spectra.each do |rt,val|
-      if k > step * (num + 1)
-        num = (((k/total)*100).to_i)
-        prog.update(num)
-      end
-      mzs = val[0]
-      ints = val[1]
-      mzs.each_with_index do |m,i|
-        if m.class == Hash
-          mzs[i] = m.keys[0][0]
-          ints[i] = ints[i].flatten.inject(:+)
-        end
-      end
-      spec = [mzs,ints]
-      spec.ms_level = val.ms_level
-      spec.ms2 = val.ms2
-      spectra[rt] = spec
-      k += 1
-    end
-    prog.finish!
-    return spectra
   end
 end
-
-#test
-#data = {1 => [[1.0,1.5,1.7,3.0,4.0,5.0,6.0,7.0,8.0,9.0],[10,9,8,7,6,5,4,3,2,1]], 2 => [[1,2,3,4,5,6,7,8,9],[9,8,7,6,5,4,3,2,1]]}
-#p Merger.merge(data,0.5)

@@ -5,20 +5,11 @@ require 'ms/sim_peptide'
 require 'ms/rt/rt_helper'
 require 'ms/tr_file_writer'
 
-class Array
-  attr_reader :ms2, :ms_level, :pre_mz, :pre_int, :pre_charge
-  attr_writer :ms2, :ms_level, :pre_mz, :pre_int, :pre_charge
-end
-
 module MS
   class Sim_Feature 
-    def initialize(peptides,opts,one_d)
-
-      @features = []
-      @data = {}
-      @max_int = 0.0
+    def initialize(opts,one_d,db)
+      @db = db
       @one_d = one_d
-      @max_time = Sim_Spectra.r_times.max
       @opts = opts
       @max_mz = -1
 
@@ -26,114 +17,25 @@ module MS
       #------------------Each_Peptide_=>_Feature----------------------
       prog = Progress.new("Generating features:")
       num = 0
-      total = peptides.size
+      @db.execute "CREATE TABLE IF NOT EXISTS spectra(cent_id INTEGER PRIMARY KEY,pep_id INTEGER,rt REAL,mzs REAL,ints REAL,merge_id INTEGER,ms2_bool INTEGER)"
+      @cent_id = 0
+      peps = @db.execute "SELECT * FROM peptides"
+      total = peps.size
       step = total/100.0
-      peptides.each_with_index do |pep,ind|
+      peps.each do |pep|
+        ind = pep[0]
         if ind > step * (num + 1)
           num = (((ind+1)/total.to_f)*100).to_i
           prog.update(num)
         end
-
-        feature = getInts(pep)
-
-        @features<<feature
+        
+        getInts(pep)
       end
       prog.finish!
-      #---------------------------------------------------------------
-
-
-
-      #-----------------Transform_to_spectra_data_for_mzml------------
-      # rt => [[mzs],[ints]]
-      prog = Progress.new("Generating MS2 & Populating structure for mzml:")
-      num = 0
-      total = @features.size
-      step = total/100.0
-      ms2_count = 0
-      seq = nil
-      
-      @features.each_with_index do |fe,k|
-        if k > step * (num + 1)
-          num = ((k/total.to_f)*100).to_i
-          prog.update(num)
-        end
-
-        fe_ints = fe.ints 
-        fe_mzs = fe.mzs
-
-        ms2_int = fe.ints.flatten.max
-        ms2 = false
-        pre_mz = nil
-        pre_charge = nil
-
-        fe.rts.each_with_index do |rt,i|
-          rt_mzs = []
-          rt_ints = []
-
-          fe.core_mzs.size.times do |j| 
-            mz,int = [ fe_mzs[j][i], fe_ints[j][i] ]
-	    p fe.sequence if mz == nil
-            if @max_mz < mz
-              @max_mz = mz
-            end
-            if int == nil
-              int = 0.0
-            end
-            if int > 0.9
-              rt_mzs<<mz
-              rt_ints<<int
-              if int == ms2_int and fe.sequence.size > 1
-                ms2 = true
-                pre_mz = mz
-                pre_charge = fe.charge
-              end
-            end
-          end
-
-          spec = nil
-          if rt_mzs.include?(nil) or rt_mzs.empty?; else
-            if @data.key?(rt)
-              ms1 = @data[rt]
-              spec = [ms1[0] + rt_mzs, ms1[1] + rt_ints]
-              spec.ms_level = ms1.ms_level
-              spec.ms2 = ms1.ms2
-            else
-              spec = [rt_mzs, rt_ints]
-            end
-            if ms2 and fe.sequence != seq
-              #add ms2 spec
-	      seq = fe.sequence
-              spec.ms_level = 2
-              ms2_mzs = MS::Fragmenter.new.fragment(seq)
-              ms2_ints = Array.new(ms2_mzs.size,500.to_f)
-              spec2 = [(rt + RThelper.RandomFloat(0.01,@opts[:sampling_rate] - 0.1)), ms2_mzs, ms2_ints]
-              spec2.ms_level = 2
-              spec2.pre_mz = pre_mz
-              spec2.pre_int = ms2_int
-              spec2.pre_charge = pre_charge
-              if spec.ms2 != nil
-                ms2_arr = spec.ms2
-                ms2_arr<<spec2
-                spec.ms2 = ms2_arr
-              else
-                spec.ms2 = [spec2]
-              end
-              ms2_count += 1
-            end
-            @data[rt] = spec
-          end
-          ms2 = false
-        end
-      end
-      prog.finish!
-      puts "MS2s = #{ms2_count}"
-
-      #---------------------------------------------------------------
-
     end
 
-    attr_reader :data, :features, :max_mz
-    attr_writer :data, :features, :max_mz
+    attr_reader :max_mz, :cent_id
+    attr_writer :max_mz, :cent_id
 
     # Intensities are shaped in the rt direction by a gaussian with 
     # a dynamic standard deviation.
@@ -141,13 +43,17 @@ module MS
     # by a simple gaussian curve (see 'factor' below). 
     #
     def getInts(pep)
-      p_int = pep.p_int + RThelper.RandomFloat(-5,2)
+      pep_id = pep[0]
+      p_int = pep[7] + RThelper.RandomFloat(-5,2)
       if p_int > 10
         p_int -= 10
       end
       predicted_int = (p_int * 10**-1) * 14183000.0 
-      relative_ints = pep.core_ints
-      avg = pep.p_rt
+      low = 0.1*predicted_int
+      relative_ints = (@db.execute "SELECT int FROM core_ints_#{pep_id}").flatten#pep.core_ints
+      core_mzs = (@db.execute "SELECT mz FROM core_mzs_#{pep_id}").flatten#pep.core_ints
+      @db.execute "CREATE TABLE IF NOT EXISTS f_#{pep_id}(rt REAL,mz REAL,int REAL)"
+      avg = pep[5] #p_rt
 
       sampling_rate = @opts[:sampling_rate].to_f
       wobA = Distribution::Normal.rng(@opts[:wobA].to_f,0.0114199604).call #0.0014199604 is the standard deviation from Hek_cells_100904050914 file
@@ -159,36 +65,34 @@ module MS
       mu = @opts[:mu].to_f
 
       index = 0
-      sx = pep.sx
-      sy = (sx**-1) * Math.sqrt(pep.abu)
+      sx = pep[9]
+      sy = (sx**-1) * Math.sqrt(pep[8]) #abu
 
       shuff = RThelper.RandomFloat(0.05,1.0)
-      pep.core_mzs.each do |mzmu|
-
-        fin_mzs = []
-        fin_ints = []
+      core_mzs.each do |mzmu|
 
         relative_abundances_int = relative_ints[index]
 
         t_index = 1
 
-        pep.rts.each_with_index do |rt,i| 
+        (Sim_Spectra::r_times[pep[10]..pep[11]]).each_with_index do |rt,i| 
+          
 
           if !@one_d
             #-------------Tailing-------------------------
             shape = (tail * (t_index / sx)) + front
-            fin_ints << (RThelper.gaussian((t_index / sx) ,mu ,shape,100.0))
+            int = (RThelper.gaussian((t_index / sx) ,mu ,shape,100.0))
             t_index += 1
             #---------------------------------------------
 
           else
             #-----------Random 1d data--------------------
-            fin_ints<<(relative_abundances_int * ints_factor) * shuff
+            int = (relative_abundances_int * ints_factor) * shuff
             #---------------------------------------------
           end
 
-          if fin_ints[i] < 0.01
-            fin_ints[i] = RThelper.RandomFloat(0.001,0.4)
+          if int < 0.01
+            int = RThelper.RandomFloat(0.001,0.4)
           end
 
 =begin
@@ -201,38 +105,37 @@ module MS
     end
 =end	  
 
-	  if fin_ints[i] > 0.4
-	    #-------------Jagged-ness---------------------
-	    sd = (@opts[:jagA] * (1-Math.exp(-(@opts[:jagC]) * fin_ints[i])) + @opts[:jagB])/2
-	    diff = (Distribution::Normal.rng(0,sd).call)
-	    fin_ints[i] = fin_ints[i] + diff
-	    #---------------------------------------------
-	  end
+          if int > 0.4
+          #-------------Jagged-ness---------------------
+          sd = (@opts[:jagA] * (1-Math.exp(-(@opts[:jagC]) * int)) + @opts[:jagB])/2
+          diff = (Distribution::Normal.rng(0,sd).call)
+          int += diff
+          #---------------------------------------------
+          end
 
-	  #-------------mz wobble-----------------------
-	  y = fin_ints[i]
-	  wobble_mz = nil
-	  if y > 0
-	    wobble_int = wobA*y**wobB
-	    wobble_mz = Distribution::Normal.rng(mzmu,wobble_int).call
-	    if wobble_mz < 0
-	      wobble_mz = 0.01
-	    end
-
-	    fin_mzs<<wobble_mz
-	  end
-	  #---------------------------------------------
+          #-------------mz wobble-----------------------
+          wobble_mz = nil
+          if int > 0
+            wobble_int = wobA*int**wobB
+            wobble_mz = Distribution::Normal.rng(mzmu,wobble_int).call
+            if wobble_mz < 0
+              wobble_mz = 0.01
+            end
+          end
+          #---------------------------------------------
 
 
-	  fin_ints[i] = fin_ints[i]*(predicted_int*(relative_abundances_int*10**-2)) * sy
+          int = int*(predicted_int*(relative_abundances_int*10**-2)) * sy
+          if int > low.abs and wobble_mz > 0
+            @db.execute "INSERT INTO spectra VALUES(#{@cent_id},#{pep_id},#{rt},#{wobble_mz},#{int},NULL,0)"
+            @cent_id += 1
+            if @max_mz < wobble_mz
+              @max_mz = wobble_mz
+            end
+          end
         end
-
-        pep.insert_ints(fin_ints)
-        pep.insert_mzs(fin_mzs)
-
         index += 1
       end
-      return pep
     end
   end
 end

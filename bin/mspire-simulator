@@ -1,7 +1,12 @@
 #!/usr/bin/env ruby
+#SQLite version = 3.7.13
+#sudo aptitude install sqlite3
+#sudo aptitude install libsqlite3-dev
+#gem install sqlite3
 $LOAD_PATH << './lib'
 
 require 'time'
+require 'sqlite3'
 require 'progress'
 require 'nokogiri'
 require 'mspire/digester'
@@ -46,64 +51,65 @@ module MspireSimulator
 
     SampleLoad = 1.0 # Instrument dependent scaling, for an Orbitrap, assumed to be 1 ug 
     # TODO define an option for sample loading, and a scaling function to define the peak intensities
+    @@database = "peptides" #can be :memory: stored
+    #
+    db = SQLite3::Database.new(@@database)
+    db.transaction
+    db.execute "CREATE TABLE IF NOT EXISTS peptides(Id INTEGER PRIMARY KEY, seq TEXT, mass REAL, charge INTEGER, mono_mz REAL, p_rt REAL, p_rt_index REAL, p_int REAL, abu REAL, sx REAL, rt_a INTEGER, rt_b INTEGER)"
+    db.execute "CREATE TABLE IF NOT EXISTS aac(Id INTEGER PRIMARY KEY, A INTEGER,R INTEGER,N INTEGER,D INTEGER,B INTEGER,C INTEGER,E INTEGER,Q INTEGER,Z INTEGER,G INTEGER,H INTEGER,I INTEGER,L INTEGER,K INTEGER,M INTEGER,F INTEGER,P INTEGER,S INTEGER,T INTEGER,W INTEGER,Y INTEGER,V INTEGER,J INTEGER, place_holder REAL)"
+    #
     
     #------------------------Digest-----------------------------------------------
     peptides = []
-    digester = MS::Sim_Digester.new(@opts[:digestor],@opts[:pH],@opts[:missed_cleavages])
+    digester = MS::Sim_Digester.new(@opts[:digestor],@opts[:pH],@opts[:missed_cleavages],db)
     ARGV.each do |file|
-      peptides<<digester.digest(file)
+      digester.digest(file)
     end
-    peptides.flatten!.uniq!
     #-----------------------------------------------------------------------------
 
 
 
     #------------------------Create Spectrum--------------------------------------
-    spectra = MS::Sim_Spectra.new(peptides, @opts, one_d)
-    data = spectra.data
+    spectra = MS::Sim_Spectra.new(@opts, one_d,db)
     
     if noise == 'true'
-      noise = spectra.noiseify
+      noise = spectra.noiseify(db)
     end
     #-----------------------------------------------------------------------------
     
     
     
-    #------------------------Merge Overlaps---------------------------------------
-    spectra.spectra = Merger.merge(spectra.spectra,@opts[:overlapRange].to_f)
+    #------------------------Merge Overlaps----MS2--------------------------------
+    Merger.merge(@opts[:overlapRange].to_f,db)
+    peps = db.execute "SELECT Id, seq FROM peptides"
+    pep_t = peps.transpose
+    pep_ids = pep_t[0]
+    pep_seqs = pep_t[1]
+    pep_ids.each_with_index do |pep_id,index|
+      specs = db.execute "SELECT * FROM spectra WHERE pep_id=#{pep_id}"
+      next if specs.empty?
+      #intensity
+      m_cent = specs.max_by {|cent| cent[4]} 
+      db.execute "UPDATE spectra SET ms2_bool=1 WHERE cent_id=#{m_cent[0]}"
+    end
     #-----------------------------------------------------------------------------
-    
+
     
     
     #------------------------Truth Files------------------------------------------
     if truth != "false"
       if truth == "xml"
-        MS::Txml_file_writer.write(spectra.features,spectra.spectra,out_file)
+        MS::Txml_file_writer.write(db,out_file)
       elsif truth == "csv"
-        MS::Tcsv_file_writer.write(spectra.spectra,data,noise,spectra.features,out_file)
+        MS::Tcsv_file_writer.write(db,out_file)
       end
     end
     #-----------------------------------------------------------------------------
     
     
     
-    #-----------------------Merge Finish------------------------------------------
-    spectra.spectra = Merger.compact(spectra.spectra)
-    #-----------------------------------------------------------------------------
-    
- 
-    
-    #-----------------------Clean UP----------------------------------------------
-    spectra.features.each{|fe| fe.delete}
-    peptides.clear
-    digester.clean
-    #-----------------------------------------------------------------------------
-    
-    
-    
     #-----------------------MZML--------------------------------------------------
-    data = spectra.spectra
-    mzml = Mzml_Wrapper.new(data)
+    mzml = Mzml_Wrapper.new(db,@opts[:sampling_rate])
     puts "Writing to file..."
     mzml.to_xml(out_file)
     puts "Done."
@@ -118,18 +124,12 @@ module MspireSimulator
       if File.exists?(digester.digested_file)
         File.delete(digester.digested_file)
       end
-      digester.clean
-    end
-    if spectra != nil
-      spectra.features.each{|fe| fe.delete}
-    end
-    if !peptides.empty?
-      peptides.each{|pep| pep.delete}
     end
     puts "Exception - Simulation Failed"
-    
-    system "sim_mail #{email} Exception - Simulation Failed" if email != "nil"
-  else
-    system "sim_mail #{email} Success! - Simulation Complete" if email != "nil"
+  ensure
+    system "sim_mail #{email} Simulation Complete" if email != "nil"
+    db.commit
+    db.close if db
+    system "rm -f peptides"
   end
 end

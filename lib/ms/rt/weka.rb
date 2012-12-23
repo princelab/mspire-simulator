@@ -5,13 +5,16 @@ module MS
   module Weka
     #James Dalg
     module_function
-    def predict_rts(peptides)
+    def predict_rts(db)
       #mz,charge,intensity,rt,A,R,N,D,B,C,E,Q,Z,G,H,I,L,K,M,F,P,S,T,W,Y,V,J,mass,hydro,pi
       #make arrf file to feed weka model
       data = []
-      peptides.each do |pep|
-        data<<pep.aa_counts
+      rs = db.execute "SELECT * FROM aac"
+      rs.each do |row|
+        row.delete_at(0)
+        data<<row
       end
+
       arff = make_rt_arff(Time.now.nsec.to_s,data)
 
       path = Gem.bin_path('mspire-simulator', 'mspire-simulator').split(/\//)
@@ -24,23 +27,24 @@ module MS
       count = 0
       while line = file.gets
         if line =~ /(\d*\.\d{0,3}){1}/
-          peptides[count].p_rt = line.match(/(\d*\.\d{0,3}){1}/)[0].to_f
+          p_rt = line.match(/(\d*\.\d{0,3}){1}/)[0].to_f
+          db.execute "UPDATE peptides SET p_rt=#{p_rt} WHERE Id='#{count}'"
           count += 1
         end
       end
       system("rm #{arff}.out")
-      return peptides
     end
 
 
 
-    def predict_ints(peptides)
+    def predict_ints(db)
       data = []
-      peptides.each do |pep|
-        array = []
-        array<<pep.mono_mz<<pep.charge<<pep.mass<<pep.p_rt
-        data << array.concat(pep.aa_counts)
+      aas = "A,R,N,D,B,C,E,Q,Z,G,H,I,L,K,M,F,P,S,T,W,Y,V,J,place_holder"
+      rs = db.execute "SELECT mono_mz, charge, mass, p_rt,#{aas} FROM peptides NATURAL JOIN aac" #JOIN aac
+      rs.each do |row|
+        data<<row
       end
+
       arff = make_int_arff(Time.now.nsec.to_s,data)
 
       path = Gem.bin_path('mspire-simulator', 'mspire-simulator').split(/\//)
@@ -53,12 +57,12 @@ module MS
       count = 0
       while line = file.gets
         if line =~ /(\d*\.\d{0,3}){1}/
-          peptides[count].p_int = line.match(/(\d*\.\d{0,3}){1}/)[0].to_f
+          p_int = line.match(/(\d*\.\d{0,3}){1}/)[0].to_f
+          db.execute "UPDATE peptides SET p_int=#{p_int} WHERE Id='#{count}'"
           count += 1
         end
       end
       system("rm #{arff}.out")
-      return peptides
     end
 
 

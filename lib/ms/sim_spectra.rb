@@ -6,9 +6,8 @@ require 'ms/sim_feature'
 
 module MS
   class Sim_Spectra
-    def initialize(peptides,opts,one_d = false)
+    def initialize(opts,one_d = false,db)
       @opts = opts
-      @data
       @max_mz
       sampling_rate = opts[:sampling_rate]
       run_time = opts[:run_time]
@@ -18,59 +17,39 @@ module MS
       @@r_times = []
       num_of_spec = sampling_rate*run_time
       spec_time = 1/sampling_rate
-      num_of_spec.to_i.times do
+      num_of_spec.to_i.times do |k|
         @@r_times<<spec_time+RThelper.RandomFloat(-var,var)
         spec_time = spec_time + (1/sampling_rate)
       end
       @@r_times = MS::Noise.spec_drops(drop_percentage)
 
-      pre_features = MS::Rtgenerator.generateRT(peptides,one_d)
+      MS::Rtgenerator.generateRT(one_d,db)
 
       #Features
-      features_o = MS::Sim_Feature.new(pre_features,opts,one_d)
-      @features = features_o.features
-      @data = features_o.data
-      @max_mz = features_o.max_mz
-      @spectra = @data.clone
-
-      @noise = nil
+      @features_o = MS::Sim_Feature.new(opts,one_d,db)
+      @max_mz = @features_o.max_mz
 
     end
 
-    def noiseify
+    def noiseify(db)
       @noise = MS::Noise.noiseify(@opts,@max_mz)
-
-      @@r_times.each do |k|
-        s_v = @data[k]
-        n_v = @noise[k]
-        if s_v != nil
-	  spec = [s_v[0]+n_v[0],s_v[1]+n_v[1]]
-	  spec.ms_level = s_v.ms_level
-	  spec.ms2 = s_v.ms2
-          @spectra[k] = spec
-        else
-          spec = [n_v[0],n_v[1]]
-	  spec.ms_level = 1
-	  spec.ms2 = nil
-          @spectra[k] = spec
+      cent_id = @features_o.cent_id + 1
+      @noise.each do |key,val|
+        mzs = val[0]
+        ints = val[1]
+        mzs.each_with_index do |mz,index|
+          db.execute "INSERT INTO spectra VALUES(#{cent_id},NULL,#{key},#{mz},#{ints[index]},NULL,0)"
+          cent_id += 1
         end
       end
-
-      return @noise
     end
 
     def self.r_times
       @@r_times
     end
 
-    attr_reader :data, :max_mz, :spectra, :noise, :features
-    attr_writer :data, :max_mz, :spectra, :noise, :features
+    attr_reader :max_mz
+    attr_writer :max_mz
 
   end
 end
-
-#charge ratio: take both charge states, determine pH effective
-#more small peaks from lesser charge states
-
-#one_d
-#fit to other labs data - different machine

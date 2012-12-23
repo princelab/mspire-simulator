@@ -2,111 +2,46 @@ require 'mspire/isotope/distribution'
 
 module MS
   class Peptide
-    def initialize(sequence, charge, abu = 1.0)
+    def initialize(sequence, charge, abu = 1.0,db,id)
       @abu = abu
       @p_rt = 0
       @p_int = 0
       @rts = []
-      @charge = charge #this is saved in the file name as well
+      @charge = charge 
 
       spec = calcSpectrum(sequence, @charge)
 
       # TODO Ryan: alter this to handle variable and static mass modifications... Add it from the Katamari code
 
-      @core_ints = spec.intensities.clone
-      @core_mzs = spec.mzs.clone
-      @mzs_file = ".m/#{sequence[0]}/#{sequence}_#{charge}"
-      @ints_file = ".i/#{sequence[0]}/#{sequence}_#{charge}"
-      file = File.open(@mzs_file, "w")
-      file.puts(sequence)
-      file.close
+      #core_ints
+      db.execute "CREATE TABLE IF NOT EXISTS core_ints_#{id}(core_int_id INTEGER, int REAL)"
+      spec.intensities.each_with_index do |int,ind|
+        db.execute "INSERT INTO core_ints_#{id} VALUES(#{ind},#{int})"
+      end
+      #core_mzs
+      db.execute "CREATE TABLE IF NOT EXISTS core_mzs_#{id}(core_mz_id INTEGER, mz REAL)"
+      spec.mzs.each_with_index do |mz,ind|
+        db.execute "INSERT INTO core_mzs_#{id} VALUES(#{ind},#{mz})"
+      end
+
       @mono_mz = spec.mzs[spec.intensities.index(spec.intensities.max)]
       @mass = @mono_mz * @charge
       #U,O,X ???
+      @aa_counts = []
+      stm = "INSERT INTO aac VALUES(#{id},"
       amino_acids = ['A','R','N','D','B','C','E','Q','Z','G','H','I',
         'L','K','M','F','P','S','T','W','Y','V','J']
-      @aa_counts = amino_acids.map do |aa|
-        sequence.count(aa)
+      amino_acids.map do |aa|
+        count = sequence.count(aa)
+        stm<<"#{count},"
+        count
       end
-      @aa_counts<<0.0
+      stm<<"0.0)" #place holder for predicted values
+      stm = db.prepare(stm)
+      stm.execute
+      stm.close if stm
+      db.execute "INSERT INTO peptides VALUES(#{id},'#{sequence}', #{@mass}, #{charge}, #{@mono_mz}, #{@p_rt},NULL, #{@p_int}, #{@abu}, NULL,NULL,NULL)"
     end
-
-    attr_reader :mass, :charge, :mono_mz, :core_mzs, :p_rt, :p_int, :core_ints, :hydro, :pi, :aa_counts, :p_rt_i, :abu, :sx
-    attr_writer :mass, :charge, :mono_mz, :core_mzs, :p_rt, :p_int, :core_ints, :hydro, :pi, :aa_counts, :p_rt_i, :abu, :sx
-
-    def to_s
-      file = File.open(@mzs_file,"r")
-      seq = file.gets.chomp
-      file.close
-      "Peptide: #{seq}"
-    end
-
-    def sequence
-      file = File.open(@mzs_file,"r")
-      seq = file.gets.chomp
-      file.close
-      seq
-    end
-
-    #---------------------------------------------------------------------------
-    def ints
-      file = File.open(@ints_file, "r")
-      line = file.gets.chomp.split(/;/)
-      file.close
-      ints = []
-      line.each do |iso|
-        ints<<iso.chomp.split(/,/).map!{|fl| fl.to_f}
-      end
-      return ints
-    end
-
-    def insert_ints(arr)
-      file = File.open(@ints_file, "a")
-      arr.each do |val|
-        file.print("#{val},")
-      end
-      file.print(";")
-      file.close
-    end
-
-    def mzs
-      file = File.open(@mzs_file, "r")
-      line = file.gets
-      line = file.gets.chomp.split(/;/)
-      file.close
-      mzs = []
-      line.each do |iso|
-        mzs<<iso.chomp.split(/,/).map!{|fl| fl.to_f}
-      end
-      return mzs
-    end
-
-    def insert_mzs(arr)
-      file = File.open(@mzs_file, "a")
-      arr.each do |val|
-        file.print("#{val},")
-      end
-      file.print(";")
-      file.close
-    end
-
-    def rts
-      return Sim_Spectra::r_times[@rts[0]..@rts[1]]
-    end
-
-    def set_rts(a,b)
-      @rts = [a,b]
-    end
-
-    def delete
-      if File.exists?(@mzs_file)
-        File.delete(@mzs_file)
-      end
-      if File.exists?(@ints_file)
-        File.delete(@ints_file)
-      end
-    end
-    #---------------------------------------------------------------------------
 
     # Calculates theoretical specturm
     #
