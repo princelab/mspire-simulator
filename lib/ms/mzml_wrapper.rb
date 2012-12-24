@@ -5,8 +5,11 @@ require 'mspire/mzml'
 
 class Mzml_Wrapper
 
-  def initialize(db,sampling_rate)
+  def initialize(db,opts)
     #spectra is a Hash rt=>[[mzs],[ints]]
+    db.execute "CREATE TABLE IF NOT EXISTS ms2(ms2_id INTEGER PRIMARY KEY,cent_id INTEGER,pep_id INTEGER,rt REAL,mzs TEXT,ints TEXT)" if opts[:ms2] == "true"
+    sampling_rate = opts[:sampling_rate]
+    noise_max = opts[:noiseMaxInt]
     ms2_count = 0
     count = 0.0
     scan_number = 1
@@ -27,12 +30,18 @@ class Mzml_Wrapper
       mzs = data_t[3]
       ints = data_t[4]
 
+      #grab top 2 centroids for ms2
       ms2s = []
-      data.each do |cent| 
-        if cent[6] == 1
-          ms2s<<cent
+      if opts[:ms2] == "true"
+        top2 = ints.sort[-opts[:ms2s]..-1]
+        top2.each do |top|
+          if top > noise_max + 1000.0
+            cent = data[ints.index(top)]
+            ms2s<<cent if cent[1] != nil
+          end
         end
       end
+      
 
       spc = Mspire::Mzml::Spectrum.new("scan=#{scan_number}") do |spec|
         spec.describe_many!(['MS:1000127', ['MS:1000511', 1]]) 
@@ -53,37 +62,40 @@ class Mzml_Wrapper
         ms2s.each do |cent|
           pep = db.execute "SELECT seq,charge FROM peptides WHERE Id=#{cent[1]}"
           seq = pep[0][0]
-          charge = pep[0][1]
-          ms2_mzs = MS::Fragmenter.new.fragment(seq)
-          ms2_ints = Array.new(ms2_mzs.size,500.to_f)
-          rt = cent[2] + RThelper.RandomFloat(0.01,sampling_rate - 0.1)
+          if seq.size > 1
+            charge = pep[0][1]
+            ms2_mzs = MS::Fragmenter.new.fragment(seq)
+            ms2_ints = Array.new(ms2_mzs.size,500.to_f)
+            rt = cent[2] + RThelper.RandomFloat(0.01,sampling_rate - 0.1)
+            db.execute "INSERT INTO ms2(cent_id,pep_id,rt,mzs,ints) VALUES(#{cent[0]},#{cent[1]},#{rt},'#{ms2_mzs}','#{ms2_ints}')"
 
-          ms2_count += 1
-          scan_number += 1
-          spc2 = Mspire::Mzml::Spectrum.new("scan=#{scan_number}") do |spec|
-            spec.describe_many!(['MS:1000127', ['MS:1000511', 2]]) 
-            spec.data_arrays = [
-              Mspire::Mzml::DataArray.new(ms2_mzs).describe!('MS:1000514'),  
-              Mspire::Mzml::DataArray.new(ms2_ints).describe!('MS:1000515')   
-            ]
-            spec.scan_list = Mspire::Mzml::ScanList.new do |sl|
-              scan = Mspire::Mzml::Scan.new do |scan|
-                scan.describe! 'MS:1000016', rt, 'UO:0000010'
+            ms2_count += 1
+            scan_number += 1
+            spc2 = Mspire::Mzml::Spectrum.new("scan=#{scan_number}") do |spec|
+              spec.describe_many!(['MS:1000127', ['MS:1000511', 2]]) 
+              spec.data_arrays = [
+                Mspire::Mzml::DataArray.new(ms2_mzs).describe!('MS:1000514'),  
+                Mspire::Mzml::DataArray.new(ms2_ints).describe!('MS:1000515')   
+              ]
+              spec.scan_list = Mspire::Mzml::ScanList.new do |sl|
+                scan = Mspire::Mzml::Scan.new do |scan|
+                  scan.describe! 'MS:1000016', rt, 'UO:0000010'
+                end
+                sl << scan
               end
-              sl << scan
+              precursor = Mspire::Mzml::Precursor.new( spc.id )
+              si = Mspire::Mzml::SelectedIon.new
+              # the selected ion m/z:
+              si.describe! "MS:1000744", cent[3] #pre_mz
+              # the selected ion charge state
+              si.describe! "MS:1000041", charge #pre_charge
+              # the selected ion intensity
+              si.describe! "MS:1000042", cent[4] #pre_int
+              precursor.selected_ions = [si]
+              spec.precursors = [precursor]
             end
-            precursor = Mspire::Mzml::Precursor.new( spc.id )
-            si = Mspire::Mzml::SelectedIon.new
-            # the selected ion m/z:
-            si.describe! "MS:1000744", cent[3] #pre_mz
-            # the selected ion charge state
-            si.describe! "MS:1000041", charge #pre_charge
-            # the selected ion intensity
-            si.describe! "MS:1000042", cent[4] #pre_int
-            precursor.selected_ions = [si]
-            spec.precursors = [precursor]
           end
-          specs<<spc2
+          specs<<spc2 if seq.size > 1
         end
       end
       count += 1

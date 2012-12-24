@@ -17,7 +17,7 @@ module MS
       #------------------Each_Peptide_=>_Feature----------------------
       prog = Progress.new("Generating features:")
       num = 0
-      @db.execute "CREATE TABLE IF NOT EXISTS spectra(cent_id INTEGER PRIMARY KEY,pep_id INTEGER,rt REAL,mzs REAL,ints REAL,merge_id INTEGER,ms2_bool INTEGER)"
+      @db.execute "CREATE TABLE IF NOT EXISTS spectra(cent_id INTEGER PRIMARY KEY,pep_id INTEGER,rt REAL,mzs REAL,ints REAL,merge_id INTEGER)"
       @cent_id = 0
       peps = @db.execute "SELECT * FROM peptides"
       total = peps.size
@@ -52,7 +52,6 @@ module MS
       low = 0.1*predicted_int
       relative_ints = (@db.execute "SELECT int FROM core_ints_#{pep_id}").flatten#pep.core_ints
       core_mzs = (@db.execute "SELECT mz FROM core_mzs_#{pep_id}").flatten#pep.core_ints
-      @db.execute "CREATE TABLE IF NOT EXISTS f_#{pep_id}(rt REAL,mz REAL,int REAL)"
       avg = pep[5] #p_rt
 
       sampling_rate = @opts[:sampling_rate].to_f
@@ -127,7 +126,7 @@ module MS
 
           int = int*(predicted_int*(relative_abundances_int*10**-2)) * sy
           if int > low.abs and wobble_mz > 0
-            @db.execute "INSERT INTO spectra VALUES(#{@cent_id},#{pep_id},#{rt},#{wobble_mz},#{int},NULL,0)"
+            @db.execute "INSERT INTO spectra VALUES(#{@cent_id},#{pep_id},#{rt},#{wobble_mz},#{int},NULL)"
             @cent_id += 1
             if @max_mz < wobble_mz
               @max_mz = wobble_mz

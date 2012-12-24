@@ -38,7 +38,7 @@ module MS
         mzs = val[0]
         ints = val[1]
         mzs.each_with_index do |mz,index|
-          db.execute "INSERT INTO spectra VALUES(#{cent_id},NULL,#{key},#{mz},#{ints[index]},NULL,0)"
+          db.execute "INSERT INTO spectra VALUES(#{cent_id},NULL,#{key},#{mz},#{ints[index]},NULL)"
           cent_id += 1
         end
       end

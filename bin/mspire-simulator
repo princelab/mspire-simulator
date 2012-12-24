@@ -51,9 +51,17 @@ module MspireSimulator
 
     SampleLoad = 1.0 # Instrument dependent scaling, for an Orbitrap, assumed to be 1 ug 
     # TODO define an option for sample loading, and a scaling function to define the peak intensities
-    @@database = "peptides" #can be :memory: stored
+    if @opts[:memory] == "true"
+      database = ":memory:"
+    else
+      if @opts[:databaseName] == "peptides_[Time.now.sec]"
+        database = "peptides_#{Time.now.sec}.sqlite3" #can be :memory: stored
+      else
+        database = "#{@opts[:databaseName]}.sqlite3"
+      end
+    end
     #
-    db = SQLite3::Database.new(@@database)
+    db = SQLite3::Database.new(database)
     db.transaction
     db.execute "CREATE TABLE IF NOT EXISTS peptides(Id INTEGER PRIMARY KEY, seq TEXT, mass REAL, charge INTEGER, mono_mz REAL, p_rt REAL, p_rt_index REAL, p_int REAL, abu REAL, sx REAL, rt_a INTEGER, rt_b INTEGER)"
     db.execute "CREATE TABLE IF NOT EXISTS aac(Id INTEGER PRIMARY KEY, A INTEGER,R INTEGER,N INTEGER,D INTEGER,B INTEGER,C INTEGER,E INTEGER,Q INTEGER,Z INTEGER,G INTEGER,H INTEGER,I INTEGER,L INTEGER,K INTEGER,M INTEGER,F INTEGER,P INTEGER,S INTEGER,T INTEGER,W INTEGER,Y INTEGER,V INTEGER,J INTEGER, place_holder REAL)"
@@ -81,17 +89,6 @@ module MspireSimulator
     
     #------------------------Merge Overlaps----MS2--------------------------------
     Merger.merge(@opts[:overlapRange].to_f,db)
-    peps = db.execute "SELECT Id, seq FROM peptides"
-    pep_t = peps.transpose
-    pep_ids = pep_t[0]
-    pep_seqs = pep_t[1]
-    pep_ids.each_with_index do |pep_id,index|
-      specs = db.execute "SELECT * FROM spectra WHERE pep_id=#{pep_id}"
-      next if specs.empty?
-      #intensity
-      m_cent = specs.max_by {|cent| cent[4]} 
-      db.execute "UPDATE spectra SET ms2_bool=1 WHERE cent_id=#{m_cent[0]}"
-    end
     #-----------------------------------------------------------------------------
 
     
@@ -109,7 +106,7 @@ module MspireSimulator
     
     
     #-----------------------MZML--------------------------------------------------
-    mzml = Mzml_Wrapper.new(db,@opts[:sampling_rate])
+    mzml = Mzml_Wrapper.new(db,@opts)
     puts "Writing to file..."
     mzml.to_xml(out_file)
     puts "Done."
@@ -130,6 +127,5 @@ module MspireSimulator
     system "sim_mail #{email} Simulation Complete" if email != "nil"
     db.commit
     db.close if db
-    system "rm -f peptides"
   end
 end

@@ -27,13 +27,13 @@ module MS
                 trypsin,\n \t\tv8_e_trypsin,
                 v8_de_trypsin",
                 :default => "trypsin" 
-		opt :missed_cleavages, "Number of missed cleavages during digestion", :default => 2
+                opt :missed_cleavages, "Number of missed cleavages during digestion", :default => 2
                 opt :sampling_rate, "How many scans per second", :default => 0.5 
                 opt :run_time, "Run time in seconds", :default => 1000.0 
                 opt :noise, "Noise on or off", :default => "true"
                 opt :noise_density, "Determines the density of white noise", :default => 10
-		opt :noiseMaxInt, "The max noise intensity level", :default => 1000
-		opt :noiseMinInt, "The minimum noise intensity level", :default => 50
+                opt :noiseMaxInt, "The max noise intensity level", :default => 1000
+                opt :noiseMinInt, "The minimum noise intensity level", :default => 50
                 opt :pH, "The pH that the sample is in - for determining charge", :default => 2.6
                 opt :out_file, "Name of the output file", :default => "test.mzml"
                 opt :contaminants, "Fasta file containing contaminant sequences", :default => "testFiles/contam/hum_keratin.fasta"
@@ -55,6 +55,10 @@ module MS
                 opt :generations, "If an mzml file is provided this specifies the number of generations for the curve fitting algorithm", :default => 30000
                 opt :mass_label, "Specify a mass tag pattern", :default => 0
                 opt :modifications, "Use a specific modifications file, or read them from a header of the fasta file, perhaps... TBD..."
+                opt :ms2s, "Number of peptide ms2s to perform on each scan", :default => 1
+                opt :ms2, "Turn on/off ms2 (true == on)", :default => "true"
+                opt :databaseName, "Name of database file", :default => "peptides_[Time.now.sec]"
+                opt :memory, "Determines whether to store the database in memory or write to file (false == write to file) Note: if true no database file will be accessible after simulation", :default => "false"
 
       end
 
