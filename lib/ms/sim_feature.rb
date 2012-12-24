@@ -50,8 +50,8 @@ module MS
       end
       predicted_int = (p_int * 10**-1) * 14183000.0 
       low = 0.1*predicted_int
-      relative_ints = (@db.execute "SELECT int FROM core_ints_#{pep_id}").flatten#pep.core_ints
-      core_mzs = (@db.execute "SELECT mz FROM core_mzs_#{pep_id}").flatten#pep.core_ints
+      relative_ints = (@db.execute "SELECT ints FROM core_spec WHERE pep_id=#{pep_id}").flatten[0].gsub(/\[/,"").split(/,/).map{|val| val.to_f}
+      core_mzs = (@db.execute "SELECT mzs FROM core_spec WHERE pep_id=#{pep_id}").flatten[0].gsub(/\[/,"").split(/,/).map{|val| val.to_f}
       avg = pep[5] #p_rt
 
       sampling_rate = @opts[:sampling_rate].to_f

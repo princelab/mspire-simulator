@@ -51,6 +51,7 @@ module MspireSimulator
 
     SampleLoad = 1.0 # Instrument dependent scaling, for an Orbitrap, assumed to be 1 ug 
     # TODO define an option for sample loading, and a scaling function to define the peak intensities
+    database = nil
     if @opts[:memory] == "true"
       database = ":memory:"
     else
@@ -63,8 +64,9 @@ module MspireSimulator
     #
     db = SQLite3::Database.new(database)
     db.transaction
-    db.execute "CREATE TABLE IF NOT EXISTS peptides(Id INTEGER PRIMARY KEY, seq TEXT, mass REAL, charge INTEGER, mono_mz REAL, p_rt REAL, p_rt_index REAL, p_int REAL, abu REAL, sx REAL, rt_a INTEGER, rt_b INTEGER)"
+    db.execute "CREATE TABLE IF NOT EXISTS peptides(Id INTEGER PRIMARY KEY, seq TEXT, mass REAL, charge INTEGER, mono_mz REAL, p_rt REAL, p_rt_index REAL, p_int REAL, abu REAL, sx REAL, rt_a INTEGER, rt_b INTEGER, prot_id INTEGER)"
     db.execute "CREATE TABLE IF NOT EXISTS aac(Id INTEGER PRIMARY KEY, A INTEGER,R INTEGER,N INTEGER,D INTEGER,B INTEGER,C INTEGER,E INTEGER,Q INTEGER,Z INTEGER,G INTEGER,H INTEGER,I INTEGER,L INTEGER,K INTEGER,M INTEGER,F INTEGER,P INTEGER,S INTEGER,T INTEGER,W INTEGER,Y INTEGER,V INTEGER,J INTEGER, place_holder REAL)"
+    db.execute "CREATE TABLE IF NOT EXISTS core_spec(pep_id INTEGER PRIMARY KEY,mzs TEXT, ints TEXT)"
     #
     
     #------------------------Digest-----------------------------------------------
@@ -87,7 +89,7 @@ module MspireSimulator
     
     
     
-    #------------------------Merge Overlaps----MS2--------------------------------
+    #------------------------Merge Overlaps---------------------------------------
     Merger.merge(@opts[:overlapRange].to_f,db)
     #-----------------------------------------------------------------------------
 
@@ -122,6 +124,7 @@ module MspireSimulator
         File.delete(digester.digested_file)
       end
     end
+    system "rm #{database}"
     puts "Exception - Simulation Failed"
   ensure
     system "sim_mail #{email} Simulation Complete" if email != "nil"

@@ -24,6 +24,7 @@ Jeweler::Tasks.new do |gem|
   gem.add_dependency "obo", "= 0.1.0"
   gem.add_dependency "trollop", "= 1.16.2"
   gem.add_dependency "MS-fragmenter", "= 0.0.2"
+  gem.add_dependency "sqlite3", "= 1.3.6"
   
   gem.executables = ["mspire-simulator","sim_mail"]
   gem.files.exclude "elution_curvefit.svg"

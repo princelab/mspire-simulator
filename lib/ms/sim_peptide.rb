@@ -2,7 +2,7 @@ require 'mspire/isotope/distribution'
 
 module MS
   class Peptide
-    def initialize(sequence, charge, abu = 1.0,db,id)
+    def initialize(sequence, charge, abu = 1.0,db,id,prot_id)
       @abu = abu
       @p_rt = 0
       @p_int = 0
@@ -13,16 +13,8 @@ module MS
 
       # TODO Ryan: alter this to handle variable and static mass modifications... Add it from the Katamari code
 
-      #core_ints
-      db.execute "CREATE TABLE IF NOT EXISTS core_ints_#{id}(core_int_id INTEGER, int REAL)"
-      spec.intensities.each_with_index do |int,ind|
-        db.execute "INSERT INTO core_ints_#{id} VALUES(#{ind},#{int})"
-      end
-      #core_mzs
-      db.execute "CREATE TABLE IF NOT EXISTS core_mzs_#{id}(core_mz_id INTEGER, mz REAL)"
-      spec.mzs.each_with_index do |mz,ind|
-        db.execute "INSERT INTO core_mzs_#{id} VALUES(#{ind},#{mz})"
-      end
+      #core mzs, ints
+      db.execute "INSERT INTO core_spec VALUES(#{id},'#{spec.mzs}','#{spec.intensities}')"
 
       @mono_mz = spec.mzs[spec.intensities.index(spec.intensities.max)]
       @mass = @mono_mz * @charge
@@ -40,7 +32,7 @@ module MS
       stm = db.prepare(stm)
       stm.execute
       stm.close if stm
-      db.execute "INSERT INTO peptides VALUES(#{id},'#{sequence}', #{@mass}, #{charge}, #{@mono_mz}, #{@p_rt},NULL, #{@p_int}, #{@abu}, NULL,NULL,NULL)"
+      db.execute "INSERT INTO peptides VALUES(#{id},'#{sequence}', #{@mass}, #{charge}, #{@mono_mz}, #{@p_rt},NULL, #{@p_int}, #{@abu}, NULL,NULL,NULL,#{prot_id})"
     end
 
     # Calculates theoretical specturm

@@ -38,7 +38,7 @@ class Merger
     prog = Progress.new("Merging Overlaps:")
     db.execute "CREATE TABLE IF NOT EXISTS merged(merge_id INTEGER PRIMARY KEY, merged_vals TEXT, a_vals TEXT, b_vals TEXT)"
     spectra = db.execute "SELECT * FROM spectra"
-    spectra = spectra.group_by{|spec| spec[1]}
+    spectra = spectra.group_by{|spec| spec[2]}
     total = spectra.size
     merge_id = 0
     k = 0
@@ -63,8 +63,8 @@ class Merger
           new_mz = w_avg(metaA_mz,meta_int)
           db.execute "DELETE FROM spectra WHERE cent_id=#{cent_ids[i]}"
           db.execute "DELETE FROM spectra WHERE cent_id=#{cent_ids[i+1]}"
-          db.execute "INSERT INTO spectra VALUES(#{cent_ids[i]},#{pep_ids[i]},#{rt},#{new_mz},#{sum},#{merge_id},0)"
-          db.execute "INSERT INTO merged VALUES(#{merge_id}, '#{pep_ids[i]},#{rt},#{new_mz},#{sum}', '#{peaks[i]}', '#{peaks[i+1]}')"
+          db.execute "INSERT INTO spectra VALUES(#{cent_ids[i]},#{pep_ids[i]},#{rt},#{new_mz},#{sum},#{merge_id})"
+          db.execute "INSERT INTO merged VALUES(#{merge_id}, '#{cent_ids[i]},#{pep_ids[i]},#{rt},#{new_mz},#{sum}', '#{peaks[i]}', '#{peaks[i+1]}')"
           merge_id += 1
         end
       end

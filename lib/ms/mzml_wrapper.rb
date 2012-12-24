@@ -6,6 +6,7 @@ require 'mspire/mzml'
 class Mzml_Wrapper
 
   def initialize(db,opts)
+    prog = Progress.new("Converting to mzml:")
     #spectra is a Hash rt=>[[mzs],[ints]]
     db.execute "CREATE TABLE IF NOT EXISTS ms2(ms2_id INTEGER PRIMARY KEY,cent_id INTEGER,pep_id INTEGER,rt REAL,mzs TEXT,ints TEXT)" if opts[:ms2] == "true"
     sampling_rate = opts[:sampling_rate]
@@ -14,7 +15,6 @@ class Mzml_Wrapper
     count = 0.0
     scan_number = 1
     specs = []
-    prog = Progress.new("Converting to mzml:")
     num = 0
     spectra = db.execute "SELECT * FROM spectra"
     total = spectra.size

@@ -1,30 +1,29 @@
 
 class String
-  abu = 0
-  attr_reader :abu
-  attr_writer :abu
+  attr_reader :abu, :prot_id
+  attr_writer :abu, :prot_id
 end
 
 module MS
   class Sim_Digester
 
-    attr_reader :digested_file
-    attr_writer :digested_file
-
     def initialize(digestor,pH,missed_cleavages,db)
       @db = db
+      @db.execute "CREATE TABLE IF NOT EXISTS digested(prot_id INTEGER PRIMARY KEY,header TEXT, abu REAL, sequence TEXT, peptides TEXT)"
       @digestor = digestor
       @pH = pH
       @missed_cleavages = missed_cleavages
-      @digested_file = ".#{Time.now.nsec.to_s}"
+      @digested = nil
     end
 
-    def create_digested_file(file)
+    def create_digested(file)
       abundances = []
+      headers = []
       inFile = File.open(file,"r")
       seq = ""
       inFile.each_line do |sequence| 
         if sequence =~ />/
+          headers<<sequence
           num = sequence.match(/\#.+/).to_s.chomp.gsub('#','')
           if num != ""
             abundances<<(num.to_f)*10.0**-2
@@ -43,54 +42,33 @@ module MS
 
       trypsin = Mspire::Digester[@digestor]
 
-      digested = []
-      d_file = File.open(@digested_file, "w")
+      @digested = []
       proteins.each_with_index do |prot,index|
         dig = trypsin.digest(prot,@missed_cleavages) # two missed cleavages for fig 6
+        @db.execute "INSERT INTO digested(header,abu,sequence,peptides) VALUES(\"#{headers[index]}\",#{abundances[index]},\"#{prot}\",'#{dig}')"
         dig.each do |d|
           d.abu = abundances[index]
-          digested<<d
+          d.prot_id = index
+          @digested<<d
         end
       end
       proteins.clear
-      digested.uniq!
-
-      trun_digested = []
-      if digested.length > 50000
-        50000.times do 
-          trun_digested<<digested[rand(digested.length)]
-        end
-        digested.clear
-        digested = trun_digested
-      end
-
-      digested.each do |dig|
-        d_file.puts(dig<<"#"<<dig.abu.to_s)
-      end
-      d_file.close
-      num_digested = digested.size
-      digested.clear
+      dige = @digested.uniq!
+      
+      num_digested = @digested.size
       puts "Number of peptides: #{num_digested}"
-      return num_digested
     end
 
     def digest(file)
-      num_digested = create_digested_file(file)
+      prog = Progress.new("Creating peptides '#{file}':")
+      create_digested(file)
 
-      d_file = File.open(@digested_file, "r")
       i = 0
       count = 0
-
-      peptides = []
-
-      prog = Progress.new("Creating peptides '#{file}':")
       num = 0
-      total = num_digested
+      total = @digested.size
       step = total/100.0
-      d_file.each_line do |peptide_seq|
-        peptide_seq.chomp!
-        peptide_seq.abu = peptide_seq.match(/#.+/).to_s.chomp.gsub('#','').to_f
-          peptide_seq.gsub!(/#.+/,'')
+      @digested.each do |peptide_seq|
           if count > step * (num + 1)
             num = ((count/total.to_f)*100.0).to_i
             prog.update(num)
@@ -99,19 +77,14 @@ module MS
         charge_ratio = charge_at_pH(identify_potential_charges(peptide_seq), @pH)
         charge_f = charge_ratio.floor
         charge_c = charge_ratio.ceil
-        peptide_f = MS::Peptide.new(peptide_seq, charge_f, peptide_seq.abu,@db,i) if charge_f != 0
+        peptide_f = MS::Peptide.new(peptide_seq, charge_f, peptide_seq.abu,@db,i,peptide_seq.prot_id) if charge_f != 0
         i += 1 if charge_f != 0
-        peptide_c = MS::Peptide.new(peptide_seq, charge_c, peptide_seq.abu,@db,i) if charge_c != 0
+        peptide_c = MS::Peptide.new(peptide_seq, charge_c, peptide_seq.abu,@db,i,peptide_seq.prot_id) if charge_c != 0
         i += 1 if charge_c != 0
 
-        peptides<<peptide_f if charge_f != 0
-        peptides<<peptide_c if charge_c != 0
         count += 1
       end
       prog.finish!
-      d_file.close
-      File.delete(@digested_file)
-      return peptides
     end
   end
 end
