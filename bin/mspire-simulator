@@ -92,29 +92,30 @@ module MspireSimulator
     #------------------------Merge Overlaps---------------------------------------
     Merger.merge(@opts[:overlapRange].to_f,db)
     #-----------------------------------------------------------------------------
-
-    
-    
-    #------------------------Truth Files------------------------------------------
-    if truth != "false"
-      if truth == "xml"
-        MS::Txml_file_writer.write(db,out_file)
-      elsif truth == "csv"
-        MS::Tcsv_file_writer.write(db,out_file)
-      end
-    end
-    #-----------------------------------------------------------------------------
     
     
     
     #-----------------------MZML--------------------------------------------------
     mzml = Mzml_Wrapper.new(db,@opts)
-    puts "Writing to file..."
+    puts "Writing to mzml file..."
     mzml.to_xml(out_file)
     puts "Done."
     #-----------------------------------------------------------------------------
 
 
+
+    #------------------------Truth Files------------------------------------------
+    if truth != "false"
+      if truth == "xml"
+        MS::Txml_file_writer.write(db,out_file,@opts)
+      elsif truth == "csv"
+        MS::Tcsv_file_writer.write(db,out_file,@opts)
+      elsif truth == "xml_csv" or truth == "csv_xml"
+        MS::Txml_file_writer.write(db,out_file,@opts)
+        MS::Tcsv_file_writer.write(db,out_file,@opts)
+      end
+    end
+    #-----------------------------------------------------------------------------
 
   rescue Exception => e  #Clean up if exception 
     puts e.message  

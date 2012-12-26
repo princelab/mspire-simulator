@@ -115,7 +115,7 @@ class Mzml_Wrapper
       mzml.instrument_configurations << default_instrument_config
       software = Mspire::Mzml::Software.new
       mzml.software_list << software
-      default_data_processing = Mspire::Mzml::DataProcessing.new("did_nothing")
+      default_data_processing = Mspire::Mzml::DataProcessing.new("simulator options=#{opts}")
       mzml.data_processing_list << default_data_processing
       mzml.run = Mspire::Mzml::Run.new("simulated_run", default_instrument_config) do |run|
         spectrum_list = Mspire::Mzml::SpectrumList.new(default_data_processing, specs)

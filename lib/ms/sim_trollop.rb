@@ -40,7 +40,7 @@ module MS
                 opt :dropout_percentage, "Defines the percentage of random dropouts in the run. 0.0 <= percentage < 1.0", :default => 0.01
                 opt :shuffle, "Option shuffles the scans to simulate 1d data", :default => "false"
                 opt :one_d, "Turns on one dimension simulation; run_time is automatically set to 300.0", :default => "false"
-                opt :truth, "Determines truth file type; false gives no truth file; one of: xml or csv", :default => "false"
+                opt :truth, "Determines truth file type; false gives no truth file; one of: 'xml' or 'csv' or 'xml_csv' (for both)", :default => "csv"
                 opt :front, "Fronting chromatography parameter", :default => 6.65
                 opt :tail, "Tailing chromatography parameter", :default => 0.30
                 opt :mu, "Expected value of the chromatography curve", :default => 25.0
