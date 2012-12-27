@@ -1,4 +1,6 @@
 
+require 'obo/ontology'
+
 class String
   attr_reader :abu, :prot_id
   attr_writer :abu, :prot_id
@@ -7,12 +9,13 @@ end
 module MS
   class Sim_Digester
 
-    def initialize(digestor,pH,missed_cleavages,db)
+    def initialize(opts,db)
       @db = db
       @db.execute "CREATE TABLE IF NOT EXISTS digested(prot_id INTEGER PRIMARY KEY,header TEXT, abu REAL, sequence TEXT, peptides TEXT)"
-      @digestor = digestor
-      @pH = pH
-      @missed_cleavages = missed_cleavages
+      @digestor = opts[:digestor]
+      @pH = opts[:pH]
+      @missed_cleavages = opts[:missed_cleavages]
+      @modifications = Modifications.new(opts[:modifications]).modifications
       @digested = nil
     end
 
@@ -33,7 +36,7 @@ module MS
         sequence
         seq = seq<<";"
         elsif sequence == "/n"; else
-          seq = seq<<sequence.chomp
+          seq = seq<<sequence.chomp.upcase
         end
       end
       inFile.close
@@ -77,9 +80,9 @@ module MS
         charge_ratio = charge_at_pH(identify_potential_charges(peptide_seq), @pH)
         charge_f = charge_ratio.floor
         charge_c = charge_ratio.ceil
-        peptide_f = MS::Peptide.new(peptide_seq, charge_f, peptide_seq.abu,@db,i,peptide_seq.prot_id) if charge_f != 0
+        peptide_f = MS::Peptide.new(peptide_seq, charge_f, peptide_seq.abu,@db,i,peptide_seq.prot_id,@modifications) if charge_f != 0
         i += 1 if charge_f != 0
-        peptide_c = MS::Peptide.new(peptide_seq, charge_c, peptide_seq.abu,@db,i,peptide_seq.prot_id) if charge_c != 0
+        peptide_c = MS::Peptide.new(peptide_seq, charge_c, peptide_seq.abu,@db,i,peptide_seq.prot_id,@modifications) if charge_c != 0
         i += 1 if charge_c != 0
 
         count += 1

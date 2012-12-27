@@ -11,7 +11,6 @@ class Mzml_Wrapper
     db.execute "CREATE TABLE IF NOT EXISTS ms2(ms2_id INTEGER PRIMARY KEY,cent_id INTEGER,pep_id INTEGER,rt REAL,mzs TEXT,ints TEXT)" if opts[:ms2] == "true"
     sampling_rate = opts[:sampling_rate]
     noise_max = opts[:noiseMaxInt]
-    ms2_count = 0
     count = 0.0
     scan_number = 1
     specs = []
@@ -69,7 +68,6 @@ class Mzml_Wrapper
             rt = cent[2] + RThelper.RandomFloat(0.01,sampling_rate - 0.1)
             db.execute "INSERT INTO ms2(cent_id,pep_id,rt,mzs,ints) VALUES(#{cent[0]},#{cent[1]},#{rt},'#{ms2_mzs}','#{ms2_ints}')"
 
-            ms2_count += 1
             scan_number += 1
             spc2 = Mspire::Mzml::Spectrum.new("scan=#{scan_number}") do |spec|
               spec.describe_many!(['MS:1000127', ['MS:1000511', 2]]) 
@@ -123,7 +121,6 @@ class Mzml_Wrapper
       end
     end
     prog.finish!
-    puts "ms2 written = #{ms2_count}"
     return @mzml
   end
 

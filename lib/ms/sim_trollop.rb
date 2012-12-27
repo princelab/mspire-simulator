@@ -54,11 +54,11 @@ module MS
                 opt :mzml, "Mzml file to extract simulation parameters from", :default => "nil"
                 opt :generations, "If an mzml file is provided this specifies the number of generations for the curve fitting algorithm", :default => 30000
                 opt :mass_label, "Specify a mass tag pattern", :default => 0
-                opt :modifications, "Use a specific modifications file, or read them from a header of the fasta file, perhaps... TBD..."
                 opt :ms2s, "Number of peptide ms2s to perform on each scan", :default => 1
                 opt :ms2, "Turn on/off ms2 (true == on)", :default => "true"
                 opt :databaseName, "Name of database file", :default => "peptides_[Time.now.sec]"
                 opt :memory, "Determines whether to store the database in memory or write to file (false == write to file) Note: if true no database file will be accessible after simulation", :default => "false"
+                opt :modifications, "To define residue or termini modifications. Enter a string Id1R1_Id2R2_ ... where Idi is a modification Id from http://psidev.cvs.sourceforge.net/viewvc/psidev/psi/mod/data/PSI-MOD.obo and Ri is the residue/terminus to apply it to (c-term = CT, n-term = NT)", :default => "false"
 
       end
 

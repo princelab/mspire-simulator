@@ -23,6 +23,7 @@ require 'ms/isoelectric_calc'
 require 'ms/sim_digester'
 require 'ms/sim_trollop'
 require 'ms/merger'
+require 'ms/sim_modifications'
 
 
 
@@ -53,10 +54,10 @@ module MspireSimulator
     # TODO define an option for sample loading, and a scaling function to define the peak intensities
     database = nil
     if @opts[:memory] == "true"
-      database = ":memory:"
+      database = ":memory:" #can be :memory: stored
     else
       if @opts[:databaseName] == "peptides_[Time.now.sec]"
-        database = "peptides_#{Time.now.sec}.sqlite3" #can be :memory: stored
+        database = "peptides_#{Time.now.sec}.sqlite3" 
       else
         database = "#{@opts[:databaseName]}.sqlite3"
       end
@@ -69,9 +70,9 @@ module MspireSimulator
     db.execute "CREATE TABLE IF NOT EXISTS core_spec(pep_id INTEGER PRIMARY KEY,mzs TEXT, ints TEXT)"
     #
     
-    #------------------------Digest-----------------------------------------------
+    #------------------------Digest-&-Modifications-------------------------------
     peptides = []
-    digester = MS::Sim_Digester.new(@opts[:digestor],@opts[:pH],@opts[:missed_cleavages],db)
+    digester = MS::Sim_Digester.new(@opts,db)
     ARGV.each do |file|
       digester.digest(file)
     end
@@ -97,9 +98,9 @@ module MspireSimulator
     
     #-----------------------MZML--------------------------------------------------
     mzml = Mzml_Wrapper.new(db,@opts)
-    puts "Writing to mzml file..."
+    prog = Progress.new("Writing to mzml file...")
     mzml.to_xml(out_file)
-    puts "Done."
+    prog.finish!
     #-----------------------------------------------------------------------------
 
 

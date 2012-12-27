@@ -1,7 +1,5 @@
 require 'progress'
 
-#if m/z value is in "[m/z, percentage contributed to peak]" it's a
-#merged peak. 
 module MS
   class Txml_file_writer
     def self.write(db,file_name,opts)
