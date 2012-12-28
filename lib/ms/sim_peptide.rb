@@ -108,6 +108,20 @@ module MS
                 atom_counts[atom_indexes[sl[0]]] = atom_counts[atom_indexes[sl[0]]] + sl[1].to_i 
               end
             end
+          elsif seq[0] == aa and @mods["CT"] != nil#N-terminus
+            mods = @mods["CT"]
+            mods.each do |mod|
+              mod[1].split(/\s/).each_slice(2) do |sl|
+                atom_counts[atom_indexes[sl[0]]] = atom_counts[atom_indexes[sl[0]]] + sl[1].to_i 
+              end
+            end
+          elsif seq[-1] == aa and @mods["NT"] != nil#C-terminus
+            mods = @mods["NT"]
+            mods.each do |mod|
+              mod[1].split(/\s/).each_slice(2) do |sl|
+                atom_counts[atom_indexes[sl[0]]] = atom_counts[atom_indexes[sl[0]]] + sl[1].to_i 
+              end
+            end
           end
         end
 
