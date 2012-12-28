@@ -99,6 +99,7 @@ module MspireSimulator
     #-----------------------MZML--------------------------------------------------
     mzml = Mzml_Wrapper.new(db,@opts)
     prog = Progress.new("Writing to mzml file...")
+    prog.update(0)
     mzml.to_xml(out_file)
     prog.finish!
     #-----------------------------------------------------------------------------

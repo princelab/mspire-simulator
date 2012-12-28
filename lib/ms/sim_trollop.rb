@@ -58,7 +58,10 @@ module MS
                 opt :ms2, "Turn on/off ms2 (true == on)", :default => "true"
                 opt :databaseName, "Name of database file", :default => "peptides_[Time.now.sec]"
                 opt :memory, "Determines whether to store the database in memory or write to file (false == write to file) Note: if true no database file will be accessible after simulation", :default => "false"
-                opt :modifications, "To define residue or termini modifications. Enter a string Id1R1_Id2R2_ ... where Idi is a modification Id from http://psidev.cvs.sourceforge.net/viewvc/psidev/psi/mod/data/PSI-MOD.obo and Ri is the residue/terminus to apply it to (c-term = CT, n-term = NT)", :default => "false"
+                opt :modifications, "To define residue or termini modifications. Enter a string Id1R1_Id2R2_ ... 
+                                    where Idi is a modification Id from http://psidev.cvs.sourceforge.net/viewvc/psidev/psi/mod/data/PSI-MOD.obo 
+                                    and Ri is the residue/terminus to apply it to (c-term = CT, n-term = NT). Place a lowercase 'v' after the residue if variable.
+                                    (e.g. MOD:00412Mv - oxidation on Methionine, variable)", :default => "false"
 
       end
 

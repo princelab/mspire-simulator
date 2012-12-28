@@ -104,22 +104,46 @@ module MS
           if @mods[aa] != nil
             mods = @mods[aa]
             mods.each do |mod|
-              mod[1].split(/\s/).each_slice(2) do |sl|
-                atom_counts[atom_indexes[sl[0]]] = atom_counts[atom_indexes[sl[0]]] + sl[1].to_i 
+              if mod[2] #variable
+                if rand(2) == 1
+                  mod[1].split(/\s/).each_slice(2) do |sl|
+                    atom_counts[atom_indexes[sl[0]]] = atom_counts[atom_indexes[sl[0]]] + sl[1].to_i 
+                  end
+                end
+              else
+                mod[1].split(/\s/).each_slice(2) do |sl|
+                  atom_counts[atom_indexes[sl[0]]] = atom_counts[atom_indexes[sl[0]]] + sl[1].to_i 
+                end
               end
             end
           elsif seq[0] == aa and @mods["CT"] != nil#N-terminus
             mods = @mods["CT"]
             mods.each do |mod|
-              mod[1].split(/\s/).each_slice(2) do |sl|
-                atom_counts[atom_indexes[sl[0]]] = atom_counts[atom_indexes[sl[0]]] + sl[1].to_i 
+              if mod[2] #variable
+                if rand(2) == 1
+                  mod[1].split(/\s/).each_slice(2) do |sl|
+                    atom_counts[atom_indexes[sl[0]]] = atom_counts[atom_indexes[sl[0]]] + sl[1].to_i 
+                  end
+                end
+              else
+                mod[1].split(/\s/).each_slice(2) do |sl|
+                  atom_counts[atom_indexes[sl[0]]] = atom_counts[atom_indexes[sl[0]]] + sl[1].to_i 
+                end
               end
             end
           elsif seq[-1] == aa and @mods["NT"] != nil#C-terminus
             mods = @mods["NT"]
             mods.each do |mod|
-              mod[1].split(/\s/).each_slice(2) do |sl|
-                atom_counts[atom_indexes[sl[0]]] = atom_counts[atom_indexes[sl[0]]] + sl[1].to_i 
+              if mod[2] #variable
+                if rand(2) == 1
+                  mod[1].split(/\s/).each_slice(2) do |sl|
+                    atom_counts[atom_indexes[sl[0]]] = atom_counts[atom_indexes[sl[0]]] + sl[1].to_i 
+                  end
+                end
+              else
+                mod[1].split(/\s/).each_slice(2) do |sl|
+                  atom_counts[atom_indexes[sl[0]]] = atom_counts[atom_indexes[sl[0]]] + sl[1].to_i 
+                end
               end
             end
           end
