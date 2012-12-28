@@ -7,6 +7,8 @@ class Modifications
     @modifications = @modifications.split(/_/)
     if @modifications[0] != "false"
       get_mods
+    else
+      @modifications = nil
     end
     return @modifications
   end
