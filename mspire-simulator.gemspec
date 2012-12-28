@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = "mspire-simulator"
-  s.version = "0.3.0"
+  s.version = "0.3.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["anoyce"]
@@ -73,7 +73,7 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<distribution>, ["= 0.7.0"])
       s.add_runtime_dependency(%q<pony>, ["= 1.4"])
       s.add_runtime_dependency(%q<obo>, ["= 0.1.0"])
-      s.add_runtime_dependency(%q<trollop>, ["= 1.16.2"])
+      s.add_runtime_dependency(%q<trollop>, ["= 2.0"])
       s.add_runtime_dependency(%q<MS-fragmenter>, ["= 0.0.2"])
       s.add_runtime_dependency(%q<sqlite3>, ["= 1.3.6"])
     else
@@ -86,7 +86,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<distribution>, ["= 0.7.0"])
       s.add_dependency(%q<pony>, ["= 1.4"])
       s.add_dependency(%q<obo>, ["= 0.1.0"])
-      s.add_dependency(%q<trollop>, ["= 1.16.2"])
+      s.add_dependency(%q<trollop>, ["= 2.0"])
       s.add_dependency(%q<MS-fragmenter>, ["= 0.0.2"])
       s.add_dependency(%q<sqlite3>, ["= 1.3.6"])
     end
@@ -100,7 +100,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<distribution>, ["= 0.7.0"])
     s.add_dependency(%q<pony>, ["= 1.4"])
     s.add_dependency(%q<obo>, ["= 0.1.0"])
-    s.add_dependency(%q<trollop>, ["= 1.16.2"])
+    s.add_dependency(%q<trollop>, ["= 2.0"])
     s.add_dependency(%q<MS-fragmenter>, ["= 0.0.2"])
     s.add_dependency(%q<sqlite3>, ["= 1.3.6"])
   end
