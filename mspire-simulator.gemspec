@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["anoyce"]
-  s.date = "2012-12-14"
+  s.date = "2012-12-28"
   s.description = "Simulates MS1 runs given amino acid FASTA files. Outputs an MZML file.\n\t\t\tCan simulate specific data if given an MZML file containing a single isolated peptide peak."
   s.email = "andrewbnoyce@gmail.com"
   s.executables = ["mspire-simulator", "sim_mail"]
@@ -38,6 +38,7 @@ Gem::Specification.new do |s|
     "lib/ms/rt/weka.rb",
     "lib/ms/sim_digester.rb",
     "lib/ms/sim_feature.rb",
+    "lib/ms/sim_modifications.rb",
     "lib/ms/sim_peptide.rb",
     "lib/ms/sim_spectra.rb",
     "lib/ms/sim_trollop.rb",
@@ -63,7 +64,7 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<mspire>, ["= 0.8.2"])
+      s.add_runtime_dependency(%q<mspire>, ["= 0.8.5"])
       s.add_runtime_dependency(%q<rubyvis>, ["= 0.5.2"])
       s.add_runtime_dependency(%q<nokogiri>, ["= 1.5.2"])
       s.add_runtime_dependency(%q<ffi>, ["= 1.0.11"])
@@ -74,8 +75,9 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<obo>, ["= 0.1.0"])
       s.add_runtime_dependency(%q<trollop>, ["= 1.16.2"])
       s.add_runtime_dependency(%q<MS-fragmenter>, ["= 0.0.2"])
+      s.add_runtime_dependency(%q<sqlite3>, ["= 1.3.6"])
     else
-      s.add_dependency(%q<mspire>, ["= 0.8.2"])
+      s.add_dependency(%q<mspire>, ["= 0.8.5"])
       s.add_dependency(%q<rubyvis>, ["= 0.5.2"])
       s.add_dependency(%q<nokogiri>, ["= 1.5.2"])
       s.add_dependency(%q<ffi>, ["= 1.0.11"])
@@ -86,9 +88,10 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<obo>, ["= 0.1.0"])
       s.add_dependency(%q<trollop>, ["= 1.16.2"])
       s.add_dependency(%q<MS-fragmenter>, ["= 0.0.2"])
+      s.add_dependency(%q<sqlite3>, ["= 1.3.6"])
     end
   else
-    s.add_dependency(%q<mspire>, ["= 0.8.2"])
+    s.add_dependency(%q<mspire>, ["= 0.8.5"])
     s.add_dependency(%q<rubyvis>, ["= 0.5.2"])
     s.add_dependency(%q<nokogiri>, ["= 1.5.2"])
     s.add_dependency(%q<ffi>, ["= 1.0.11"])
@@ -99,6 +102,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<obo>, ["= 0.1.0"])
     s.add_dependency(%q<trollop>, ["= 1.16.2"])
     s.add_dependency(%q<MS-fragmenter>, ["= 0.0.2"])
+    s.add_dependency(%q<sqlite3>, ["= 1.3.6"])
   end
 end
 
