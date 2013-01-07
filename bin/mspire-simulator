@@ -122,11 +122,6 @@ module MspireSimulator
   rescue Exception => e  #Clean up if exception 
     puts e.message  
     puts e.backtrace 
-    if digester != nil
-      if File.exists?(digester.digested_file)
-        File.delete(digester.digested_file)
-      end
-    end
     system "rm #{database}"
     puts "Exception - Simulation Failed"
   ensure
