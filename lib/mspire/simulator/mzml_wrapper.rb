@@ -1,6 +1,7 @@
 
 require 'nokogiri'
 require 'mspire/utilities/progress'
+require 'fragmenter' # from MS-fragmenter gem
 require 'mspire/mzml' 
 
 module Mspire
@@ -69,7 +70,7 @@ class Mspire::Simulator::Mzml_Wrapper
             charge = pep[0][1]
             ms2_mzs = MS::Fragmenter.new.fragment(seq)
             ms2_ints = Array.new(ms2_mzs.size,500.to_f)
-            rt = cent[2] + RThelper.RandomFloat(0.01,sampling_rate - 0.1)
+            rt = cent[2] + Mspire::Simulator::RetentionTime::Helper.RandomFloat(0.01,sampling_rate - 0.1)
             db.execute "INSERT INTO ms2(cent_id,pep_id,rt,mzs,ints) VALUES(#{cent[0]},#{cent[1]},#{rt},'#{ms2_mzs}','#{ms2_ints}')"
 
             scan_number += 1

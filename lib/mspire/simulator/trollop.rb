@@ -1,4 +1,4 @@
-require 'mspire/simulator/curvefit'
+require 'mspire/simulator/curve_fit'
 
 module Mspire
   module Simulator ; end
@@ -64,8 +64,11 @@ module Mspire
                                     and Ri is the residue/terminus to apply it to (c-term = CT, n-term = NT). Place a lowercase 'v' after the residue if variable.
                                     (e.g. MOD:00412Mv - oxidation on Methionine, variable)", :default => "false"
 
+                opt :weka_jar, "path to your weka.jar file. If none given, then expects your $CLASSPATH to be properly set.", :default => ''
+
       end
 
+      @opts[:weka_jar] = nil if @opts[:weka_jar] == ''
       if @opts[:mzml] != "nil"
         @opts = Mspire::Simulator::CurveFit.get_parameters(@opts)
       end

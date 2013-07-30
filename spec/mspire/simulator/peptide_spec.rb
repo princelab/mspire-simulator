@@ -4,7 +4,8 @@ require 'mspire'
 require 'mspire/simulator/peptide'
 
 describe Mspire::Simulator::Peptide do
-  it "creates a peptide object given an amino acid sequence and charge state" do 
+  # the interface has dramatically changed
+  xit "creates a peptide object given an amino acid sequence and charge state" do 
     pep = Mspire::Simulator::Peptide.new("HSVVVPYEPPEVGSDCTTIHYNYMCNSSCMGGMNR",2)
     pep.should be_a(Mspire::Simulator::Peptide)
     pep.sequence.should == "HSVVVPYEPPEVGSDCTTIHYNYMCNSSCMGGMNR"

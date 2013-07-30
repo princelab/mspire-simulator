@@ -1,6 +1,6 @@
 
 require 'time'
-require 'mspire/simulator/fit_graph'
+require 'mspire/simulator/curve_fit/fit_plot'
 
 
 module Enumerable

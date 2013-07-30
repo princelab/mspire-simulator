@@ -3,9 +3,11 @@ require 'csv'
 
 module Mspire
   module Weka
+    WEKA_MODEL_DIR = File.expand_path(File.dirname(__FILE__) + "/weka")
+
     #James Dalg
     module_function
-    def predict_rts(db)
+    def predict_rts(db, opts)
       #mz,charge,intensity,rt,A,R,N,D,B,C,E,Q,Z,G,H,I,L,K,M,F,P,S,T,W,Y,V,J,mass,hydro,pi
       #make arrf file to feed weka model
       data = []
@@ -17,9 +19,9 @@ module Mspire
 
       arff = make_rt_arff(Time.now.nsec.to_s,data)
 
-      path = Gem.bin_path('mspire-simulator', 'mspire-simulator').split(/\//)
-      dir = path[0..path.size-3].join("/")
-      system("java weka.classifiers.functions.MultilayerPerceptron -T #{arff} -l #{dir}/lib/mspire/simulator/weka/M5Rules.model -p 24 > #{arff}.out")
+      weka_jar_cp_opt = opts[:weka_jar] ? "-cp #{opts[:weka_jar]}" : nil
+      cmd = "java #{weka_jar_cp_opt} weka.classifiers.functions.MultilayerPerceptron -T #{arff} -l #{WEKA_MODEL_DIR}/M5Rules.model -p 24 > #{arff}.out"
+      system cmd
       system("rm #{arff}")
 
       #extract what was predicted by weka model
@@ -37,7 +39,7 @@ module Mspire
 
 
 
-    def predict_ints(db)
+    def predict_ints(db, opts)
       data = []
       aas = "A,R,N,D,B,C,E,Q,Z,G,H,I,L,K,M,F,P,S,T,W,Y,V,J,place_holder"
       rs = db.execute "SELECT mono_mz, charge, mass, p_rt,#{aas} FROM peptides NATURAL JOIN aac" #JOIN aac
@@ -47,9 +49,9 @@ module Mspire
 
       arff = make_int_arff(Time.now.nsec.to_s,data)
 
-      path = Gem.bin_path('mspire-simulator', 'mspire-simulator').split(/\//)
-      dir = path[0..path.size-3].join("/")
-      system("java weka.classifiers.trees.M5P -T #{arff} -l #{dir}/lib/mspire/simulator/weka/M5P.model -p 27 > #{arff}.out")
+      weka_jar_cp_opt = opts[:weka_jar] ? "-cp #{opts[:weka_jar]}" : nil
+      cmd = "java #{weka_jar_cp_opt} weka.classifiers.trees.M5P -T #{arff} -l #{WEKA_MODEL_DIR}/M5P.model -p 27 > #{arff}.out"
+      system cmd
       system("rm #{arff}")
 
       #extract what was predicted by weka model

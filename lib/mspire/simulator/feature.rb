@@ -1,6 +1,6 @@
 require 'time'
 require 'distribution'
-#require 'fragmenter'
+require 'fragmenter'
 require 'mspire/simulator/peptide'
 require 'mspire/simulator/retention_time/helper'
 require 'mspire/simulator/tr_file_writer'
@@ -76,7 +76,7 @@ module Mspire
 
           t_index = 1
 
-          (Sim_Spectra::r_times[pep[10]..pep[11]]).each_with_index do |rt,i| 
+          (Mspire::Simulator::Spectra::r_times[pep[10]..pep[11]]).each_with_index do |rt,i| 
 
 
             if !@one_d

@@ -9,16 +9,16 @@ require 'mspire/simulator/retention_time/helper'
 module Mspire
   module Simulator 
     module RetentionTime
-      module Rtgenerator
+      module Generator
 
         module_function
-        def generateRT(one_d,db)
+        def generateRT(one_d, db, opts)
           prog = Mspire::Utilities::Progress.new("Generating retention times:")
-          @r_times = Sim_Spectra.r_times
+          @r_times = Mspire::Simulator::Spectra.r_times
 
           # Gets retention times from the weka model
-          Mspire::Weka.predict_rts(db)
-          Mspire::Weka.predict_ints(db)
+          Mspire::Weka.predict_rts(db, opts)
+          Mspire::Weka.predict_ints(db, opts)
 
 
           #-----------------------------------------------------------------

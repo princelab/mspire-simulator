@@ -1,7 +1,7 @@
-require 'mspire/simulator/retention_time/helper'
 require 'mspire/simulator/noise'
-require 'mspire/simulator/retention_time/generator'
 require 'mspire/simulator/feature'
+require 'mspire/simulator/retention_time/generator'
+require 'mspire/simulator/retention_time/helper'
 
 module Mspire
   module Simulator
@@ -18,15 +18,15 @@ module Mspire
         num_of_spec = sampling_rate*run_time
         spec_time = 1/sampling_rate
         num_of_spec.to_i.times do |k|
-          @@r_times<<spec_time+RThelper.RandomFloat(-var,var)
+          @@r_times << spec_time + Mspire::Simulator::RetentionTime::Helper.RandomFloat(-var,var)
           spec_time = spec_time + (1/sampling_rate)
         end
         @@r_times = Mspire::Simulator::Noise.spec_drops(drop_percentage)
 
-        Mspire::Simulator::RetentionTime::Generator.generateRT(one_d,db)
+        Mspire::Simulator::RetentionTime::Generator.generateRT(one_d,db, @opts)
 
         #Features
-        @features_o = Mspire::Simulator::Feature.new(opts,one_d,db)
+        @features_o = Mspire::Simulator::Feature.new(@opts,one_d,db)
         @max_mz = @features_o.max_mz
 
       end

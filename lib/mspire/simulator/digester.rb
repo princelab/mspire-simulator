@@ -82,9 +82,9 @@ module Mspire
           charge_ratio = charge_at_pH(identify_potential_charges(peptide_seq), @pH)
           charge_f = charge_ratio.floor
           charge_c = charge_ratio.ceil
-          peptide_f = MS::Peptide.new(peptide_seq, charge_f, peptide_seq.abu,@db,i,peptide_seq.prot_id,@modifications) if charge_f != 0
+          peptide_f = Mspire::Simulator::Peptide.new(peptide_seq, charge_f, peptide_seq.abu,@db,i,peptide_seq.prot_id,@modifications) if charge_f != 0
           i += 1 if charge_f != 0
-          peptide_c = MS::Peptide.new(peptide_seq, charge_c, peptide_seq.abu,@db,i,peptide_seq.prot_id,@modifications) if charge_c != 0
+          peptide_c = Mspire::Simulator::Peptide.new(peptide_seq, charge_c, peptide_seq.abu,@db,i,peptide_seq.prot_id,@modifications) if charge_c != 0
           i += 1 if charge_c != 0
 
           count += 1

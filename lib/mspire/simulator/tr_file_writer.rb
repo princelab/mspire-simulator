@@ -50,7 +50,7 @@ module Mspire
 
     class Tcsv_file_writer
       def self.write(db,file_name,opts)
-        prog = Progress.new("Writing csv:")
+        prog = Mspire::Utilities::Progress.new("Writing csv:")
         spectra = db.execute "SELECT * FROM spectra AS S JOIN peptides AS P ON S.pep_id=P.Id"
         total = spectra.size
 

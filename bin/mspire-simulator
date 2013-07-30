@@ -7,28 +7,27 @@ $LOAD_PATH << './lib'
 
 require 'time'
 require 'sqlite3'
-require 'progress'
+require 'mspire/utilities/progress'
 require 'nokogiri'
 require 'mspire/digester'
 require 'mspire/tagged_peak'
 require 'mspire'
-require 'ms/sim_peptide'
-require 'ms/rt/rtgenerator'
-require 'ms/sim_spectra'
-require 'ms/noise'
-require 'ms/mzml_wrapper'
+require 'mspire/simulator/peptide'
+require 'mspire/simulator/retention_time/generator'
+require 'mspire/simulator/spectra'
+require 'mspire/simulator/noise'
+require 'mspire/simulator/mzml_wrapper'
 require 'trollop'
-require 'ms/tr_file_writer'
-require 'ms/isoelectric_calc'
-require 'ms/sim_digester'
-require 'ms/sim_trollop'
-require 'ms/merger'
-require 'ms/sim_modifications'
-
+require 'mspire/simulator/tr_file_writer'
+require 'mspire/simulator/isoelectric_calc'
+require 'mspire/simulator/digester'
+require 'mspire/simulator/trollop'
+require 'mspire/simulator/merger'
+require 'mspire/simulator/modifications'
 
 
 module MspireSimulator
-@opts = MS::Troll.new.get
+@opts = Mspire::Simulator::Troll.new.get
   begin
 
   @start = Time.now
@@ -72,7 +71,7 @@ module MspireSimulator
     
     #------------------------Digest-&-Modifications-------------------------------
     peptides = []
-    digester = MS::Sim_Digester.new(@opts,db)
+    digester = Mspire::Simulator::Digester.new(@opts,db)
     ARGV.each do |file|
       digester.digest(file)
     end
@@ -81,7 +80,7 @@ module MspireSimulator
 
 
     #------------------------Create Spectrum--------------------------------------
-    spectra = MS::Sim_Spectra.new(@opts, one_d,db)
+    spectra = Mspire::Simulator::Spectra.new(@opts, one_d,db)
     
     if noise == 'true'
       noise = spectra.noiseify(db)
@@ -91,14 +90,14 @@ module MspireSimulator
     
     
     #------------------------Merge Overlaps---------------------------------------
-    Merger.merge(@opts[:overlapRange].to_f,db)
+    Mspire::Simulator::Merger.merge(@opts[:overlapRange].to_f,db)
     #-----------------------------------------------------------------------------
     
     
     
     #-----------------------MZML--------------------------------------------------
-    mzml = Mzml_Wrapper.new(db,@opts)
-    prog = Progress.new("Writing to mzml file...")
+    mzml = Mspire::Simulator::Mzml_Wrapper.new(db,@opts)
+    prog = Mspire::Utilities::Progress.new("Writing to mzml file...")
     prog.update(0)
     mzml.to_xml(out_file)
     prog.finish!
@@ -109,12 +108,12 @@ module MspireSimulator
     #------------------------Truth Files------------------------------------------
     if truth != "false"
       if truth == "xml"
-        MS::Txml_file_writer.write(db,out_file,@opts)
+        Mspire::Simulator::Txml_file_writer.write(db,out_file,@opts)
       elsif truth == "csv"
-        MS::Tcsv_file_writer.write(db,out_file,@opts)
+        Mspire::Simulator::Tcsv_file_writer.write(db,out_file,@opts)
       elsif truth == "xml_csv" or truth == "csv_xml"
-        MS::Txml_file_writer.write(db,out_file,@opts)
-        MS::Tcsv_file_writer.write(db,out_file,@opts)
+        Mspire::Simulator::Txml_file_writer.write(db,out_file,@opts)
+        Mspire::Simulator::Tcsv_file_writer.write(db,out_file,@opts)
       end
     end
     #-----------------------------------------------------------------------------
