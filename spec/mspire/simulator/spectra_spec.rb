@@ -1,27 +1,25 @@
-#spectra_spec.rb
-$LOAD_PATH << './lib'
-require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
+require 'spec_helper'
 require 'mspire'
-require 'ms/sim_spectra'
-require 'ms/sim_peptide'
+require 'mspire/simulator/spectra'
+require 'mspire/simulator/peptide'
 
-describe MS::Sim_Spectra do
+describe Mspire::Simulator::Spectra do
   before(:all) do 
     peptides = []
-    peptides<<MS::Peptide.new("ANDY",1)
-    peptides<<MS::Peptide.new("PRINCE",2)
-    peptides<<MS::Peptide.new("PEPTIDE",3)
+    peptides<<Mspire::Simulator::Peptide.new("ANDY",1)
+    peptides<<Mspire::Simulator::Peptide.new("PRINCE",2)
+    peptides<<Mspire::Simulator::Peptide.new("PEPTIDE",3)
     one_d = false
     opts = {:sampling_rate => 1.0, :run_time => 5000.0,
             :dropout_percentage => 0, :noise_density => 20,
             :jagA => 10.34, :jagC => 0.00712, :jagB => 0.12,
             :wobA => 0.001071, :wobB => -0.5430, :mu => 25.0}
-    @spectra = MS::Sim_Spectra.new(peptides,opts,one_d)
+    @spectra = Mspire::Simulator::Spectra.new(peptides,opts,one_d)
     @features = @spectra.features
   end
   
   it "Creates spectra for a ms run given an array of peptide objects, a sampling rate and a run time, " do
-    @spectra.should be_a(MS::Sim_Spectra)
+    @spectra.should be_a(Mspire::Simulator::Spectra)
   end
   
   it "#data Returns a hash that has retention times as keys and arrays as values such that [[mzs],[intensitys]]" do 

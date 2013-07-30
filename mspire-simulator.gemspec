@@ -9,10 +9,10 @@ prep = lambda {|arg| arg.split(" ",2).compact }
 Gem::Specification.new do |spec|
   spec.name          = "mspire-simulator"
   spec.version       = Mspire::Simulator::VERSION
-  spec.authors       = ["John Prince"]
+  spec.authors       = ["Andrew Noyce, John Prince"]
   spec.email         = ["jtprince@gmail.com"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
+  spec.description   = %q{Simulates MS1 runs given amino acid FASTA files. Outputs an MZML file.  Can simulate specific data if given an MZML file containing a single isolated peptide peak.}
+  spec.summary       = %q{Simulates MS1 runs given amino acid FASTA files. Outputs an MZML file.}
   spec.homepage      = ""
   spec.license       = "MIT"
 
@@ -35,7 +35,6 @@ Gem::Specification.new do |spec|
     "MS-fragmenter = 0.0.2",
     "sqlite3 = 1.3.6",
   ].each do |arg|
-    p prep.call(arg)
     spec.add_dependency *prep.call(arg)
   end
   [
@@ -45,7 +44,6 @@ Gem::Specification.new do |spec|
     "rdoc ~> 3.12", 
     "simplecov",
   ].each do |arg|
-    p prep.call(arg)
     spec.add_development_dependency *prep.call(arg)
   end
 end

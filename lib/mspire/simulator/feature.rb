@@ -1,9 +1,9 @@
 require 'time'
 require 'distribution'
 #require 'fragmenter'
-require 'mspire/sim_peptide'
-require 'mspire/retention_time/helper'
-require 'mspire/tr_file_writer'
+require 'mspire/simulator/peptide'
+require 'mspire/simulator/retention_time/helper'
+require 'mspire/simulator/tr_file_writer'
 
 module Mspire
   module Simulator

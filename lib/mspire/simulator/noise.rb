@@ -1,6 +1,6 @@
 
 require 'mspire/utilities/progress'
-require 'mspire/retention_time/helper'
+require 'mspire/simulator/retention_time/helper'
 
 module Mspire
   module Simulator
@@ -12,7 +12,7 @@ module Mspire
         max_int = opts[:noiseMaxInt]
         min_int = opts[:noiseMinInt]
         @noise = {}
-        r_times = Sim_Spectra.r_times
+        r_times = Mspire::Simulator::Spectra.r_times
         count = 0
         prog = Mspire::Utilities::Progress.new("Adding noise:")
         num = 0
@@ -26,8 +26,8 @@ module Mspire
           nmzs = []
           nints = []
           density.times do
-            rmz = RThelper.RandomFloat(0.0,max_mz)
-            rint = RThelper.RandomFloat(min_int,max_int)
+            rmz = Mspire::Simulator::RetentionTime::Helper.RandomFloat(0.0,max_mz)
+            rint = Mspire::Simulator::RetentionTime::Helper.RandomFloat(min_int,max_int)
             nmzs<<rmz
             nints<<rint
           end
@@ -39,7 +39,7 @@ module Mspire
       end
 
       def spec_drops(drop_percentage)
-        r_times = Sim_Spectra.r_times
+        r_times = Mspire::Simulator::Spectra.r_times
         l = r_times.length
         num_drops = drop_percentage * l
         num_drops.to_i.times do 

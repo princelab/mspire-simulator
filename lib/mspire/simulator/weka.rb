@@ -1,7 +1,7 @@
 
 require 'csv'
 
-module MS
+module Mspire
   module Weka
     #James Dalg
     module_function
@@ -19,7 +19,7 @@ module MS
 
       path = Gem.bin_path('mspire-simulator', 'mspire-simulator').split(/\//)
       dir = path[0..path.size-3].join("/")
-      system("java weka.classifiers.functions.MultilayerPerceptron -T #{arff} -l #{dir}/lib/weka/M5Rules.model -p 24 > #{arff}.out")
+      system("java weka.classifiers.functions.MultilayerPerceptron -T #{arff} -l #{dir}/lib/mspire/simulator/weka/M5Rules.model -p 24 > #{arff}.out")
       system("rm #{arff}")
 
       #extract what was predicted by weka model
@@ -49,7 +49,7 @@ module MS
 
       path = Gem.bin_path('mspire-simulator', 'mspire-simulator').split(/\//)
       dir = path[0..path.size-3].join("/")
-      system("java weka.classifiers.trees.M5P -T #{arff} -l #{dir}/lib/weka/M5P.model -p 27 > #{arff}.out")
+      system("java weka.classifiers.trees.M5P -T #{arff} -l #{dir}/lib/mspire/simulator/weka/M5P.model -p 27 > #{arff}.out")
       system("rm #{arff}")
 
       #extract what was predicted by weka model
