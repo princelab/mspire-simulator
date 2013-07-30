@@ -105,15 +105,17 @@ class Mzml_Wrapper
     @mzml = Mspire::Mzml.new do |mzml|
       mzml.id = 'ms1_and_ms2'
       mzml.cvs = Mspire::Mzml::CV::DEFAULT_CVS
+      #mzml.cvs<<Mspire::Mzml::CV.new('Options',"#{opts}",'1')
       mzml.file_description = Mspire::Mzml::FileDescription.new  do |fd|
         fd.file_content = Mspire::Mzml::FileContent.new
+        fd.file_content.cv_params<<Mspire::UserParam.new("Simulated Options","#{opts}","options")
         fd.source_files << Mspire::Mzml::SourceFile.new
       end
       default_instrument_config = Mspire::Mzml::InstrumentConfiguration.new("IC").describe!('MS:1000031')
       mzml.instrument_configurations << default_instrument_config
       software = Mspire::Mzml::Software.new
       mzml.software_list << software
-      default_data_processing = Mspire::Mzml::DataProcessing.new("simulator options=#{opts}")
+      default_data_processing = Mspire::Mzml::DataProcessing.new("did_nothing")
       mzml.data_processing_list << default_data_processing
       mzml.run = Mspire::Mzml::Run.new("simulated_run", default_instrument_config) do |run|
         spectrum_list = Mspire::Mzml::SpectrumList.new(default_data_processing, specs)
