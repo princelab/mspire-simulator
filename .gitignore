@@ -1,6 +1,5 @@
 .m/
 *.svg
-lib/pool.rb
 *.mzml
 *.mzML
 *.csv
