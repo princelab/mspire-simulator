@@ -1,12 +1,16 @@
 
 require 'nokogiri'
-require 'progress'
+require 'mspire/utilities/progress'
 require 'mspire/mzml' 
 
-class Mzml_Wrapper
+module Mspire
+  module Simulator ; end
+end
+
+class Mspire::Simulator::Mzml_Wrapper
 
   def initialize(db,opts)
-    prog = Progress.new("Converting to mzml:")
+    prog = Mspire::Utilities::Progress.new("Converting to mzml:")
     #spectra is a Hash rt=>[[mzs],[ints]]
     db.execute "CREATE TABLE IF NOT EXISTS ms2(ms2_id INTEGER PRIMARY KEY,cent_id INTEGER,pep_id INTEGER,rt REAL,mzs TEXT,ints TEXT)" if opts[:ms2] == "true"
     sampling_rate = opts[:sampling_rate]

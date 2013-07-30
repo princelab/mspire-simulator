@@ -1,7 +1,8 @@
-require 'ms/curvefit'
+require 'mspire/simulator/curvefit'
 
-module MS
-  class Troll
+module Mspire
+  module Simulator ; end
+  class Simulator::Troll
     def initialize
       @opts = Trollop::options do
         version "mspire-simulator 0.0.1a (c) 2012 Brigham Young University"
@@ -66,7 +67,7 @@ module MS
       end
 
       if @opts[:mzml] != "nil"
-        @opts = CurveFit.get_parameters(@opts)
+        @opts = Mspire::Simulator::CurveFit.get_parameters(@opts)
       end
       Trollop::die :sampling_rate, "must be greater than 0" if @opts[:sampling_rate] <= 0
       Trollop::die :run_time, "must be non-negative" if @opts[:run_time] < 0

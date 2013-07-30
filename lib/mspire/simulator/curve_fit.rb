@@ -1,13 +1,17 @@
 require 'progress'
-require 'ms/curvefit/mzml_reader'
-require 'ms/curvefit/curve_fit_helper'
+require 'mspire/simulator/curve_fit/mzml_reader'
+require 'mspire/simulator/curve_fit/helper'
 
 @@avg_mz = 0
 @@avg_rt = 0
 
-class CurveFit
+module Mspire
+  module Simulator ; end
+end
+
+class Mspire::Simulator::CurveFit
   def self.get_parameters(opts)
-    data = Mzml_reader.get_data(opts[:mzml])
+    data = MzmlReader.get_data(opts[:mzml])
     generations = opts[:generations]
 
     @pts_int_var = []

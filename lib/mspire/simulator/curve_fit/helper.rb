@@ -1,5 +1,6 @@
+
 require 'time'
-require_relative 'fit_graph'
+require 'mspire/simulator/fit_graph'
 
 
 module Enumerable
@@ -22,7 +23,11 @@ module Enumerable
   end
 end
 
-class GenCurvefit
+module Mspire
+  module Simulator ; end
+end
+
+class Mspire::Simulator::GenCurvefit
   def initialize(pts_in,function = nil,paramsize = nil,mutation_limits = nil,popsize = 0,generations = nil)
     @pts_in = pts_in
     @function = function
@@ -119,7 +124,7 @@ class GenCurvefit
   end
 
   def fit
-    prog = Progress.new("Generation")
+    prog = Mspire::Utilities::Progress.new("Generation")
     num = 0
     total = @generations
     step = total/100
@@ -151,7 +156,7 @@ class GenCurvefit
 
   def plot(file,labels = nil)
     pts = fitness(@best,@pts_in,true)
-    Fit_plot.plot(@pts_in,pts,file,labels)
+    FitPlot.plot(@pts_in,pts,file,labels)
     puts "  Output File: #{file}"
   end
 

@@ -1,10 +1,14 @@
 require 'rubyvis'
 
-class Fit_plot
+module Mspire
+  module Simulator ; end
+end
+
+class Mspire::Simulator::FitPlot
   def self.plot(pts,pts2,file,labels = ["",""])
     xlab = labels[0]
     ylab = labels[1]
-  
+
     w = 600
     h = 300
 
@@ -28,13 +32,13 @@ class Fit_plot
 
 
     vis = pv.Panel.new()
-      .width(w)
-      .height(h)
-      .bottom(50)
-      .left(40)
-      .right(30)
-      .top(5);
-     
+    .width(w)
+    .height(h)
+    .bottom(50)
+    .left(40)
+    .right(30)
+    .top(5);
+
     vis.add(pv.Dot).
       stroke_style('blue').
       data(line1).
@@ -43,7 +47,7 @@ class Fit_plot
       bottom(lambda {|d| y.scale(d.y)}).
       shape_size(1).
       anchor("bottom");
-      
+
     vis.add(pv.Line).
       stroke_style('red').
       data(line2).
@@ -51,32 +55,32 @@ class Fit_plot
       left(lambda {|d| x.scale(d.x)}).
       bottom(lambda {|d| y.scale(d.y)}).
       anchor("bottom");
-      
+
     vis.add(pv.Label)
-        .data(x.ticks())
-        .left(lambda {|d| x.scale(d)})
-        .bottom(0)
-        .text_baseline("top")
-        .text_margin(5);
-        
+    .data(x.ticks())
+    .left(lambda {|d| x.scale(d)})
+    .bottom(0)
+    .text_baseline("top")
+    .text_margin(5);
+
     vis.add(pv.Label)
-      .bottom(-30)
-      .text(xlab);
-      
+    .bottom(-30)
+    .text(xlab);
+
     vis.add(pv.Label)
-      .text_angle(-Math::PI/2.0)
-      .left(-10)
-      .text(ylab);
+    .text_angle(-Math::PI/2.0)
+    .left(-10)
+    .text(ylab);
 
     vis.add(pv.Rule)
-        .data(y.ticks())
-        .bottom(lambda {|d| y.scale(d)})
-        .stroke_style(lambda {|i|  i!=0 ? pv.color("#ccc") : pv.color("black")})
-      .anchor("right").add(pv.Label)
-      .visible(lambda { (self.index & 1)==0})
-        .text_margin(6);
-        vis.render();
-    
+    .data(y.ticks())
+    .bottom(lambda {|d| y.scale(d)})
+    .stroke_style(lambda {|i|  i!=0 ? pv.color("#ccc") : pv.color("black")})
+    .anchor("right").add(pv.Label)
+    .visible(lambda { (self.index & 1)==0})
+    .text_margin(6);
+    vis.render();
+
     file_out = File.open(file,"w")
     file_out.puts vis.to_svg
     file_out.close

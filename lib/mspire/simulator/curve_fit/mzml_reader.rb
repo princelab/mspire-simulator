@@ -1,7 +1,11 @@
 require 'mspire'
 require 'mspire/mzml'
 
-class Mzml_reader
+module Mspire
+  module Simulator; end
+end
+
+class Mspire::Simulator::MzmlReader
   def self.get_data(file)
     mzs_out = []
     rts_out = []
@@ -23,6 +27,7 @@ class Mzml_reader
         end
       end
     end
+    io.close
     return mzs_out,rts_out,ints_out
   end
 end

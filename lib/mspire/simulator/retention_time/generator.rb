@@ -1,22 +1,22 @@
 
 require 'time'
 require 'progress'
-require 'ms/sim_feature'
-require 'ms/rt/weka'
-require 'ms/sim_peptide'
-require 'ms/rt/rt_helper'
+require 'mspire/sim_feature'
+require 'mspire/rt/weka'
+require 'mspire/sim_peptide'
+require 'mspire/rt/rt_helper'
 
-module MS
+module Mspire
   module Rtgenerator
 
     module_function
     def generateRT(one_d,db)
-      prog = Progress.new("Generating retention times:")
+      prog = Mspire::Utilities::Progress.new("Generating retention times:")
       @r_times = Sim_Spectra.r_times
 
       # Gets retention times from the weka model
-      MS::Weka.predict_rts(db)
-      MS::Weka.predict_ints(db)
+      Mspire::Weka.predict_rts(db)
+      Mspire::Weka.predict_ints(db)
 
 
       #-----------------------------------------------------------------

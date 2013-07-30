@@ -1,7 +1,14 @@
 
 require 'obo/ontology'
 
-class Modifications
+module Mspire
+  module Simulator ; end
+end
+
+class Mspire::Simulator::Modifications
+
+  attr_accessor :modifications
+
   def initialize(mods)
     @modifications = mods
     @modifications = @modifications.split(/_/)
@@ -41,7 +48,5 @@ class Modifications
     end
     @modifications = mods
   end
-  
-  attr_reader :modifications
-  attr_writer :modifications
+
 end
