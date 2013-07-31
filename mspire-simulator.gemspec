@@ -22,15 +22,15 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   [
-    "mspire = 0.8.5",
+    "mspire = 0.8.7",
     "rubyvis = 0.5.2",
-    "nokogiri = 1.5.2",
+    "nokogiri ~> 1.5.9",
     "ffi = 1.0.11",
     "ffi-inliner = 0.2.4",
     "fftw3 = 0.3",
     "distribution = 0.7.0",
     "pony = 1.4",
-    "obo = 0.1.0",
+    "obo = 0.1.3",
     "trollop = 2.0",
     "MS-fragmenter = 0.0.2",
     "sqlite3 = 1.3.6",

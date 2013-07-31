@@ -31,7 +31,9 @@ class Mspire::Simulator::Modifications
         variable = true
       end
       residue = mod[9..-1]
-      mod = (obo.id_to_element[mod[0..8]]).tagvalues
+      element = obo.id_to_element[mod[0..8]]
+      raise ArgumentError, "a modification does not seem to appear in the PSI-MOD.obo!" unless element
+      mod = element.tagvalues
       xref = mod['xref']
       xref.each do |x|
         if x =~ /DiffFormula/
