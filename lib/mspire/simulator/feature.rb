@@ -18,9 +18,11 @@ module Mspire
         #------------------Each_Peptide_=>_Feature----------------------
         prog = Mspire::Utilities::Progress.new("Generating features:")
         num = 0
-        @db.execute "CREATE TABLE IF NOT EXISTS spectra(cent_id INTEGER PRIMARY KEY,pep_id INTEGER,rt REAL,mzs REAL,ints REAL,merge_id INTEGER)"
+        @db.execute "CREATE TABLE IF NOT EXISTS spectra(cent_id INTEGER PRIMARY KEY,pep_id INTEGER,rt REAL,mzs REAL,ints REAL,merge_id INTEGER,isotope_id INTEGER)"
+#        @db.execute "CREATE TABLE IF NOT EXISTS spectra(cent_id INTEGER PRIMARY KEY,pep_id INTEGER,rt REAL,mzs REAL,ints REAL,merge_id INTEGER)"
         @cent_id = 0
         peps = @db.execute "SELECT * FROM peptides"
+
         total = peps.size
         step = total/100.0
         peps.each do |pep|
@@ -70,7 +72,7 @@ module Mspire
         sy = (sx**-1) * Math.sqrt(pep[8]) #abu
 
         shuff = rt_helper.RandomFloat(0.05,1.0)
-        core_mzs.each do |mzmu|
+        core_mzs.each_with_index do |mzmu,core_idx|
 
           relative_abundances_int = relative_ints[index]
 
@@ -128,7 +130,8 @@ module Mspire
 
             int = int*(predicted_int*(relative_abundances_int*10**-2)) * sy
             if int > low.abs and wobble_mz > 0
-              @db.execute "INSERT INTO spectra VALUES(#{@cent_id},#{pep_id},#{rt},#{wobble_mz},#{int},NULL)"
+              @db.execute "INSERT INTO spectra VALUES(#{@cent_id},#{pep_id},#{rt},#{wobble_mz},#{int},NULL,#{core_idx})"
+#              @db.execute "INSERT INTO spectra VALUES(#{@cent_id},#{pep_id},#{rt},#{wobble_mz},#{int},NULL)"
               @cent_id += 1
               if @max_mz < wobble_mz
                 @max_mz = wobble_mz

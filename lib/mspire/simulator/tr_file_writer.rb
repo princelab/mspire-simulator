@@ -57,13 +57,16 @@ module Mspire
         #write
         file = File.open("#{file_name}_truth.csv","w")
         file.puts "simulator_options=#{opts.inspect}"
-        file.puts "rt,mz,int,centroid_id,merge_id,peptide_id,protien_id,seq,charge,abu"
+#        file.puts "rt,mz,int,centroid_id,merge_id,peptide_id,protien_id,seq,charge,abu,isotope_id"
+        file.puts "centroid_id,mz,rt,int,protein_id,peptide_id,isotope_id,seq,charge,abu,merge_id,"
+
         count = 0
 
         num = 0
         step = total/100
         spectra.each do |cent|
-          file.puts "#{cent[2]},#{cent[3]},#{cent[4]},#{cent[0]},#{cent[5]},#{cent[1]},#{cent[18]},#{cent[7]},#{cent[9]},#{cent[14]}"
+          file.puts "#{cent[0]},#{cent[3]},#{cent[2]},#{cent[4]},#{cent[19]},#{cent[1]},#{cent[6]},#{cent[8]},#{cent[10]},#{cent[15]},#{cent[5]}"
+#old          file.puts "#{cent[2]},#{cent[3]},#{cent[4]},#{cent[0]},#{cent[5]},#{cent[1]},#{cent[18]},#{cent[7]},#{cent[9]},#{cent[14]}"
         end
         file.close
         prog.finish!

@@ -38,7 +38,7 @@ module Mspire
           mzs = val[0]
           ints = val[1]
           mzs.each_with_index do |mz,index|
-            db.execute "INSERT INTO spectra VALUES(#{cent_id},NULL,#{key},#{mz},#{ints[index]},NULL)"
+            db.execute "INSERT INTO spectra VALUES(#{cent_id},NULL,#{key},#{mz},#{ints[index]},NULL,-1)"
             cent_id += 1
           end
         end
